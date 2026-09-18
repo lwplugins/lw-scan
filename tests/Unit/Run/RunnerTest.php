@@ -603,13 +603,10 @@ final class RunnerTest extends MonkeyTestCase {
 	 * @param string $message The fatal error message to simulate.
 	 */
 	private function invoke_fatal_guard( Runner $runner, string $message ): void {
-		$guard_property = new \ReflectionProperty( Runner::class, 'guard' );
-		$guard_property->setAccessible( true );
-		$guard = $guard_property->getValue( $runner );
+		// setAccessible() is a no-op since PHP 8.1 and deprecated in 8.5.
+		$guard = ( new \ReflectionProperty( Runner::class, 'guard' ) )->getValue( $runner );
 
-		$callback_property = new \ReflectionProperty( \LightweightPlugins\Scan\Run\FatalGuard::class, 'on_fatal' );
-		$callback_property->setAccessible( true );
-		$callback = $callback_property->getValue( $guard );
+		$callback = ( new \ReflectionProperty( \LightweightPlugins\Scan\Run\FatalGuard::class, 'on_fatal' ) )->getValue( $guard );
 
 		$callback( $message );
 	}
