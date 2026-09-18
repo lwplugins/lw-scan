@@ -1,0 +1,911 @@
+/**
+ * LW Scan — admin styles.
+ *
+ * Converted from the approved mockup (mockup/lw.css). Everything wp-admin
+ * already provides — .wrap, .button, .form-table, .notice — is
+ * left to core; only the plugin's own vocabulary lives here, all of it
+ * under the lw-scan- prefix.
+ */
+
+/* --- Layout ------------------------------------------------------------ */
+
+.lw-scan-wrap {
+	--lw-scan-line: #c3c4c7;
+	--lw-scan-soft: #dcdcde;
+	--lw-scan-bg: #f6f7f7;
+	--lw-scan-muted: #646970;
+}
+
+/* Title row and vertical tab nav: the layout every LW plugin shares. */
+
+.lw-title-icon {
+	width: 28px;
+	height: 28px;
+	vertical-align: middle;
+	margin-right: 4px;
+	position: relative;
+	top: -2px;
+}
+
+.lw-scan-version {
+	font-size: 13px;
+	font-weight: 400;
+	color: #50575e;
+}
+
+.lw-scan-settings {
+	display: flex;
+	margin-top: 20px;
+	background: #fff;
+	border: 1px solid #c3c4c7;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+}
+
+.lw-scan-tabs {
+	width: 200px;
+	min-width: 200px;
+	background: #f6f7f7;
+	border-right: 1px solid #c3c4c7;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.lw-scan-tabs li {
+	margin: 0;
+	padding: 0;
+}
+
+.lw-scan-tabs a {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 15px 20px;
+	text-decoration: none;
+	color: #1d2327;
+	border-bottom: 1px solid #c3c4c7;
+	border-left: 3px solid transparent;
+	transition: all 0.15s ease;
+}
+
+.lw-scan-tabs a:hover {
+	background: #fff;
+	color: #d63638;
+}
+
+.lw-scan-tabs a:focus {
+	box-shadow: none;
+	outline: none;
+}
+
+.lw-scan-tabs a:focus-visible {
+	box-shadow: inset 0 0 0 2px #d63638;
+}
+
+.lw-scan-tabs a.active {
+	background: #fff;
+	border-left-color: #d63638;
+	color: #d63638;
+	font-weight: 600;
+	margin-right: -1px;
+}
+
+.lw-scan-tabs .dashicons {
+	font-size: 18px;
+	width: 18px;
+	height: 18px;
+}
+
+.lw-scan-tab-content {
+	flex: 1;
+	min-width: 0;
+	padding: 20px 30px;
+	min-height: 500px;
+}
+
+.lw-scan-count {
+	margin-left: auto;
+	font-size: 11px;
+	background: #d63638;
+	color: #fff;
+	border-radius: 9px;
+	padding: 0 6px;
+	line-height: 16px;
+	font-weight: 600;
+}
+
+.lw-scan-stack,
+.lw-scan-form {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.lw-scan-card {
+	background: #fff;
+	border: 1px solid var(--lw-scan-line);
+	border-radius: 4px;
+	padding: 18px 20px;
+	box-sizing: border-box;
+}
+
+.lw-scan-card--flush {
+	padding: 0;
+}
+
+.lw-scan-row {
+	display: flex;
+	gap: 12px;
+	align-items: center;
+}
+
+.lw-scan-row--wrap {
+	flex-wrap: wrap;
+}
+
+.lw-scan-row--between {
+	justify-content: space-between;
+}
+
+.lw-scan-col {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.lw-scan-save {
+	align-items: center;
+}
+
+.lw-scan-save .submit,
+.lw-scan-save p.submit {
+	margin: 0;
+	padding: 0;
+}
+
+.lw-scan-section-title {
+	font-size: 14px;
+	font-weight: 600;
+	margin: 0 0 4px;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.lw-scan-nomargin {
+	margin: 0;
+}
+
+/* --- Type --------------------------------------------------------------- */
+
+.lw-scan-muted {
+	color: var(--lw-scan-muted);
+}
+
+.lw-scan-small {
+	font-size: 12px;
+}
+
+.lw-scan-mono,
+.lw-scan-wrap code {
+	font-family: Menlo, Consolas, monaco, monospace;
+	font-size: 12px;
+}
+
+.lw-scan-sub {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* --- Icons -------------------------------------------------------------- */
+
+.lw-scan-ic {
+	width: 18px;
+	height: 18px;
+	flex: 0 0 18px;
+	vertical-align: text-bottom;
+}
+
+.lw-scan-ic-lg {
+	width: 28px;
+	height: 28px;
+	flex: 0 0 28px;
+	color: #2271b1;
+}
+
+.lw-scan-spin {
+	animation: lw-scan-spin 1.2s linear infinite;
+}
+
+@keyframes lw-scan-spin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.lw-scan-spin {
+		animation: none;
+	}
+}
+
+/* --- Hero --------------------------------------------------------------- */
+
+.lw-scan-hero {
+	display: flex;
+	gap: 22px;
+	align-items: stretch;
+	flex-wrap: wrap;
+}
+
+.lw-scan-hero-main {
+	flex: 1 1 320px;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.lw-scan-hero-verdict {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	font-size: 20px;
+	font-weight: 600;
+}
+
+.lw-scan-verdict--alert .lw-scan-ic {
+	color: #d63638;
+}
+
+.lw-scan-verdict--review .lw-scan-ic {
+	color: #dba617;
+}
+
+.lw-scan-verdict--ok .lw-scan-ic {
+	color: #00a32a;
+}
+
+.lw-scan-hero-sub {
+	color: #50575e;
+	font-size: 13px;
+}
+
+/* --- Tiles -------------------------------------------------------------- */
+
+.lw-scan-tiles {
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	gap: 12px;
+	margin-top: 8px;
+}
+
+.lw-scan-tiles--three {
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	flex: 0 1 520px;
+}
+
+.lw-scan-tile {
+	background: var(--lw-scan-bg);
+	border: 1px solid var(--lw-scan-soft);
+	border-radius: 4px;
+	padding: 10px 12px;
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
+.lw-scan-tile-k {
+	font-size: 11px;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	color: var(--lw-scan-muted);
+}
+
+.lw-scan-tile-v {
+	font-size: 20px;
+	font-weight: 600;
+	line-height: 1.2;
+}
+
+.lw-scan-tile-h {
+	font-size: 12px;
+	color: var(--lw-scan-muted);
+}
+
+/* --- Pills -------------------------------------------------------------- */
+
+.lw-scan-pill {
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+	border-radius: 12px;
+	padding: 1px 9px;
+	font-size: 12px;
+	font-weight: 600;
+	line-height: 18px;
+}
+
+.lw-scan-pill--ok {
+	background: #edfaef;
+	color: #00650d;
+	border: 1px solid #b8e6bf;
+}
+
+.lw-scan-pill--review {
+	background: #fcf9e8;
+	color: #8a6116;
+	border: 1px solid #f0d77e;
+}
+
+.lw-scan-pill--alert {
+	background: #fcf0f1;
+	color: #8a2424;
+	border: 1px solid #f1adad;
+}
+
+.lw-scan-pill--info {
+	background: #f0f6fc;
+	color: #0a4b78;
+	border: 1px solid #9ec2e6;
+}
+
+.lw-scan-pill--muted {
+	background: var(--lw-scan-bg);
+	color: #50575e;
+	border: 1px solid var(--lw-scan-soft);
+}
+
+/* --- Segmented control and switch --------------------------------------- */
+
+.lw-scan-seg {
+	display: inline-flex;
+	border: 1px solid var(--lw-scan-line);
+	border-radius: 3px;
+	overflow: hidden;
+	background: #fff;
+	flex-wrap: wrap;
+}
+
+.lw-scan-seg label {
+	position: relative;
+	padding: 5px 12px;
+	font-size: 13px;
+	color: #2c3338;
+	border-right: 1px solid var(--lw-scan-line);
+	display: flex;
+	gap: 6px;
+	align-items: center;
+	cursor: pointer;
+}
+
+.lw-scan-seg label:last-child {
+	border-right: none;
+}
+
+.lw-scan-seg label.is-on,
+.lw-scan-seg label:has(input:checked) {
+	background: #2271b1;
+	color: #fff;
+}
+
+/* The radio stays in the DOM for keyboard and screen-reader use; the
+   highlighted segment is the visible state, so the dot itself is hidden. */
+.lw-scan-seg input {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: 0;
+	opacity: 0;
+	pointer-events: none;
+}
+
+.lw-scan-seg label:has(input:focus-visible) {
+	box-shadow: inset 0 0 0 2px #72aee6;
+}
+
+.lw-scan-toggle {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.lw-scan-wrap input[type="checkbox"].lw-scan-switch {
+	appearance: none;
+	-webkit-appearance: none;
+	width: 36px;
+	height: 20px;
+	border-radius: 10px;
+	background: #8c8f94;
+	border: none;
+	position: relative;
+	margin: 0;
+	cursor: pointer;
+	transition: background 0.15s ease-in-out;
+}
+
+.lw-scan-wrap input[type="checkbox"].lw-scan-switch::before,
+.lw-scan-wrap input[type="checkbox"].lw-scan-switch::after {
+	content: "";
+	position: absolute;
+	top: 2px;
+	left: 2px;
+	width: 16px;
+	height: 16px;
+	border-radius: 8px;
+	background: #fff;
+	margin: 0;
+	transition: left 0.15s ease-in-out;
+}
+
+.lw-scan-wrap input[type="checkbox"].lw-scan-switch:checked {
+	background: #2271b1;
+}
+
+.lw-scan-wrap input[type="checkbox"].lw-scan-switch:checked::before,
+.lw-scan-wrap input[type="checkbox"].lw-scan-switch:checked::after {
+	left: 18px;
+}
+
+.lw-scan-wrap input[type="checkbox"].lw-scan-switch:focus-visible {
+	outline: 2px solid #2271b1;
+	outline-offset: 2px;
+}
+
+.lw-scan-textarea {
+	max-width: 520px;
+	font-family: Menlo, Consolas, monospace;
+	font-size: 12px;
+	line-height: 1.5;
+}
+
+.lw-scan-wide {
+	max-width: 520px;
+	width: 100%;
+}
+
+/* --- Tables ------------------------------------------------------------- */
+
+.lw-scan-table {
+	width: 100%;
+	border-collapse: collapse;
+	background: #fff;
+	border: 1px solid var(--lw-scan-line);
+}
+
+.lw-scan-table th {
+	text-align: left;
+	font-weight: 400;
+	font-size: 13px;
+	padding: 8px 10px;
+	border-bottom: 1px solid var(--lw-scan-line);
+	background: #fff;
+	color: #2c3338;
+}
+
+.lw-scan-table td {
+	padding: 9px 10px;
+	border-bottom: 1px solid #f0f0f1;
+	vertical-align: top;
+	font-size: 13px;
+}
+
+.lw-scan-table .check-column {
+	width: 2.2em;
+	padding: 9px 0 9px 10px;
+	border-bottom: 1px solid #f0f0f1;
+}
+
+.lw-scan-table thead .check-column {
+	border-bottom: 1px solid var(--lw-scan-line);
+	padding-top: 8px;
+	padding-bottom: 8px;
+}
+
+.lw-scan-table tr:last-child td {
+	border-bottom: none;
+}
+
+.lw-scan-type {
+	white-space: nowrap;
+}
+
+.lw-scan-actions {
+	white-space: nowrap;
+}
+
+.lw-scan-finding--acknowledged,
+.lw-scan-finding--ignored {
+	opacity: 0.65;
+}
+
+.lw-scan-detail-row td {
+	padding: 0;
+	background: var(--lw-scan-bg);
+}
+
+.lw-scan-details > summary {
+	cursor: pointer;
+	padding: 8px 12px;
+	font-size: 12px;
+	color: #2271b1;
+}
+
+.lw-scan-detail {
+	background: var(--lw-scan-bg);
+	border-top: 1px solid var(--lw-scan-soft);
+	padding: 12px 14px;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 14px;
+}
+
+.lw-scan-detail--wide {
+	grid-template-columns: 1fr;
+}
+
+.lw-scan-k {
+	font-size: 11px;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	color: var(--lw-scan-muted);
+	margin-bottom: 2px;
+}
+
+.lw-scan-excerpt {
+	background: #1d2327;
+	color: #f0f0f1;
+	border-radius: 4px;
+	padding: 8px 10px;
+	font-family: Menlo, Consolas, monospace;
+	font-size: 11.5px;
+	white-space: pre-wrap;
+	word-break: break-word;
+	line-height: 1.5;
+}
+
+.lw-scan-excerpt mark {
+	background: #d63638;
+	color: #fff;
+	padding: 0 2px;
+	border-radius: 2px;
+}
+
+/* --- Chips and search --------------------------------------------------- */
+
+.lw-scan-chips {
+	display: flex;
+	gap: 6px;
+	flex-wrap: wrap;
+	align-items: center;
+}
+
+.lw-scan-chip {
+	border: 1px solid var(--lw-scan-line);
+	background: #fff;
+	border-radius: 14px;
+	padding: 2px 10px;
+	font-size: 12px;
+	color: #2c3338;
+	display: inline-flex;
+	gap: 6px;
+	align-items: center;
+	text-decoration: none;
+}
+
+.lw-scan-chip:hover,
+.lw-scan-chip:focus {
+	color: #2271b1;
+	border-color: #2271b1;
+}
+
+.lw-scan-chip.is-on,
+.lw-scan-chip.is-on:hover,
+.lw-scan-chip.is-on:focus {
+	background: #1d2327;
+	color: #fff;
+	border-color: #1d2327;
+}
+
+.lw-scan-chip-n {
+	background: rgba(0, 0, 0, 0.08);
+	border-radius: 8px;
+	padding: 0 6px;
+	font-size: 11px;
+}
+
+.lw-scan-chip.is-on .lw-scan-chip-n {
+	background: rgba(255, 255, 255, 0.2);
+}
+
+.lw-scan-chip-sep {
+	margin: 0 4px;
+}
+
+.lw-scan-search {
+	display: flex;
+	gap: 6px;
+	align-items: center;
+}
+
+.lw-scan-search input[type="search"] {
+	width: 260px;
+	max-width: 100%;
+}
+
+.lw-scan-pager .page-numbers {
+	display: inline-block;
+	padding: 3px 8px;
+	border: 1px solid var(--lw-scan-line);
+	border-radius: 3px;
+	margin-left: 4px;
+	text-decoration: none;
+	background: #fff;
+}
+
+.lw-scan-pager .page-numbers.current {
+	background: #1d2327;
+	color: #fff;
+	border-color: #1d2327;
+}
+
+/* --- Run progress ------------------------------------------------------- */
+
+.lw-scan-phases {
+	display: grid;
+	grid-template-columns: repeat(7, minmax(0, 1fr));
+	gap: 6px;
+}
+
+.lw-scan-phase {
+	border: 1px solid var(--lw-scan-soft);
+	border-radius: 4px;
+	padding: 8px 10px;
+	background: var(--lw-scan-bg);
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
+.lw-scan-phase.is-done {
+	border-color: #b8e6bf;
+	background: #edfaef;
+}
+
+.lw-scan-phase.is-active {
+	border-color: #2271b1;
+	background: #f0f6fc;
+}
+
+.lw-scan-phase-n {
+	font-size: 12px;
+	font-weight: 600;
+}
+
+.lw-scan-phase-d {
+	font-size: 11px;
+	color: var(--lw-scan-muted);
+}
+
+.lw-scan-bar {
+	height: 10px;
+	background: var(--lw-scan-soft);
+	border-radius: 5px;
+	overflow: hidden;
+	display: flex;
+}
+
+.lw-scan-bar > span {
+	display: block;
+	height: 100%;
+	background: #2271b1;
+	transition: width 0.3s ease-in-out;
+}
+
+.lw-scan-feed {
+	border: 1px solid var(--lw-scan-soft);
+	border-radius: 4px;
+	background: #fff;
+	max-height: 260px;
+	overflow: auto;
+}
+
+.lw-scan-feed-row {
+	display: grid;
+	grid-template-columns: 70px 120px 1fr 200px;
+	gap: 10px;
+	padding: 7px 10px;
+	border-bottom: 1px solid #f0f0f1;
+	font-size: 12px;
+	align-items: center;
+	word-break: break-word;
+}
+
+.lw-scan-feed-row:last-child {
+	border-bottom: none;
+}
+
+.lw-scan-feed-empty {
+	padding: 10px;
+	font-size: 12px;
+}
+
+.wp-core-ui .button.lw-scan-clear {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	margin-left: 8px;
+	color: #b32d2e;
+	border-color: #b32d2e;
+}
+
+.wp-core-ui .button.lw-scan-clear:hover,
+.wp-core-ui .button.lw-scan-clear:focus {
+	background: #fcf0f1;
+	color: #8a2424;
+	border-color: #8a2424;
+}
+
+.lw-scan-clear .lw-scan-ic {
+	width: 16px;
+	height: 16px;
+	flex: 0 0 16px;
+}
+
+.lw-scan-feedback {
+	margin: 0;
+	font-size: 12px;
+	color: var(--lw-scan-muted);
+	min-height: 1em;
+}
+
+.lw-scan-feedback.is-error {
+	color: #b32d2e;
+}
+
+/* --- Health ------------------------------------------------------------- */
+
+.lw-scan-hl {
+	display: grid;
+	grid-template-columns: 28px 220px 1fr 130px;
+	gap: 12px;
+	align-items: center;
+	padding: 10px 12px;
+	border-bottom: 1px solid #f0f0f1;
+}
+
+.lw-scan-hl:last-child {
+	border-bottom: none;
+}
+
+.lw-scan-hl--head {
+	background: var(--lw-scan-bg);
+	font-weight: 600;
+}
+
+.lw-scan-hl--ok .lw-scan-ic {
+	color: #00a32a;
+}
+
+.lw-scan-hl--review .lw-scan-ic {
+	color: #dba617;
+}
+
+.lw-scan-hl--alert .lw-scan-ic {
+	color: #d63638;
+}
+
+.lw-scan-copy {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	background: #1d2327;
+	border-radius: 4px;
+	padding: 8px 10px;
+}
+
+.lw-scan-copy code {
+	background: none;
+	color: #f0f0f1;
+	padding: 0;
+	word-break: break-all;
+}
+
+.lw-scan-copy-btn {
+	margin-left: auto;
+	background: #3c434a;
+	color: #fff;
+	border: none;
+	border-radius: 3px;
+	padding: 3px 9px;
+	font-size: 11px;
+	font-family: inherit;
+	cursor: pointer;
+	flex: 0 0 auto;
+}
+
+.lw-scan-copy-btn:hover,
+.lw-scan-copy-btn:focus {
+	background: #50575e;
+}
+
+.lw-scan-copy-btn--inline {
+	margin-left: 6px;
+	background: none;
+	color: #2271b1;
+	padding: 0;
+	font-size: 12px;
+	text-decoration: underline;
+}
+
+.lw-scan-copy-btn--inline:hover,
+.lw-scan-copy-btn--inline:focus {
+	background: none;
+	color: #135e96;
+}
+
+/* --- Narrow screens ----------------------------------------------------- */
+
+@media screen and (max-width: 960px) {
+	.lw-scan-settings {
+		flex-direction: column;
+	}
+
+	.lw-scan-tabs {
+		width: 100%;
+		min-width: 100%;
+		display: flex;
+		flex-wrap: wrap;
+		border-right: none;
+		border-bottom: 1px solid #c3c4c7;
+	}
+
+	.lw-scan-tabs li {
+		flex: 1;
+		min-width: 120px;
+	}
+
+	.lw-scan-tabs a {
+		justify-content: center;
+		border-bottom: 3px solid transparent;
+		border-left: none;
+		padding: 12px 15px;
+	}
+
+	.lw-scan-tabs a.active {
+		border-bottom-color: #d63638;
+		margin-right: 0;
+	}
+
+	.lw-scan-tabs .lw-scan-count {
+		margin-left: 0;
+	}
+
+	.lw-scan-tab-content {
+		padding: 20px;
+	}
+
+	.lw-scan-tiles,
+	.lw-scan-tiles--three {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.lw-scan-phases {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+
+	.lw-scan-detail {
+		grid-template-columns: 1fr;
+	}
+
+	.lw-scan-hl {
+		grid-template-columns: 24px 1fr;
+	}
+
+	.lw-scan-hl > span:nth-child(3),
+	.lw-scan-hl > span:nth-child(4) {
+		grid-column: 2;
+	}
+
+	.lw-scan-feed-row {
+		grid-template-columns: 1fr;
+	}
+}

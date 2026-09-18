@@ -1,0 +1,93 @@
+name: Release
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'lw-scan.php'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Extract version from plugin file
+        id: get_version
+        run: |
+          VERSION=$(grep -m1 "Version:" lw-scan.php | sed 's/.*Version:[[:space:]]*//' | tr -d '[:space:]')
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Extracted version: $VERSION"
+
+      - name: Check if release exists
+        id: check_release
+        env:
+          VERSION: ${{ steps.get_version.outputs.version }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if gh release view "v$VERSION" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+            echo "Release v$VERSION already exists — skipping"
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+            echo "Release v$VERSION does not exist — will create (even if the tag was pushed manually)"
+          fi
+
+      - name: Setup PHP
+        if: steps.check_release.outputs.exists == 'false'
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+
+      - name: Install production dependencies
+        if: steps.check_release.outputs.exists == 'false'
+        run: composer install --no-dev --optimize-autoloader --no-interaction
+
+      - name: Regenerate the shipped checksum manifest
+        if: steps.check_release.outputs.exists == 'false'
+        run: composer checksums
+
+      - name: Create release ZIP
+        if: steps.check_release.outputs.exists == 'false'
+        env:
+          VERSION: ${{ steps.get_version.outputs.version }}
+        run: |
+          mkdir -p dist/lw-scan
+          # Every path-shaped exclude is anchored with a leading slash so it
+          # matches the repository root only: an unanchored 'tests' or 'bin'
+          # also strips vendor/*/tests and vendor/bin from the shipped ZIP.
+          rsync -av --exclude='/.git' --exclude='/.github' --exclude='/dist' --exclude='/builds' \
+            --exclude='/composer.json' --exclude='/composer.lock' --exclude='/phpcs.xml.dist' \
+            --exclude='/node_modules' --exclude='/.gitignore' --exclude='/.gitattributes' \
+            --exclude='/tests' --exclude='/docs' --exclude='/.claude' --exclude='/.superpowers' \
+            --exclude='/phpstan.neon.dist' --exclude='/phpstan-baseline.neon' \
+            --exclude='/phpstan-bootstrap.php' --exclude='/phpunit.xml.dist' --exclude='/stubs' \
+            --exclude='/bin' --exclude='*.log' ./ dist/lw-scan/
+          cd dist && zip -r "lw-scan-${VERSION}.zip" lw-scan/
+
+      - name: Create tag and release
+        if: steps.check_release.outputs.exists == 'false'
+        uses: softprops/action-gh-release@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ steps.get_version.outputs.version }}
+        with:
+          tag_name: v${{ steps.get_version.outputs.version }}
+          name: v${{ steps.get_version.outputs.version }}
+          body: |
+            ## LW Scan v${{ steps.get_version.outputs.version }}
+
+            See [readme.txt](https://github.com/lwplugins/lw-scan/blob/main/readme.txt) for changelog.
+          files: |
+            dist/lw-scan-${{ steps.get_version.outputs.version }}.zip
+          draft: false
+          prerelease: false
+          generate_release_notes: true

@@ -1,0 +1,5 @@
+LW Scan is licensed under the GPL v2 or later.
+
+A copy of the license is included in the root of the plugin's directory. The
+file is named LICENSE. Visit https://www.gnu.org/licenses/gpl-2.0.html for the
+full license text.

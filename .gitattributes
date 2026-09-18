@@ -1,0 +1,19 @@
+# Normalize line endings on checkout: the shipped self-manifest (checksums.json)
+# hashes file bytes, so a CRLF checkout would make every PHP/JS/CSS file look
+# tampered with to the scanner's own known-good check.
+* text=auto eol=lf
+
+# Keep development files out of the Composer/Packagist dist and GitHub "Download ZIP".
+/tests	export-ignore
+/docs	export-ignore
+/.github	export-ignore
+/bin	export-ignore
+/.claude	export-ignore
+/.gitattributes	export-ignore
+/.gitignore	export-ignore
+/phpcs.xml.dist	export-ignore
+/phpstan.neon.dist	export-ignore
+/phpstan-baseline.neon	export-ignore
+/phpstan-bootstrap.php	export-ignore
+/phpunit.xml.dist	export-ignore
+/stubs	export-ignore

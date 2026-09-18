@@ -1,0 +1,260 @@
+{
+    "lw/corpus/clean/clean-redirect.php": [],
+    "lw/corpus/clean/clean-template-eval.php": [],
+    "lw/corpus/clean/clean-upload-guarded.php": [],
+    "lw/corpus/clean/clean-wpmail.php": [],
+    "lw/corpus/positives/lw-kitchen-sink-webshell.php": [
+        [
+            "lw:0002",
+            8,
+            "infected"
+        ],
+        [
+            "lw:0005",
+            7,
+            "infected"
+        ],
+        [
+            "lw:0007",
+            4,
+            "infected"
+        ],
+        [
+            "lw:0009",
+            5,
+            "infected"
+        ]
+    ],
+    "lw/corpus/positives/lw0001-eval-request.php": [
+        [
+            "heur:source_sink",
+            4,
+            "heuristic:source_sink"
+        ],
+        [
+            "lw:0001",
+            3,
+            "suspicious"
+        ]
+    ],
+    "lw/corpus/positives/lw0002-eval-base64.php": [
+        [
+            "lw:0002",
+            5,
+            "infected"
+        ]
+    ],
+    "lw/corpus/positives/lw0003-iframe-injector.php": [
+        [
+            "lw:0003",
+            4,
+            "infected"
+        ]
+    ],
+    "lw/corpus/positives/lw0004-preg-replace-e.php": [
+        [
+            "lw:0004",
+            4,
+            "infected"
+        ]
+    ],
+    "lw/corpus/positives/lw0005-shell-exec-request.php": [
+        [
+            "lw:0005",
+            4,
+            "infected"
+        ]
+    ],
+    "lw/corpus/positives/lw0006-create-function.php": [
+        [
+            "heur:source_sink",
+            4,
+            "heuristic:source_sink"
+        ],
+        [
+            "lw:0006",
+            4,
+            "suspicious"
+        ]
+    ],
+    "lw/corpus/positives/lw0007-auth-pass-webshell.php": [
+        [
+            "lw:0007",
+            4,
+            "infected"
+        ]
+    ],
+    "lw/corpus/positives/lw0008-gzinflate-base64.php": [
+        [
+            "lw:0008",
+            3,
+            "infected"
+        ]
+    ],
+    "lw/corpus/positives/lw0009-webshell-banner.php": [
+        [
+            "lw:0009",
+            4,
+            "infected"
+        ]
+    ],
+    "lw/corpus/positives/lw0010-file-uploader.php": [
+        [
+            "heur:source_sink",
+            4,
+            "heuristic:source_sink"
+        ],
+        [
+            "lw:0010",
+            4,
+            "suspicious"
+        ]
+    ],
+    "lw/corpus/positives/lw0011-open-redirect.php": [
+        [
+            "lw:0011",
+            4,
+            "suspicious"
+        ]
+    ],
+    "lw/corpus/positives/lw0012-hex-encoded.php": [
+        [
+            "lw:0012",
+            4,
+            "infected"
+        ]
+    ],
+    "lw/corpus/positives/lw0013-spam-mailer.php": [
+        [
+            "lw:0013",
+            4,
+            "suspicious"
+        ]
+    ],
+    "lw/corpus/positives/lw0014-htaccess-prepend.htaccess": [
+        [
+            "lw:0014",
+            2,
+            "infected"
+        ]
+    ],
+    "lw/corpus/positives/lw0015-defacement.php": [
+        [
+            "lw:0015",
+            3,
+            "info"
+        ]
+    ],
+    "lw/heuristic/clean-plugin.php": [],
+    "lw/heuristic/decoder.php": [
+        [
+            "lw:0008",
+            3,
+            "infected"
+        ]
+    ],
+    "lw/heuristic/disguise-uploads.php": [],
+    "lw/heuristic/entropy.php": [
+        [
+            "heur:entropy",
+            3,
+            "heuristic:entropy"
+        ]
+    ],
+    "lw/heuristic/source-sink.php": [
+        [
+            "heur:source_sink",
+            13,
+            "heuristic:source_sink"
+        ],
+        [
+            "heur:source_sink",
+            17,
+            "heuristic:source_sink"
+        ]
+    ],
+    "mini/corpus/clean/clean-redirect.php": [],
+    "mini/corpus/clean/clean-template-eval.php": [],
+    "mini/corpus/clean/clean-upload-guarded.php": [],
+    "mini/corpus/clean/clean-wpmail.php": [],
+    "mini/corpus/positives/lw-kitchen-sink-webshell.php": [
+        [
+            "test:re:two-common",
+            8,
+            "infected"
+        ]
+    ],
+    "mini/corpus/positives/lw0001-eval-request.php": [
+        [
+            "heur:source_sink",
+            4,
+            "heuristic:source_sink"
+        ]
+    ],
+    "mini/corpus/positives/lw0002-eval-base64.php": [
+        [
+            "test:re:two-common",
+            5,
+            "infected"
+        ]
+    ],
+    "mini/corpus/positives/lw0003-iframe-injector.php": [],
+    "mini/corpus/positives/lw0004-preg-replace-e.php": [
+        [
+            "heur:source_sink",
+            4,
+            "heuristic:source_sink"
+        ]
+    ],
+    "mini/corpus/positives/lw0005-shell-exec-request.php": [
+        [
+            "heur:source_sink",
+            4,
+            "heuristic:source_sink"
+        ]
+    ],
+    "mini/corpus/positives/lw0006-create-function.php": [
+        [
+            "heur:source_sink",
+            4,
+            "heuristic:source_sink"
+        ]
+    ],
+    "mini/corpus/positives/lw0007-auth-pass-webshell.php": [],
+    "mini/corpus/positives/lw0008-gzinflate-base64.php": [],
+    "mini/corpus/positives/lw0009-webshell-banner.php": [],
+    "mini/corpus/positives/lw0010-file-uploader.php": [
+        [
+            "heur:source_sink",
+            4,
+            "heuristic:source_sink"
+        ]
+    ],
+    "mini/corpus/positives/lw0011-open-redirect.php": [],
+    "mini/corpus/positives/lw0012-hex-encoded.php": [],
+    "mini/corpus/positives/lw0013-spam-mailer.php": [],
+    "mini/corpus/positives/lw0014-htaccess-prepend.htaccess": [],
+    "mini/corpus/positives/lw0015-defacement.php": [],
+    "mini/heuristic/clean-plugin.php": [],
+    "mini/heuristic/decoder.php": [],
+    "mini/heuristic/disguise-uploads.php": [],
+    "mini/heuristic/entropy.php": [
+        [
+            "heur:entropy",
+            3,
+            "heuristic:entropy"
+        ]
+    ],
+    "mini/heuristic/source-sink.php": [
+        [
+            "heur:source_sink",
+            13,
+            "heuristic:source_sink"
+        ],
+        [
+            "heur:source_sink",
+            17,
+            "heuristic:source_sink"
+        ]
+    ]
+}

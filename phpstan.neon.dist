@@ -1,0 +1,33 @@
+includes:
+	- vendor/szepeviktor/phpstan-wordpress/extension.neon
+
+parameters:
+	level: 5
+
+	# The plugin supports PHP 8.0 upwards, so analyse against the lowest
+	# supported version — anything newer would let 8.1+ syntax slip through.
+	phpVersion:
+		min: 80000
+		max: 80599
+
+	paths:
+		- lw-scan.php
+		- uninstall.php
+		- includes/
+
+	excludePaths:
+		- tests/
+		- vendor/
+
+	# Declare the plugin's runtime-defined constants for static analysis.
+	bootstrapFiles:
+		- phpstan-bootstrap.php
+
+	# Symbols the plugin references but does not ship: WP-CLI for the CLI
+	# commands and HelloPack Client's status API for the optional status
+	# check. WordPress core stubs come from the szepeviktor/phpstan-wordpress
+	# extension above.
+	scanFiles:
+		- stubs/hellopack-client.php
+		- vendor/php-stubs/wp-cli-stubs/wp-cli-stubs.php
+		- vendor/php-stubs/wp-cli-stubs/wp-cli-tools-stubs.php
