@@ -842,6 +842,76 @@
 	color: #135e96;
 }
 
+/* --- Status ------------------------------------------------------------- */
+
+.lw-scan-status-head {
+	align-items: flex-start;
+	flex-wrap: wrap;
+}
+
+.lw-scan-status-head .lw-scan-col {
+	flex: 1 1 320px;
+	gap: 4px;
+}
+
+.lw-scan-status-head .lw-scan-section-title .lw-scan-ic {
+	color: #2271b1;
+}
+
+.lw-scan-status-head .lw-scan-toggle {
+	flex: 0 0 auto;
+	padding-top: 2px;
+}
+
+.lw-scan-help {
+	margin: 4px 0 0;
+	font-size: 12px;
+	font-weight: 400;
+	line-height: 1.5;
+	color: var(--lw-scan-muted);
+}
+
+.lw-scan-url-field {
+	display: flex;
+	gap: 8px;
+	align-items: center;
+	max-width: 640px;
+}
+
+.lw-scan-wrap .lw-scan-url-field input[type="text"] {
+	flex: 1 1 auto;
+	min-width: 0;
+	font-family: Menlo, Consolas, monaco, monospace;
+	font-size: 12px;
+	background: var(--lw-scan-bg);
+}
+
+.lw-scan-url-meta {
+	margin: 8px 0 0;
+	display: flex;
+	gap: 6px;
+	align-items: baseline;
+	flex-wrap: wrap;
+}
+
+.wp-core-ui .lw-scan-url-meta .button-link {
+	font-size: 12px;
+}
+
+.lw-scan-status-off {
+	margin: 0 0 8px;
+	display: flex;
+	gap: 8px;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+/* Switched off: the URL stays readable but reads as inactive. */
+.lw-scan-card.is-off .lw-scan-url-field,
+.lw-scan-card.is-off .lw-scan-url-meta {
+	opacity: 0.55;
+}
+
 /* --- Narrow screens ----------------------------------------------------- */
 
 @media screen and (max-width: 960px) {

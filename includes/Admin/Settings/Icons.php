@@ -40,6 +40,7 @@ final class Icons {
 		'spinner'       => '<path d="M12 3a9 9 0 1 0 9 9"/>',
 		'search'        => '<circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/>',
 		'trash'         => '<path d="M4 7h16"/><path d="M9 7V4h6v3"/><path d="M6 7l1 13a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1l1-13"/><path d="M10 11v6M14 11v6"/>',
+		'pulse'         => '<path d="M3 12h4l3-7 4 14 3-7h4"/>',
 	];
 
 	/**

@@ -1,6 +1,6 @@
 /**
  * LW Scan — admin behaviour: run control + polling, finding state changes,
- * bundle/index maintenance, copy buttons.
+ * bundle/index maintenance, copy buttons, the status-URL rotate confirm.
  *
  * Every request goes to admin-ajax.php with the shared `lw_scan_admin`
  * nonce. Endpoints that do not exist yet answer with a bare "0", which
@@ -513,7 +513,7 @@
 		}
 
 		document.addEventListener('click', function (event) {
-			var button = event.target.closest('.lw-scan-copy-btn');
+			var button = event.target.closest('.lw-scan-copy-btn, .lw-scan-copy-url');
 
 			if (button) {
 				copy(button);
@@ -575,6 +575,32 @@
 		document.body.removeChild(field);
 	}
 
+	/* --- Status tab ------------------------------------------------------ */
+
+	function initStatus() {
+		var rotate = document.getElementById('lw-scan-status-rotate');
+		var url = document.getElementById('lw-scan-status-url');
+
+		/*
+		 * A plain form POST to admin-post.php; without script it simply
+		 * submits, with it the owner confirms first — the old URL dies the
+		 * moment the new one is stored.
+		 */
+		if (rotate) {
+			rotate.addEventListener('submit', function (event) {
+				if (!window.confirm(i18n.confirmRotate || '')) {
+					event.preventDefault();
+				}
+			});
+		}
+
+		if (url) {
+			url.addEventListener('focus', function () {
+				url.select();
+			});
+		}
+	}
+
 	function init() {
 		if (!cfg.ajaxUrl) {
 			return;
@@ -584,6 +610,7 @@
 		initRun();
 		initFindings();
 		initHealth();
+		initStatus();
 	}
 
 	if (document.readyState === 'loading') {

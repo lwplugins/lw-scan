@@ -14,15 +14,18 @@ use LightweightPlugins\Scan\Admin\Settings\TabHealth;
 use LightweightPlugins\Scan\Admin\Settings\TabInterface;
 use LightweightPlugins\Scan\Admin\Settings\TabScan;
 use LightweightPlugins\Scan\Admin\Settings\TabSettings;
+use LightweightPlugins\Scan\Admin\Settings\TabStatus;
 use LightweightPlugins\Scan\Options;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Spec §11.1: one submenu page under the shared "LW Plugins" menu, four
+ * Spec §11.1: one submenu page under the shared "LW Plugins" menu, five
  * tabs routed by `?tab=`, and the assets loaded on this screen only. The
  * Save button — and the `options.php` form around it — exists on the
- * `settings` tab alone; the other three are read/act views driven by AJAX.
+ * `settings` tab alone; Scan, Findings and Health are read/act views
+ * driven by AJAX, and Status posts its own two small forms to
+ * `admin-post.php` (`Admin\Post\StatusEndpointHandler`).
  */
 final class SettingsPage {
 
@@ -46,6 +49,7 @@ final class SettingsPage {
 			new TabFindings(),
 			new TabSettings(),
 			new TabHealth(),
+			new TabStatus(),
 		];
 
 		add_action( 'admin_menu', [ $this, 'add_menu_page' ] );
@@ -135,18 +139,19 @@ final class SettingsPage {
 			'pollMs'      => 1000,
 			'assistAfter' => 3,
 			'i18n'        => [
-				'starting'     => __( 'Starting…', 'lw-scan' ),
-				'stopping'     => __( 'Stopping…', 'lw-scan' ),
-				'working'      => __( 'Working…', 'lw-scan' ),
-				'copied'       => __( 'Copied', 'lw-scan' ),
-				'copy'         => __( 'Copy', 'lw-scan' ),
-				'failed'       => __( 'That did not work. Please reload the page and try again.', 'lw-scan' ),
-				'noSelected'   => __( 'Select at least one finding first.', 'lw-scan' ),
+				'starting'      => __( 'Starting…', 'lw-scan' ),
+				'stopping'      => __( 'Stopping…', 'lw-scan' ),
+				'working'       => __( 'Working…', 'lw-scan' ),
+				'copied'        => __( 'Copied', 'lw-scan' ),
+				'copy'          => __( 'Copy', 'lw-scan' ),
+				'failed'        => __( 'That did not work. Please reload the page and try again.', 'lw-scan' ),
+				'noSelected'    => __( 'Select at least one finding first.', 'lw-scan' ),
 				/* translators: %s: estimated remaining time, e.g. "1 m 20 s". */
-				'remaining'    => __( '~%s remaining', 'lw-scan' ),
-				'phaseDone'    => __( 'done', 'lw-scan' ),
-				'confirmAll'   => __( 'Apply this action to every selected finding?', 'lw-scan' ),
-				'confirmClear' => __( 'Delete every finding from this list? The next scan re-checks every file, so it takes about as long as the first one, and reports again anything that is still on the site.', 'lw-scan' ),
+				'remaining'     => __( '~%s remaining', 'lw-scan' ),
+				'phaseDone'     => __( 'done', 'lw-scan' ),
+				'confirmAll'    => __( 'Apply this action to every selected finding?', 'lw-scan' ),
+				'confirmClear'  => __( 'Delete every finding from this list? The next scan re-checks every file, so it takes about as long as the first one, and reports again anything that is still on the site.', 'lw-scan' ),
+				'confirmRotate' => __( 'The current URL stops working immediately. Continue?', 'lw-scan' ),
 			],
 		];
 	}
@@ -169,7 +174,7 @@ final class SettingsPage {
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only navigation parameter; it selects a panel and changes nothing.
 		$tab = isset( $_GET['tab'] ) ? sanitize_key( wp_unslash( $_GET['tab'] ) ) : '';
 
-		return in_array( $tab, [ 'scan', 'findings', 'settings', 'health' ], true ) ? $tab : 'scan';
+		return in_array( $tab, [ 'scan', 'findings', 'settings', 'health', 'status' ], true ) ? $tab : 'scan';
 	}
 
 	/**
