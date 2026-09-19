@@ -14,4 +14,5 @@
 - Email notification and admin notice for new alerts, plus a failure-streak warning for scheduled scans.
 - WP-CLI commands: run, status, findings, ack, ignore, reopen, bundle, index, stop.
 - Four `lw-scan/*` abilities for the WordPress Abilities API and an `lw_scan` HelloPack status check.
+- A Status tab and a secret-keyed, read-only status endpoint (`/wp-json/lw-scan/v1/status/<key>`) that publishes the `lw_scan` status check for external monitoring, on by default.
 - Uninstall removes the options, the scan tables and the `wp-content/lw-scan` directory.

@@ -68,6 +68,10 @@ Scans run in the background, in ticks that stay inside the request's time budget
 
 Yes. `wp lw-scan run` runs a whole scan in one foreground process and exits 0 when it found nothing alerting, 1 when it found a new alert and 2 on an error — which is what a cron job or a CI pipeline wants. `wp lw-scan status`, `findings`, `ack`, `ignore`, `reopen`, `bundle`, `index` and `stop` cover the rest.
 
+= Can an external monitoring service check the scan status? =
+
+Yes. The Status tab gives you a secret URL, `/wp-json/lw-scan/v1/status/<key>`, that answers with the scanner's status as JSON: `ok`, `warn`, `crit` (new alerts) or `unknown`, with the number of new alerts and the last scan's time and result — never a file path. It only reads; it changes nothing. It is on by default. Add `?http_status=1` to get HTTP 503 while there are new alerts, or `?fresh=1` to skip the stored result. The key in the URL is its only protection: switch the endpoint off on the Status tab, or press "Generate new URL" to replace the key — the old URL stops working at once.
+
 = Does it work on multisite? =
 
 The plugin activates and scans files on multisite, but the database scan covers the site the request runs on — sub-sites are not iterated.
@@ -90,4 +94,5 @@ Everything goes: the settings, the run state, the three scan tables and the `wp-
 * New: Email notification and admin notice for new alerts, plus a failure-streak warning for scheduled scans.
 * New: WP-CLI commands: run, status, findings, ack, ignore, reopen, bundle, index, stop.
 * New: Four `lw-scan/*` abilities for the WordPress Abilities API and an `lw_scan` HelloPack status check.
+* New: A Status tab and a secret-keyed, read-only status endpoint (`/wp-json/lw-scan/v1/status/<key>`) that publishes the `lw_scan` status check for external monitoring, on by default.
 * New: Uninstall removes the options, the scan tables and the `wp-content/lw-scan` directory.

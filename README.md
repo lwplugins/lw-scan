@@ -72,6 +72,45 @@ Four abilities are registered in the `lw-scan` category when the WordPress Abili
 
 On a site running HelloPack Client, LW Scan adds an `lw_scan` status check: new alerts, a failed last scan or scans that stopped running all surface there. Review-severity findings do not — they are mostly benign matches best triaged in the admin UI, not surfaced as a site-health warning. The check is read-only, makes no HTTP request, and its details carry no filesystem path.
 
+## Status endpoint
+
+The same `lw_scan` check, published for an external monitoring service — on sites without HelloPack Client too, in the same wire format. It only reads; it changes nothing. It is **on by default**, and the URL is on **LW Plugins → Scan → Status**:
+
+```
+GET /wp-json/lw-scan/v1/status/<key>
+```
+
+The 32-character key in the path is the only credential, so treat the URL as a secret. A wrong key gets exactly the `404 rest_no_route` answer WordPress gives for a URL that does not exist; while the endpoint is switched off, the route does not exist at all.
+
+| query | effect |
+|---|---|
+| `?http_status=1` | answers `503` instead of `200` while `overall` is `crit` — for monitors that only read the status code |
+| `?fresh=1` | runs the check now instead of reusing the stored result |
+
+A computed result is reused for 5 minutes by default (1 to 60 minutes, set on the Status tab); `cached` says whether this answer came from it. Every answer carries `Cache-Control: no-store, private` and `X-Robots-Tag: noindex, nofollow`.
+
+```json
+{
+  "overall": "crit",
+  "checked_at": "2026-09-19T08:12:03+00:00",
+  "cached": false,
+  "site": { "url": "https://example.com", "wp": "7.1", "php": "8.3.30", "lw_scan": "1.0.0" },
+  "checks": {
+    "lw_scan": {
+      "status": "crit",
+      "summary": "2 new alerts.",
+      "details": { "alerts_new": 2, "last_run_at": 1789370000, "last_status": "done", "bundle_version": 20260916045 },
+      "checked_at": "2026-09-19T08:12:03+00:00",
+      "duration_ms": 3
+    }
+  }
+}
+```
+
+`status` (and `overall`) is `ok`, `warn`, `crit` or `unknown`, by the same rules as the HelloPack check: `crit` only for new alerts, `warn` for a failed last scan or scans that stopped running. `details` never carry a filesystem path.
+
+To turn it off, switch **Status endpoint** off on the Status tab and save. **Generate new URL** replaces the key; the old URL stops working immediately.
+
 ## Privacy
 
 Only package slugs (and versions for checksums). No file contents, hashes, paths or site URL.
