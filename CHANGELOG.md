@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.2.0] - 2026-09-19
+
+### Added
+- `wp lw-scan endpoint` WP-CLI command — `url`, `enable`, `disable`, `rotate`, `ttl` and `status` for the status endpoint from the terminal.
+
 ## [1.1.0] - 2026-09-19
 
 ### Added

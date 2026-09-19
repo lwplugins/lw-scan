@@ -4,7 +4,7 @@ Tags: security, malware, scanner, antivirus, vulnerability
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 1.1.0
+Stable tag: 1.2.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -67,7 +67,7 @@ Scans run in the background, in ticks that stay inside the request's time budget
 
 = Can I run it from the command line? =
 
-Yes. `wp lw-scan run` runs a whole scan in one foreground process and exits 0 when it found nothing alerting, 1 when it found a new alert and 2 on an error — which is what a cron job or a CI pipeline wants. `wp lw-scan status`, `findings`, `ack`, `ignore`, `reopen`, `bundle`, `index` and `stop` cover the rest.
+Yes. `wp lw-scan run` runs a whole scan in one foreground process and exits 0 when it found nothing alerting, 1 when it found a new alert and 2 on an error — which is what a cron job or a CI pipeline wants. `wp lw-scan status`, `findings`, `ack`, `ignore`, `reopen`, `bundle`, `index` and `stop` cover the rest. `wp lw-scan endpoint` manages the status endpoint below (its URL, switch, key and reuse period) from the terminal.
 
 = Can an external monitoring service check the scan status? =
 
@@ -88,6 +88,9 @@ The plugin activates and scans files on multisite, but the database scan covers 
 Everything goes: the settings, the run state, the three scan tables and the `wp-content/lw-scan` directory with the signature bundle and its caches. The cleanup covers the site it runs on, so a network install may leave per-site options behind. A re-install starts from a clean scan.
 
 == Changelog ==
+
+= 1.2.0 =
+* New: `wp lw-scan endpoint` WP-CLI command — `url`, `enable`, `disable`, `rotate`, `ttl` and `status` for the status endpoint from the terminal.
 
 = 1.1.0 =
 * New: A Status tab and a secret-keyed, read-only status endpoint (`/wp-json/lw-scan/v1/status/<key>`) that publishes the `lw_scan` status check for external monitoring, on by default.

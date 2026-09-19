@@ -47,6 +47,7 @@ wp lw-scan reopen <id>...
 wp lw-scan bundle <status|update|force-full> [--force] [--format=<table|json|csv>]
 wp lw-scan index <rebuild|stats> [--force] [--format=<table|json|csv>]
 wp lw-scan stop
+wp lw-scan endpoint <url|enable|disable|rotate|ttl|status> [<minutes>] [--porcelain] [--format=<table|json|yaml>]
 ```
 
 `run` carries the whole pipeline in one foreground process instead of the admin's cron relay, and its exit code is the contract a cron job or a CI pipeline reads:
@@ -65,6 +66,22 @@ wp lw-scan run --scope=path wp-content/uploads    # one directory
 wp lw-scan run --scope=db --format=json           # database only, machine-readable
 wp lw-scan findings --severity=alert --state=new  # what still needs a decision
 ```
+
+`endpoint` manages the status endpoint below (see "Status endpoint") the same way the Status tab does — same `Status\EndpointSettings`, so a CLI call and an admin-screen click leave identical state:
+
+```bash
+wp lw-scan endpoint url                # the secret URL, or why there is none
+wp lw-scan endpoint url --porcelain    # just the URL, for scripting; exits 1 with no output if there is none
+wp lw-scan endpoint enable             # switch it on; creates a key if missing; idempotent
+wp lw-scan endpoint disable            # switch it off; idempotent
+wp lw-scan endpoint rotate             # new key; the old URL stops working at once
+wp lw-scan endpoint ttl 15             # reuse period in minutes: 1, 5, 15, 30 or 60
+wp lw-scan endpoint ttl                # print the current reuse period
+wp lw-scan endpoint status             # one-line summary: on/off, reuse period, key age
+wp lw-scan endpoint status --format=json
+```
+
+`url` and `enable` provision a key when the endpoint is on and has none yet — an authenticated CLI call is the same trust level as the admin screen — but never while the endpoint is off, and a disabled endpoint's `url` creates nothing.
 
 ## Abilities and HelloPack
 

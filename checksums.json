@@ -1,5 +1,5 @@
 {
-    "version": "1.1.0",
+    "version": "1.2.0",
     "files": {
         "assets/css/admin.css": "528929e118c3a8ca6f9021a4f8eb0f85",
         "assets/js/admin.js": "8965596c19795a72ffa5b775a42a863c",
@@ -50,9 +50,11 @@
         "includes/Bundle/Signatures.php": "05a28040ed10d6774a05e6da49749193",
         "includes/Bundle/Store.php": "0f62d41bc3f768967434723e37b39df7",
         "includes/CLI/BundleCommand.php": "87fc6c94f7fbee93df9fd9167dabad86",
-        "includes/CLI/Commands.php": "48e3f403bfda80e1295a996b04312b05",
+        "includes/CLI/Commands.php": "98ae85627585da58c6fbcdf185413542",
+        "includes/CLI/EndpointCli.php": "76ff0a960bbce5dee825b1ad601817c8",
+        "includes/CLI/EndpointCommand.php": "0b5c2b9b7f23036ed8a734b6ec9490fc",
         "includes/CLI/FindingsCommand.php": "6e0c728165802a1f1364841fa4f6cfe7",
-        "includes/CLI/Formatter.php": "f8b7493d6075e568f8bbe6fc94f95b3b",
+        "includes/CLI/Formatter.php": "9a50b6e03f3c9df71cd099cc0b40887d",
         "includes/CLI/IndexCommand.php": "0a65d9fc57bc9d3a2b0ddcd035dba7c1",
         "includes/CLI/RunCommand.php": "ad3676d371f51da483e613578bbbc75a",
         "includes/CLI/RunGuard.php": "ade02a503e09f402c145077d844d77c5",
@@ -176,7 +178,7 @@
         "includes/Vuln/Matcher.php": "52416eff4e86205c216f8f78237010d1",
         "includes/Vuln/VersionRange.php": "f94cc5debc0b6c862c4865b8cec6a537",
         "includes/functions.php": "137fc6cf37d788d22f100c6f2743c977",
-        "lw-scan.php": "6a62770aeba3b8d224a78179d0cec67d",
+        "lw-scan.php": "dce842d8fb4375319ff9246c3a78be81",
         "uninstall.php": "feb3613e6a957b8b376195b888f5bddd"
     }
 }
