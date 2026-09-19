@@ -4,7 +4,7 @@ Tags: security, malware, scanner, antivirus, vulnerability
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 1.0.0
+Stable tag: 1.1.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -89,6 +89,9 @@ Everything goes: the settings, the run state, the three scan tables and the `wp-
 
 == Changelog ==
 
+= 1.1.0 =
+* New: A Status tab and a secret-keyed, read-only status endpoint (`/wp-json/lw-scan/v1/status/<key>`) that publishes the `lw_scan` status check for external monitoring, on by default.
+
 = 1.0.0 =
 * New: File scanning with a compact signature pack — hash, literal and regex layers, with the content type detected from the file itself.
 * New: Signatures arrive as a compact pack built by the signature service; scanning keeps them in about 6 MB of memory (4 MB for the pack, 2 MB more once a finding has to be named).
@@ -101,5 +104,4 @@ Everything goes: the settings, the run state, the three scan tables and the `wp-
 * New: Email notification and admin notice for new alerts, plus a failure-streak warning for scheduled scans.
 * New: WP-CLI commands: run, status, findings, ack, ignore, reopen, bundle, index, stop.
 * New: Four `lw-scan/*` abilities for the WordPress Abilities API and an `lw_scan` HelloPack status check.
-* New: A Status tab and a secret-keyed, read-only status endpoint (`/wp-json/lw-scan/v1/status/<key>`) that publishes the `lw_scan` status check for external monitoring, on by default.
 * New: Uninstall removes the options, the scan tables and the `wp-content/lw-scan` directory.

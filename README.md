@@ -94,7 +94,7 @@ A computed result is reused for 5 minutes by default (1 to 60 minutes, set on th
   "overall": "crit",
   "checked_at": "2026-09-19T08:12:03+00:00",
   "cached": false,
-  "site": { "url": "https://example.com", "wp": "7.1", "php": "8.3.30", "lw_scan": "1.0.0" },
+  "site": { "url": "https://example.com", "wp": "7.1", "php": "8.3.30", "lw_scan": "1.1.0" },
   "checks": {
     "lw_scan": {
       "status": "crit",
