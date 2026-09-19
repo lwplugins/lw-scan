@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.2.1] - 2026-09-19
+
+### Changed
+- The distributed ZIP no longer carries Composer's generated autoloader or the install-time `composer/installers` package — the plugin now ships its own small PSR-4 autoloader. Composer installs are unaffected.
+
 ## [1.2.0] - 2026-09-19
 
 ### Added
