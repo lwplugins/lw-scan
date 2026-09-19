@@ -41,6 +41,7 @@
         "includes/Admin/SettingsPage.php": "9625cbc47999ef9cc272cfde1d6fae7c",
         "includes/Admin/SettingsRenderer.php": "b4e55c8750d355db2456c5f1caa5fb07",
         "includes/Admin/SettingsSanitizer.php": "5b82a09d3e310ea44c7a45b0ede63ff4",
+        "includes/Autoloader.php": "421eaeebfe744a16369fe44fa3fe6f0e",
         "includes/Bundle/NewSignatures.php": "4c97bda4af2d411844e183f39e00626c",
         "includes/Bundle/NewSignaturesBuilder.php": "448b7c90ad855a5a6b857b03918925fe",
         "includes/Bundle/Pack.php": "1aad5c20149a30a77c041354bfc4cbee",
@@ -178,7 +179,7 @@
         "includes/Vuln/Matcher.php": "52416eff4e86205c216f8f78237010d1",
         "includes/Vuln/VersionRange.php": "f94cc5debc0b6c862c4865b8cec6a537",
         "includes/functions.php": "137fc6cf37d788d22f100c6f2743c977",
-        "lw-scan.php": "dce842d8fb4375319ff9246c3a78be81",
+        "lw-scan.php": "0f4422f8812dd16f63f1c68cf74620f3",
         "uninstall.php": "feb3613e6a957b8b376195b888f5bddd"
     }
 }

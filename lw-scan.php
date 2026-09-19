@@ -30,18 +30,17 @@ define( 'LW_SCAN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'LW_SCAN_URL', plugin_dir_url( __FILE__ ) );
 
 if ( file_exists( LW_SCAN_PATH . 'vendor/autoload.php' ) ) {
+	// A Composer-installed copy: Composer's autoloader also loads
+	// includes/functions.php through its `autoload.files` entry.
 	require_once LW_SCAN_PATH . 'vendor/autoload.php';
-} elseif ( ! class_exists( Plugin::class ) ) {
-	add_action(
-		'admin_notices',
-		static function (): void {
-			printf(
-				'<div class="notice notice-error"><p><strong>LW Scan:</strong> %s</p></div>',
-				esc_html__( 'Autoloader not found. Please run "composer install" in the plugin directory, or re-install the plugin from a release ZIP.', 'lw-scan' )
-			);
-		}
-	);
-	return;
+} else {
+	// The release ZIP: no vendor/, so no Composer autoloader and no
+	// install-time composer/installers package either. Use the plugin's
+	// own tiny PSR-4 autoloader instead, and load functions.php ourselves
+	// since there is no files-autoloader here to do it.
+	require_once LW_SCAN_PATH . 'includes/Autoloader.php';
+	Autoloader::register();
+	require_once LW_SCAN_PATH . 'includes/functions.php';
 }
 
 register_activation_hook( __FILE__, [ Activator::class, 'activate' ] );

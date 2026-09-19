@@ -64,13 +64,19 @@ jobs:
           # Every path-shaped exclude is anchored with a leading slash so it
           # matches the repository root only: an unanchored 'tests' or 'bin'
           # also strips vendor/*/tests and vendor/bin from the shipped ZIP.
+          # /vendor is excluded too: the plugin ships its own PSR-4
+          # autoloader (includes/Autoloader.php) and has no runtime
+          # dependencies, so Composer's generated autoloader and the
+          # install-time composer/installers package would just be dead
+          # weight in the ZIP. `composer install --no-dev` above still runs
+          # so `composer checksums` has a working autoloader to run under.
           rsync -av --exclude='/.git' --exclude='/.github' --exclude='/dist' --exclude='/builds' \
             --exclude='/composer.json' --exclude='/composer.lock' --exclude='/phpcs.xml.dist' \
             --exclude='/node_modules' --exclude='/.gitignore' --exclude='/.gitattributes' \
             --exclude='/tests' --exclude='/docs' --exclude='/.claude' --exclude='/.superpowers' \
             --exclude='/phpstan.neon.dist' --exclude='/phpstan-baseline.neon' \
             --exclude='/phpstan-bootstrap.php' --exclude='/phpunit.xml.dist' --exclude='/stubs' \
-            --exclude='/bin' --exclude='*.log' ./ dist/lw-scan/
+            --exclude='/bin' --exclude='/vendor' --exclude='*.log' ./ dist/lw-scan/
           cd dist && zip -r "lw-scan-${VERSION}.zip" lw-scan/
 
       - name: Create tag and release
