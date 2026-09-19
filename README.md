@@ -74,20 +74,20 @@ On a site running HelloPack Client, LW Scan adds an `lw_scan` status check: new 
 
 ## Status endpoint
 
-The same `lw_scan` check, published for an external monitoring service — on sites without HelloPack Client too, in the same wire format. It only reads; it changes nothing. It is **on by default**, and the URL is on **LW Plugins → Scan → Status**:
+The same `lw_scan` check, published for an external monitoring service — on sites without HelloPack Client too, in the same wire format. It only reads and changes nothing, and it sends nothing anywhere: it only answers requests that carry its key. It is **on by default**, and the URL is on **LW Plugins → Scan → Status**:
 
 ```
 GET /wp-json/lw-scan/v1/status/<key>
 ```
 
-The 32-character key in the path is the only credential, so treat the URL as a secret. A wrong key gets exactly the `404 rest_no_route` answer WordPress gives for a URL that does not exist; while the endpoint is switched off, the route does not exist at all.
+The 32-character key in the path is the only credential, so treat the URL as a secret. A wrong key gets the same body as a missing route: WordPress core's own `404 rest_no_route` answer. The route is not the secret — core still adds an `Allow: GET` header and answers `OPTIONS` for it, as it does for HelloPack Client's endpoint — but it is kept out of the public REST index, and while the endpoint is switched off it does not exist at all.
 
 | query | effect |
 |---|---|
 | `?http_status=1` | answers `503` instead of `200` while `overall` is `crit` — for monitors that only read the status code |
 | `?fresh=1` | runs the check now instead of reusing the stored result |
 
-A computed result is reused for 5 minutes by default (1 to 60 minutes, set on the Status tab); `cached` says whether this answer came from it. Every answer carries `Cache-Control: no-store, private` and `X-Robots-Tag: noindex, nofollow`.
+A computed result is reused for 5 minutes by default (1 to 60 minutes, set on the Status tab); `cached` says whether this answer came from it. The report itself — the `200` or `503` answer — carries `Cache-Control: no-store, private` and `X-Robots-Tag: noindex, nofollow`; a wrong-key `404` is left as WordPress core builds it.
 
 ```json
 {
@@ -107,15 +107,19 @@ A computed result is reused for 5 minutes by default (1 to 60 minutes, set on th
 }
 ```
 
-`status` (and `overall`) is `ok`, `warn`, `crit` or `unknown`, by the same rules as the HelloPack check: `crit` only for new alerts, `warn` for a failed last scan or scans that stopped running. `details` never carry a filesystem path.
+An answer contains the site's home URL (`site.url`), its WordPress, PHP and LW Scan versions, and the one check: `status` (and `overall`) is `ok`, `warn`, `crit` or `unknown`, by the same rules as the HelloPack check — `crit` only for new alerts, `warn` for a failed last scan or scans that stopped running — with a one-sentence `summary`, the number of new alerts, when the last scan ran and how it ended, the signature `bundle_version`, and when the check ran and how long it took. `details` never carry a filesystem path.
 
 To turn it off, switch **Status endpoint** off on the Status tab and save. **Generate new URL** replaces the key; the old URL stops working immediately.
+
+A plugin that restricts the REST API to logged-in users — LW Disable's "Restrict REST API to logged-in users", for example — makes the endpoint answer `401` to a monitor, which never logs in. The endpoint only works with that restriction off.
 
 ## Privacy
 
 Only package slugs (and versions for checksums). No file contents, hashes, paths or site URL.
 
 Requests go to `scan-data.lwplugins.com`, operated by LW Plugins, for the signature bundle, for wordpress.org checksums and for vulnerability records — as plain `GET`s whose URL carries nothing but a package slug and, for checksums, its version. Each one also sends a `User-Agent: lw-scan/<plugin version>; WordPress/<wp version>` header, so your WordPress version travels with the request; that is the whole of it. There is no telemetry, no account and no site identifier of any kind. Requests happen on activation, while a scan runs, and when you press "Check for updates" or "Re-download full bundle" on the Health tab.
+
+The status endpoint (on by default) sends nothing either: it only answers requests that carry its secret key, with the site URL, versions and scan status listed under "Status endpoint" above.
 
 - Terms of service: <https://lwplugins.com/terms>
 - Privacy policy: <https://lwplugins.com/privacy>

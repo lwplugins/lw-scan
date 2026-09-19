@@ -92,6 +92,15 @@ final class StatusEndpointHandlerTest extends MonkeyTestCase {
 		Functions\when( 'current_user_can' )->justReturn( true );
 	}
 
+	public function test_both_writes_are_hooked_for_logged_in_users_only(): void {
+		StatusEndpointHandler::register();
+
+		$this->assertNotFalse( has_action( 'admin_post_lw_scan_status_save', [ StatusEndpointHandler::class, 'handle_save' ] ) );
+		$this->assertNotFalse( has_action( 'admin_post_lw_scan_status_rotate', [ StatusEndpointHandler::class, 'handle_rotate' ] ) );
+		$this->assertFalse( has_action( 'admin_post_nopriv_lw_scan_status_save' ) );
+		$this->assertFalse( has_action( 'admin_post_nopriv_lw_scan_status_rotate' ) );
+	}
+
 	public function test_save_refuses_a_bad_nonce_and_changes_nothing(): void {
 		$_POST['cache_ttl'] = '900';
 		$this->refuse_the_nonce_for( 'lw_scan_status_save', 'lw_scan_status_nonce' );
@@ -185,6 +194,18 @@ final class StatusEndpointHandlerTest extends MonkeyTestCase {
 		StatusEndpointHandler::save( new EndpointSettings() );
 
 		$this->assertMatchesRegularExpression( '/^[a-f0-9]{32}$/', ( new EndpointSettings() )->key() );
+	}
+
+	public function test_switching_off_a_keyless_site_creates_no_key(): void {
+		$this->allow();
+		$this->options[ EndpointSettings::OPTION ] = [ 'enabled' => true ];
+		$_POST['cache_ttl']                        = '300';
+
+		StatusEndpointHandler::save( new EndpointSettings() );
+
+		$settings = new EndpointSettings();
+		$this->assertFalse( $settings->is_enabled() );
+		$this->assertSame( '', $settings->key() );
 	}
 
 	public function test_save_returns_to_the_status_tab(): void {

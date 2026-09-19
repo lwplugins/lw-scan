@@ -21,12 +21,16 @@ defined( 'ABSPATH' ) || exit;
  * HelloPack can be watched the same way.
  *
  * - The route exists only while the endpoint is on and a key is stored; a
- *   disabled endpoint is a route WordPress has never heard of.
+ *   disabled endpoint is a route WordPress has never heard of. It is kept
+ *   out of the public REST index (`show_in_index`), though its
+ *   `lw-scan/v1` namespace is still listed while it exists.
  * - Only the path segment counts as the key. `get_param()` would let a
  *   `?key=` query argument override it.
  * - A wrong key answers with WordPress core's own `rest_no_route` error —
- *   same code, message and status — so it reads exactly like a URL that
- *   does not exist.
+ *   same code, message and status — so it has the same body as a missing
+ *   route. Core still adds an `Allow: GET` header and answers `OPTIONS`
+ *   for a route that matched; that is accepted, as in HelloPack Client:
+ *   the key is what is secret, not the route.
  * - `?http_status=1` answers 503 while the report is `crit`, for monitors
  *   that only look at the status code; `?fresh=1` skips the cached result.
  */
@@ -76,6 +80,7 @@ final class StatusRoute {
 				'methods'             => 'GET',
 				'callback'            => [ $this, 'status' ],
 				'permission_callback' => '__return_true', // Read-only; the key in the path is the credential and a wrong one is a 404.
+				'show_in_index'       => false,
 			]
 		);
 	}
@@ -92,7 +97,7 @@ final class StatusRoute {
 		if ( ! is_string( $presented ) || ! $this->settings->verify_key( $presented ) ) {
 			return new WP_Error(
 				'rest_no_route',
-				__( 'No route was found matching the URL and request method.' ), // phpcs:ignore WordPress.WP.I18n.MissingArgDomain -- WP core's own string in its default text domain on purpose: the answer must be byte-for-byte what a non-existent route returns.
+				__( 'No route was found matching the URL and request method.' ), // phpcs:ignore WordPress.WP.I18n.MissingArgDomain -- WP core's own string in its default text domain on purpose: the body must be the same as a missing route's, in the site's language.
 				[ 'status' => 404 ]
 			);
 		}

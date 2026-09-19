@@ -30,10 +30,11 @@ LW Scan is a lightweight malware scanner for WordPress. It scans your files, you
 * Findings workflow: acknowledge, ignore or reopen findings; only new ones are reported again
 * Email notifications and an admin notice for new alerts, plus a warning when scheduled scans keep failing
 * A Health tab that checks the things a scanner depends on: storage, signature bundle, backend, PCRE limits, memory, tokenizer, WP-Cron and the plugin's own tables
+* A read-only status endpoint for external monitoring, on by default: a secret URL that answers with the scan status as JSON (see the FAQ)
 
 **Reports only.** LW Scan never edits, quarantines or deletes a file or a database row. What it changes on your site is its own three tables and its own directory under wp-content, nothing else.
 
-**No tracking, no upsell.** No site URL, no file contents and no paths ever leave your server. See the FAQ below for exactly what is sent.
+**No tracking, no upsell.** LW Scan sends nothing about your site anywhere: no site URL, no file contents and no paths. See the FAQ below for exactly what it requests from our service. The status endpoint (on by default) sends nothing either — it only answers requests that carry its secret key, with the details listed in the FAQ.
 
 **Also available from the terminal and from an agent:** a full `wp lw-scan` WP-CLI command set, four `lw-scan/*` abilities for the WordPress Abilities API, and an `lw_scan` status check for HelloPack Client.
 
@@ -70,7 +71,13 @@ Yes. `wp lw-scan run` runs a whole scan in one foreground process and exits 0 wh
 
 = Can an external monitoring service check the scan status? =
 
-Yes. The Status tab gives you a secret URL, `/wp-json/lw-scan/v1/status/<key>`, that answers with the scanner's status as JSON: `ok`, `warn`, `crit` (new alerts) or `unknown`, with the number of new alerts and the last scan's time and result — never a file path. It only reads; it changes nothing. It is on by default. Add `?http_status=1` to get HTTP 503 while there are new alerts, or `?fresh=1` to skip the stored result. The key in the URL is its only protection: switch the endpoint off on the Status tab, or press "Generate new URL" to replace the key — the old URL stops working at once.
+Yes. The Status tab gives you a secret URL, `/wp-json/lw-scan/v1/status/<key>`, that answers with the scanner's status as JSON. It is on by default. It only reads and changes nothing, and it sends nothing anywhere: it only answers requests that carry its key.
+
+An answer contains the site's home URL (`site.url`); its WordPress, PHP and LW Scan versions; and the one `lw_scan` check: its status (`ok`, `warn`, `crit` for new alerts, or `unknown`), a one-sentence summary, the number of new alerts, when the last scan ran and how it ended, the signature bundle version (`bundle_version`), and when the check ran and how long it took. Never a file path.
+
+Add `?http_status=1` to get HTTP 503 while there are new alerts, or `?fresh=1` to skip the stored result. The key in the URL is its only protection: switch the endpoint off on the Status tab, or press "Generate new URL" to replace the key — the old URL stops working at once.
+
+A plugin that restricts the REST API to logged-in users (LW Disable's REST API restriction, for example) makes the endpoint answer 401 to your monitor; the endpoint only works with that restriction off.
 
 = Does it work on multisite? =
 

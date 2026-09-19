@@ -252,6 +252,24 @@ final class StatusReportTest extends MonkeyTestCase {
 		$this->assertStringNotContainsString( '/', $check['summary'] );
 	}
 
+	public function test_an_anonymous_exception_class_publishes_no_server_path(): void {
+		// get_class() of an anonymous class is "Parent@anonymous", a NUL
+		// byte, then the absolute path of the file that declared it.
+		$report = new StatusReport(
+			new EndpointSettings(),
+			static function (): array {
+				throw new class( 'boom' ) extends RuntimeException {};
+			}
+		);
+
+		$summary = $report->wire()['checks']['lw_scan']['summary'];
+
+		$this->assertStringContainsString( 'RuntimeException@anonymous', $summary );
+		$this->assertStringNotContainsString( "\0", $summary );
+		$this->assertStringNotContainsString( '/', $summary );
+		$this->assertStringNotContainsString( basename( __FILE__ ), $summary );
+	}
+
 	public function test_the_real_status_check_publishes_its_own_details_and_no_path(): void {
 		$now = time();
 

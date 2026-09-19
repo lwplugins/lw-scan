@@ -110,6 +110,7 @@ final class StatusRouteTest extends MonkeyTestCase {
 				\Mockery::on(
 					static fn ( array $args ): bool => 'GET' === $args['methods']
 						&& '__return_true' === $args['permission_callback']
+						&& false === ( $args['show_in_index'] ?? true )
 						&& is_callable( $args['callback'] )
 				)
 			);
@@ -117,7 +118,7 @@ final class StatusRouteTest extends MonkeyTestCase {
 		$this->route()->register_routes();
 	}
 
-	public function test_a_wrong_key_answers_exactly_like_a_missing_route(): void {
+	public function test_a_wrong_key_answers_with_the_same_body_as_a_missing_route(): void {
 		$this->store_key();
 
 		// One argument only: core's own string in core's default text domain.
@@ -130,6 +131,33 @@ final class StatusRouteTest extends MonkeyTestCase {
 		$this->assertSame( [ self::NO_ROUTE ], $result->errors['rest_no_route'] );
 		$this->assertSame( [ 'status' => 404 ], $result->error_data['rest_no_route'] );
 		$this->assertSame( 0, $this->measured );
+	}
+
+	public function test_the_public_path_never_mints_a_key_on_a_keyless_site(): void {
+		Functions\stubTranslationFunctions();
+		Functions\expect( 'register_rest_route' )->never();
+
+		$route = $this->route();
+		$route->register_routes();
+		$result = $route->status( $this->request( [], self::KEY ) );
+
+		$this->assertInstanceOf( WP_Error::class, $result );
+		$this->assertSame( [], $this->option_writes );
+		$this->assertArrayNotHasKey( EndpointSettings::OPTION, $this->options );
+	}
+
+	public function test_the_public_path_never_writes_the_option(): void {
+		$this->store_key();
+		Functions\stubTranslationFunctions();
+		Functions\when( 'register_rest_route' )->justReturn( true );
+
+		$route = $this->route();
+		$route->register_routes();
+		$route->status( $this->request() );
+		$route->status( $this->request( [ 'fresh' => '1' ] ) );
+		$route->status( $this->request( [], 'ffffffffffffffffffffffffffffffff' ) );
+
+		$this->assertSame( [], $this->option_writes );
 	}
 
 	public function test_a_key_in_the_query_string_cannot_stand_in_for_the_path(): void {

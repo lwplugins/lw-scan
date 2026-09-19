@@ -29,7 +29,9 @@ defined( 'ABSPATH' ) || exit;
  *
  * A measurement that throws is published as `unknown` naming only the
  * exception class — its message may carry a filesystem path, and this
- * report sits behind nothing but a URL key.
+ * report sits behind nothing but a URL key. Even the class name is cut:
+ * for an anonymous class `get_class()` appends a NUL byte and the absolute
+ * path of the file that declared it.
  */
 final class StatusReport {
 
@@ -130,17 +132,29 @@ final class StatusReport {
 	 * @return array{level: string, summary: string, details: array<string, mixed>}
 	 */
 	private static function failed( Throwable $e ): array {
+		$class = self::class_name( $e );
+
 		if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 			// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- debug-mode only; the message stays in the server log and never reaches the published report.
-			error_log( sprintf( 'lw-scan status endpoint: %s: %s', get_class( $e ), $e->getMessage() ) );
+			error_log( sprintf( 'lw-scan status endpoint: %s: %s', $class, $e->getMessage() ) );
 		}
 
 		return [
 			'level'   => 'unknown',
 			/* translators: %s: exception class name. */
-			'summary' => sprintf( __( 'Check failed (%s).', 'lw-scan' ), get_class( $e ) ),
+			'summary' => sprintf( __( 'Check failed (%s).', 'lw-scan' ), $class ),
 			'details' => [],
 		];
+	}
+
+	/**
+	 * The exception's class name, cut at the NUL byte an anonymous class
+	 * carries before its file path ("RuntimeException@anonymous").
+	 *
+	 * @param Throwable $e Exception.
+	 */
+	private static function class_name( Throwable $e ): string {
+		return explode( "\0", get_class( $e ), 2 )[0];
 	}
 
 	/**

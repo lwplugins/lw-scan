@@ -26,11 +26,18 @@ defined( 'ABSPATH' ) || exit;
  * `instance()` — only ever called once the interface is known to exist —
  * which keeps this file loadable on a site without HelloPack.
  *
- * The check is read-only and cheap as the contract demands
- * (docs/status-checks.md): four small indexed reads (the grouped finding
- * counts and the last run row) plus the two plugin options, which
- * WordPress has already cached by then — no writes, no HTTP, no loopback
- * request. `evaluate()` and `interval_seconds()` hold the whole decision
+ * The check is read-only, as the contract demands (docs/status-checks.md):
+ * no writes, no HTTP, no loopback request. It runs four table queries and
+ * reads two options. `FindingsRepository::counts()` runs three of the
+ * queries: the state/severity grouping, which can be read from the
+ * `list (state,severity,last_seen)` index; a `GROUP BY type` that no index
+ * covers, so it reads the whole findings table; and a total `COUNT(*)`.
+ * `RunsRepository::last()` runs the fourth, one row by primary key. Of the
+ * options, `lw_scan_options` is autoloaded and `lw_scan_state` is not — one
+ * more query, then cached for the request. The findings table holds one
+ * row per finding on record, so the unindexed grouping stays cheap on a
+ * healthy site but grows with it.
+ * `evaluate()` and `interval_seconds()` hold the whole decision
  * and touch nothing but their arguments, so the rule table is unit-testable
  * without WordPress; the reads live in `measure()`.
  *
