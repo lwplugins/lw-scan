@@ -3,7 +3,7 @@
     "files": {
         "assets/css/admin.css": "2f603c1b0b72d588dcec5378f18f892c",
         "assets/js/admin.js": "56a7d63ed35aaea6a8e677e135cddc10",
-        "includes/Activator.php": "427ac327d16d967784b5671ea1b5f536",
+        "includes/Activator.php": "478238ed9a7d0c2b89eb5e5876e1a833",
         "includes/Admin/Ajax/AjaxGuard.php": "f109c17acea6f39a5cf3acd2660071ac",
         "includes/Admin/Ajax/AjaxGuardTrait.php": "79058a9ddba80f822afbd87490bd7de0",
         "includes/Admin/Ajax/BundleHandler.php": "d512debc5866811153eae6917380feb4",
@@ -100,7 +100,7 @@
         "includes/Notify/FailureStreak.php": "3277a6e297c5ba14c40abfa272fba971",
         "includes/Notify/Mailer.php": "c213bf41844e64cf90961a9fbf39b66a",
         "includes/Options.php": "408de500cd4eedc4d94b08abd1520f01",
-        "includes/Plugin.php": "b222da6fefbfb396d7cc5833da5fa3b5",
+        "includes/Plugin.php": "fbb9817f7343801ba6b655d73c1d6ea6",
         "includes/Remote/ChecksumProvider.php": "1bfd182f4e26b9eaf72da881028a2e8b",
         "includes/Remote/Client.php": "e61e14ee2bfdedc662a87786e37a6b8d",
         "includes/Remote/FileCache.php": "324587f81cca5e7c11a28d25efeda414",
@@ -165,13 +165,16 @@
         "includes/SiteManager/Abilities.php": "f0b7e3e508d402f1cbfec04473284139",
         "includes/SiteManager/AbilityCallbacks.php": "be8def4d5ba7e7e0c11cbf77d08c2528",
         "includes/State.php": "1d4ee3a92d8d36ee117513f774283a88",
-        "includes/Uninstall/Uninstaller.php": "eec64794315632976ccbcf683c81061c",
+        "includes/Status/EndpointSettings.php": "e98d6ffd4b0da7ffb52fb90c2b314c85",
+        "includes/Status/StatusReport.php": "ff4d00a14f5ab7988b3bc3c4b1a7f2ba",
+        "includes/Status/StatusRoute.php": "0d9764198a0fafa65a9723268b4b4335",
+        "includes/Uninstall/Uninstaller.php": "663aaa33bb4e8e4ef31e4bd139260964",
         "includes/Upgrader.php": "1ab9ae296071cab19d7802cb92b1f61c",
         "includes/Vuln/InstalledSoftware.php": "7799d79dc06c0434daa280565a0e873f",
         "includes/Vuln/Matcher.php": "52416eff4e86205c216f8f78237010d1",
         "includes/Vuln/VersionRange.php": "f94cc5debc0b6c862c4865b8cec6a537",
         "includes/functions.php": "137fc6cf37d788d22f100c6f2743c977",
         "lw-scan.php": "3469a248157bf2ac3aabf10e8329448a",
-        "uninstall.php": "46863845e9849e828387eac479acb86d"
+        "uninstall.php": "feb3613e6a957b8b376195b888f5bddd"
     }
 }

@@ -172,10 +172,10 @@ final class UninstallerTest extends MonkeyTestCase {
 		// The version option is deleted twice: once by name here, once more
 		// by Schema::drop() as part of dropping the tables it tracks.
 		$this->assertSame(
-			[ 'lw_scan_options', 'lw_scan_state', 'lw_scan_db_version', 'lw_scan_upgrading', 'lw_scan_db_version' ],
+			[ 'lw_scan_options', 'lw_scan_state', 'lw_scan_db_version', 'lw_scan_upgrading', 'lw_scan_status_endpoint', 'lw_scan_db_version' ],
 			$options
 		);
-		$this->assertSame( [ 'lw_scan_health', 'lw_scan_lock', 'lw_scan_catchup', 'lw_scan_install_retry' ], $transients );
+		$this->assertSame( [ 'lw_scan_health', 'lw_scan_lock', 'lw_scan_catchup', 'lw_scan_install_retry', 'lw_scan_status_report' ], $transients );
 		$this->assertSame( [ 'lw_scan_scheduled', 'lw_scan_tick' ], $cleared );
 		$this->assertSame( [ 'lw_scan_scheduled', 'lw_scan_tick' ], $unhooked );
 	}

@@ -113,6 +113,30 @@ final class ActivatorTest extends MonkeyTestCase {
 		$this->assertSame( Schema::VERSION, (int) $this->option_store[ Schema::VERSION_OPTION ] );
 	}
 
+	public function test_activation_provisions_the_status_endpoint_key(): void {
+		Functions\when( 'wp_remote_get' )->justReturn( [ 'response' => [ 'code' => 503 ] ] );
+
+		Activator::activate();
+
+		$stored = (array) ( $this->option_store['lw_scan_status_endpoint'] ?? [] );
+
+		$this->assertMatchesRegularExpression( '/^[a-f0-9]{32}$/', (string) ( $stored['key'] ?? '' ) );
+	}
+
+	public function test_reactivation_keeps_the_existing_status_key(): void {
+		Functions\when( 'wp_remote_get' )->justReturn( [ 'response' => [ 'code' => 503 ] ] );
+		$this->option_store['lw_scan_status_endpoint'] = [
+			'enabled'    => true,
+			'key'        => '0123456789abcdef0123456789abcdef',
+			'key_set_at' => 1750000000,
+			'cache_ttl'  => 300,
+		];
+
+		Activator::activate();
+
+		$this->assertSame( '0123456789abcdef0123456789abcdef', $this->option_store['lw_scan_status_endpoint']['key'] );
+	}
+
 	private function stub_options(): void {
 		$store = &$this->option_store;
 

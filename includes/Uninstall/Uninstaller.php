@@ -14,6 +14,7 @@ use LightweightPlugins\Scan\Db\Schema;
 use LightweightPlugins\Scan\Options;
 use LightweightPlugins\Scan\Run\Scheduler;
 use LightweightPlugins\Scan\State;
+use LightweightPlugins\Scan\Status\EndpointSettings;
 use LightweightPlugins\Scan\Upgrader;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
@@ -26,10 +27,10 @@ defined( 'ABSPATH' ) || exit;
 /**
  * Called from uninstall.php (WP_UNINSTALL_PLUGIN context only).
  *
- * The plugin keeps nothing back: its options, transients, cron hooks, three
- * tables and private storage directory all go. Findings are a report about
- * a site, not the site's own content — a re-install re-derives every one of
- * them from the next scan.
+ * The plugin keeps nothing back: its options (the status endpoint's key
+ * included), transients, cron hooks, three tables and private storage
+ * directory all go. Findings are a report about a site, not the site's own
+ * content — a re-install re-derives every one of them from the next scan.
  *
  * The option/transient/hook cleanup below repeats what uninstall.php
  * already ran inline before the autoloader was available. That is a
@@ -46,6 +47,7 @@ final class Uninstaller {
 		'lw_scan_lock',    // Run\Lock::TRANSIENT.
 		'lw_scan_catchup', // Run\CatchUp::FLAG.
 		'lw_scan_install_retry', // Db\Schema::RETRY_TRANSIENT.
+		'lw_scan_status_report', // Status\StatusReport::TRANSIENT.
 	];
 
 	/**
@@ -58,6 +60,7 @@ final class Uninstaller {
 		delete_option( State::OPTION_NAME );
 		delete_option( Schema::VERSION_OPTION );
 		delete_option( Upgrader::CLAIM_OPTION );
+		delete_option( EndpointSettings::OPTION );
 
 		foreach ( self::TRANSIENTS as $transient ) {
 			delete_transient( $transient );

@@ -18,6 +18,7 @@ use LightweightPlugins\Scan\Notify\AdminNotice;
 use LightweightPlugins\Scan\Run\CatchUp;
 use LightweightPlugins\Scan\Run\Scheduler;
 use LightweightPlugins\Scan\SiteManager\Abilities;
+use LightweightPlugins\Scan\Status\StatusRoute;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -48,15 +49,18 @@ final class Plugin {
 	 * - CLI\Commands                 WP_CLI only
 	 * - SiteManager\Abilities        the four `lw-scan/*` abilities
 	 * - HelloPack\StatusCheck        the `lw_scan` status check
+	 * - Status\StatusRoute           the keyed status endpoint, registered
+	 *                                on `rest_api_init` (REST requests only)
 	 *
 	 * The scanning pipeline itself (Bundle\*, Index\*, Scanner\*, DbScan\*,
 	 * Vuln\*) hooks nothing: `Run\Runner` drives it from whichever entry
 	 * point opened the run, so none of it loads on an ordinary request.
 	 *
-	 * The last two register unconditionally: both only ever reach their
-	 * optional host (the Abilities API, HelloPack Client) through a hook
-	 * that does not fire — or a guard that does not pass — where it is
-	 * absent.
+	 * Abilities and StatusCheck register unconditionally: both only ever
+	 * reach their optional host (the Abilities API, HelloPack Client)
+	 * through a hook that does not fire — or a guard that does not pass —
+	 * where it is absent. StatusRoute needs no host at all, and reads its
+	 * option only once `rest_api_init` fires.
 	 */
 	private function init_components(): void {
 		Schema::maybe_install();
@@ -77,6 +81,7 @@ final class Plugin {
 
 		Abilities::register();
 		StatusCheck::register();
+		StatusRoute::register();
 	}
 
 	public function load_textdomain(): void {

@@ -14,6 +14,7 @@ use LightweightPlugins\Scan\Db\Schema;
 use LightweightPlugins\Scan\Remote\Client;
 use LightweightPlugins\Scan\Remote\PackFetcher;
 use LightweightPlugins\Scan\Run\Scheduler;
+use LightweightPlugins\Scan\Status\EndpointSettings;
 use Throwable;
 
 defined( 'ABSPATH' ) || exit;
@@ -22,8 +23,9 @@ defined( 'ABSPATH' ) || exit;
  * Handles plugin activation and deactivation.
  *
  * Installs the schema and the options row, (de)schedules the recurring scan,
- * and pulls the signature bundle down while someone is watching — so the
- * first scan already has signatures instead of having to fetch them mid-run.
+ * gives the status endpoint its key, and pulls the signature bundle down
+ * while someone is watching — so the first scan already has signatures
+ * instead of having to fetch them mid-run.
  */
 final class Activator {
 
@@ -35,11 +37,27 @@ final class Activator {
 		}
 
 		Scheduler::schedule();
+		self::provision_status_key();
 		self::seed_signatures();
 	}
 
 	public static function deactivate(): void {
 		Scheduler::unschedule();
+	}
+
+	/**
+	 * The status endpoint is on by default, so it gets its key here; a
+	 * re-activation keeps the key it already has. Best effort like the
+	 * signature download below: `random_bytes()` can throw where the
+	 * system has no entropy source, and the Status tab provisions the key
+	 * on its first visit anyway.
+	 */
+	private static function provision_status_key(): void {
+		try {
+			( new EndpointSettings() )->ensure_key();
+		} catch ( Throwable $e ) {
+			unset( $e );
+		}
 	}
 
 	/**

@@ -28,11 +28,13 @@ delete_option( 'lw_scan_options' );
 delete_option( 'lw_scan_state' );
 delete_option( 'lw_scan_db_version' );
 delete_option( 'lw_scan_upgrading' );
+delete_option( 'lw_scan_status_endpoint' );
 
 delete_transient( 'lw_scan_health' );
 delete_transient( 'lw_scan_lock' );
 delete_transient( 'lw_scan_catchup' );
 delete_transient( 'lw_scan_install_retry' );
+delete_transient( 'lw_scan_status_report' );
 
 wp_clear_scheduled_hook( 'lw_scan_scheduled' );
 wp_clear_scheduled_hook( 'lw_scan_tick' );
