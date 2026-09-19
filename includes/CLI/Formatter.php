@@ -133,6 +133,38 @@ final class Formatter {
 	}
 
 	/**
+	 * The one-line summary `wp lw-scan endpoint status` prints by default.
+	 *
+	 * @param array{enabled:bool, ttl_minutes:int, has_key:bool, key_set_at:int} $status `CLI\EndpointCli::status()` output.
+	 */
+	public static function endpoint_summary( array $status ): string {
+		return sprintf(
+			'Status endpoint: %s, reuse %d min, %s',
+			$status['enabled'] ? 'on' : 'off',
+			$status['ttl_minutes'],
+			$status['has_key'] ? sprintf( 'key created %s', self::timestamp( $status['key_set_at'] ) ) : 'no key yet'
+		);
+	}
+
+	/**
+	 * The same facts as `endpoint_summary()`, as metric/value rows for
+	 * `wp lw-scan endpoint status --format=<table|json|yaml>`.
+	 *
+	 * @param array{enabled:bool, ttl_minutes:int, has_key:bool, key_set_at:int} $status `CLI\EndpointCli::status()` output.
+	 * @return array<int, array{metric:string, value:string}>
+	 */
+	public static function endpoint_status_rows( array $status ): array {
+		return self::metric_rows(
+			[
+				'enabled'     => $status['enabled'] ? 'on' : 'off',
+				'reuse'       => sprintf( '%d min', $status['ttl_minutes'] ),
+				'key'         => $status['has_key'] ? 'present' : 'none',
+				'key created' => self::timestamp( $status['key_set_at'] ),
+			]
+		);
+	}
+
+	/**
 	 * A timestamp as UTC, or a dash when there is none.
 	 *
 	 * @param int $ts Unix timestamp; 0 means "never".

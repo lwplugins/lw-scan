@@ -271,4 +271,56 @@ final class FormatterTest extends MonkeyTestCase {
 			$this->assertIsString( $row['value'] );
 		}
 	}
+
+	/**
+	 * @param array<string, mixed> $overrides Fields to change.
+	 * @return array<string, mixed>
+	 */
+	private function endpoint_status( array $overrides = [] ): array {
+		return array_merge(
+			[
+				'enabled'     => true,
+				'ttl_minutes' => 5,
+				'has_key'     => true,
+				'key_set_at'  => 1700000000,
+			],
+			$overrides
+		);
+	}
+
+	public function test_endpoint_summary_reports_on_with_a_key(): void {
+		$line = Formatter::endpoint_summary( $this->endpoint_status() );
+
+		$this->assertStringContainsString( 'on', $line );
+		$this->assertStringContainsString( '5 min', $line );
+		$this->assertStringContainsString( '2023-11-14 22:13:20', $line );
+	}
+
+	public function test_endpoint_summary_reports_off_and_no_key(): void {
+		$line = Formatter::endpoint_summary(
+			$this->endpoint_status(
+				[
+					'enabled'    => false,
+					'has_key'    => false,
+					'key_set_at' => 0,
+				]
+			)
+		);
+
+		$this->assertStringContainsString( 'off', $line );
+		$this->assertStringContainsString( 'no key yet', $line );
+	}
+
+	public function test_endpoint_status_rows_are_shaped_for_format_items(): void {
+		foreach ( Formatter::endpoint_status_rows( $this->endpoint_status() ) as $row ) {
+			$this->assertSame( Formatter::SUMMARY_COLUMNS, array_keys( $row ) );
+			$this->assertIsString( $row['value'] );
+		}
+	}
+
+	public function test_endpoint_status_rows_show_the_key_state(): void {
+		$values = $this->by_metric( Formatter::endpoint_status_rows( $this->endpoint_status( [ 'has_key' => false ] ) ) );
+
+		$this->assertSame( 'none', $values['key'] );
+	}
 }
