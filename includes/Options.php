@@ -55,7 +55,7 @@ final class Options {
 			'notify_emails'      => [],
 			'notify_level'       => 'alert',
 			'notify_limit'       => 20,
-			'admin_notice'       => true,
+			'admin_notice'       => false,
 			'next_due'           => 0,
 			'last_auto_run'      => 0,
 			'plugin_version'     => '',

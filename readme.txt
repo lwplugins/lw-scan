@@ -59,7 +59,7 @@ Privacy policy: https://lwplugins.com/privacy
 
 = Why did the first scan not e-mail me? =
 
-Because it is a baseline. The first scan on a site that has been running for a while reports everything already there: every vulnerable plugin, every library that uses dynamic code, every core file somebody once edited. That is a list to read through once, not an incident to be mailed about, so the first completed scan records its findings and sends nothing — the admin notice and the Notifications tab say so. Every scan after it mails what is new, as configured.
+Because it is a baseline. The first scan on a site that has been running for a while reports everything already there: every vulnerable plugin, every library that uses dynamic code, every core file somebody once edited. That is a list to read through once, not an incident to be mailed about, so the first completed scan records its findings and sends nothing — the Notifications tab says so, as does the admin notice when it is switched on. Every scan after it mails what is new, as configured.
 
 A site that was already scanning before this behaviour existed is not affected: it has taken its baseline long ago and keeps mailing exactly as it did.
 
@@ -104,6 +104,7 @@ Everything goes: the settings, the run state, the three scan tables and the `wp-
 * New: `wp lw-scan notify` WP-CLI command — status, enable, disable, level, recipients, limit and test.
 * Change: E-mail can be switched off entirely; off stops the failure-streak warning too.
 * Change: A new-findings e-mail lists at most 20 items by default and links to the Findings tab for the rest; the subject keeps the true total.
+* Change: The admin notice is off by default; switch it on from the Notifications tab. A site that already saved the setting keeps what it chose.
 * Change: The first completed scan on a site is a baseline — it records what is already there and sends no e-mail. A site that has scanned before keeps mailing as it did.
 * Change: The recipients field says which address is used when it is left empty.
 

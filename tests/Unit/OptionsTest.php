@@ -64,7 +64,7 @@ final class OptionsTest extends MonkeyTestCase {
 		$this->assertSame( [], $defaults['notify_emails'] );
 		$this->assertSame( 'alert', $defaults['notify_level'] );
 		$this->assertSame( 20, $defaults['notify_limit'] );
-		$this->assertTrue( $defaults['admin_notice'] );
+		$this->assertFalse( $defaults['admin_notice'] );
 		$this->assertSame( 0, $defaults['next_due'] );
 		$this->assertSame( 0, $defaults['last_auto_run'] );
 	}

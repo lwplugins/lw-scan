@@ -9,6 +9,7 @@
 ### Changed
 - E-mail can be switched off entirely. Off stops the failure-streak warning too.
 - A new-findings e-mail lists at most 20 items by default and links to the Findings tab for the rest; the subject still carries the true total.
+- The admin notice is off by default; switch it on from the Notifications tab. A site that already saved the setting keeps what it chose.
 - The first completed scan on a site is a baseline: it records what is already there and sends no e-mail. A site that has scanned before keeps mailing exactly as it did.
 - The recipients field says which address is used when it is left empty.
 - The notification settings moved off the Settings tab onto the new one.

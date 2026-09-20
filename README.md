@@ -117,12 +117,12 @@ Everything about who hears from the scanner is on **LW Plugins → Scan → Noti
 | Send e-mail | **Off**, **New alerts only** (the default) or **New alerts + review items**. Off means no scan e-mail at all — the warning about repeatedly failing scheduled scans included. |
 | Recipients | Comma-separated. Empty means the site's admin address, and the field names that address so it is never a surprise. |
 | Maximum items per e-mail | 10, 20 (the default), 50 or All. Above the cap the body lists the first N and ends with `… and N more — see the Findings tab`. The subject keeps the true total. |
-| Admin notice | The persistent notice shown while new alerts exist. Independent of the e-mail switch. |
+| Admin notice | The persistent notice shown while new alerts exist. Off by default, and independent of the e-mail switch. |
 | Send a test e-mail | Mails the saved recipients and reports whether WordPress accepted the message. |
 
 There are no "all clear" e-mails, and a failure streak is mailed once, not once per failed run.
 
-**The first scan is a baseline.** A first scan on a site that has been running for a while reports everything already there — vulnerable plugins, libraries that use dynamic code, core files somebody once edited. That is a list to read once, not an incident, so the first completed run records its findings and sends nothing; the admin notice and the tab say so. Every run after it mails what is new.
+**The first scan is a baseline.** A first scan on a site that has been running for a while reports everything already there — vulnerable plugins, libraries that use dynamic code, core files somebody once edited. That is a list to read once, not an incident, so the first completed run records its findings and sends nothing; the Notifications tab says so, as does the admin notice when it is switched on. Every run after it mails what is new.
 
 A site that was already scanning before 1.3.0 is not given a fresh baseline: an install with a finished run behind it keeps mailing exactly as it did.
 
