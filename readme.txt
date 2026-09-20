@@ -4,7 +4,7 @@ Tags: security, malware, scanner, antivirus, vulnerability
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 1.2.1
+Stable tag: 1.3.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -28,7 +28,7 @@ LW Scan is a lightweight malware scanner for WordPress. It scans your files, you
 * Scopes: changed files only (the default), a full scan, the database alone, or a single directory
 * Resumable and time-budget-aware — a scan advances in ticks that respect the request's time budget, can be stopped from the admin or the terminal, and picks up where it left off; if PHP runs out of memory mid-tick, the run is reported as a failed scan naming the memory_limit it hit
 * Findings workflow: acknowledge, ignore or reopen findings; only new ones are reported again
-* Email notifications and an admin notice for new alerts, plus a warning when scheduled scans keep failing
+* Email notifications and an admin notice for new alerts, plus a warning when scheduled scans keep failing — all on a Notifications tab where e-mail can be switched off, capped at 10, 20 or 50 items per message, and sent to a list of addresses you choose
 * A Health tab that checks the things a scanner depends on: storage, signature bundle, backend, PCRE limits, memory, tokenizer, WP-Cron and the plugin's own tables
 * A read-only status endpoint for external monitoring, on by default: a secret URL that answers with the scan status as JSON (see the FAQ)
 
@@ -57,6 +57,16 @@ Requests happen when the plugin is activated, while a scan runs, and when you pr
 Terms of service: https://lwplugins.com/terms
 Privacy policy: https://lwplugins.com/privacy
 
+= Why did the first scan not e-mail me? =
+
+Because it is a baseline. The first scan on a site that has been running for a while reports everything already there: every vulnerable plugin, every library that uses dynamic code, every core file somebody once edited. That is a list to read through once, not an incident to be mailed about, so the first completed scan records its findings and sends nothing — the admin notice and the Notifications tab say so. Every scan after it mails what is new, as configured.
+
+A site that was already scanning before this behaviour existed is not affected: it has taken its baseline long ago and keeps mailing exactly as it did.
+
+= The scan e-mails are too long, or I do not want them at all =
+
+**LW Plugins → Scan → Notifications.** "Send e-mail" has three settings — Off, new alerts only, or new alerts plus review items — and Off means no scan e-mail at all, the warning about repeatedly failing scheduled scans included. "Maximum items per e-mail" caps the body at 10, 20 or 50 items; the rest is one line linking to the Findings tab, and the subject still carries the true total. Leave Recipients empty and mail goes to the site's admin address — the tab names it, so it is never a surprise.
+
 = Does it remove or repair what it finds? =
 
 No. LW Scan reports, and stops there. Deciding what to do with an infected file is yours to make, and an automatic cleanup that guesses wrong takes a site down harder than the infection did.
@@ -67,7 +77,7 @@ Scans run in the background, in ticks that stay inside the request's time budget
 
 = Can I run it from the command line? =
 
-Yes. `wp lw-scan run` runs a whole scan in one foreground process and exits 0 when it found nothing alerting, 1 when it found a new alert and 2 on an error — which is what a cron job or a CI pipeline wants. `wp lw-scan status`, `findings`, `ack`, `ignore`, `reopen`, `bundle`, `index` and `stop` cover the rest. `wp lw-scan endpoint` manages the status endpoint below (its URL, switch, key and reuse period) from the terminal.
+Yes. `wp lw-scan run` runs a whole scan in one foreground process and exits 0 when it found nothing alerting, 1 when it found a new alert and 2 on an error — which is what a cron job or a CI pipeline wants. `wp lw-scan status`, `findings`, `ack`, `ignore`, `reopen`, `bundle`, `index` and `stop` cover the rest. `wp lw-scan endpoint` manages the status endpoint below (its URL, switch, key and reuse period) from the terminal, and `wp lw-scan notify` does the same for the e-mail settings — `status`, `enable`, `disable`, `level`, `recipients`, `limit` and `test`.
 
 = Can an external monitoring service check the scan status? =
 
@@ -88,6 +98,14 @@ The plugin activates and scans files on multisite, but the database scan covers 
 Everything goes: the settings, the run state, the three scan tables and the `wp-content/lw-scan` directory with the signature bundle and its caches. The cleanup covers the site it runs on, so a network install may leave per-site options behind. A re-install starts from a clean scan.
 
 == Changelog ==
+
+= 1.3.0 =
+* New: A Notifications tab with an e-mail off switch, the recipients, a per-e-mail item cap and a "Send a test e-mail" button.
+* New: `wp lw-scan notify` WP-CLI command — status, enable, disable, level, recipients, limit and test.
+* Change: E-mail can be switched off entirely; off stops the failure-streak warning too.
+* Change: A new-findings e-mail lists at most 20 items by default and links to the Findings tab for the rest; the subject keeps the true total.
+* Change: The first completed scan on a site is a baseline — it records what is already there and sends no e-mail. A site that has scanned before keeps mailing as it did.
+* Change: The recipients field says which address is used when it is left empty.
 
 = 1.2.1 =
 * Update: The distributed ZIP no longer carries Composer's generated autoloader or the install-time `composer/installers` package — the plugin now ships its own small PSR-4 autoloader. Composer installs (`composer require lwplugins/lw-scan`) are unaffected.

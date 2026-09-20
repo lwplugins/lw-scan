@@ -48,6 +48,7 @@ wp lw-scan bundle <status|update|force-full> [--force] [--format=<table|json|csv
 wp lw-scan index <rebuild|stats> [--force] [--format=<table|json|csv>]
 wp lw-scan stop
 wp lw-scan endpoint <url|enable|disable|rotate|ttl|status> [<minutes>] [--porcelain] [--format=<table|json|yaml>]
+wp lw-scan notify <status|enable|disable|level|recipients|limit|test> [<value>] [--clear] [--format=<table|json|yaml>]
 ```
 
 `run` carries the whole pipeline in one foreground process instead of the admin's cron relay, and its exit code is the contract a cron job or a CI pipeline reads:
@@ -83,11 +84,47 @@ wp lw-scan endpoint status --format=json
 
 `url` and `enable` provision a key when the endpoint is on and has none yet — an authenticated CLI call is the same trust level as the admin screen — but never while the endpoint is off, and a disabled endpoint's `url` creates nothing.
 
+`notify` is the Notifications tab from the terminal — same options underneath, so a CLI call and an admin-screen save leave identical state:
+
+```bash
+wp lw-scan notify status              # one line: switch, level, recipients, cap, baseline
+wp lw-scan notify status --format=json
+wp lw-scan notify disable             # no scan e-mail at all, failure-streak warning included
+wp lw-scan notify enable              # back on, at the level it was left at
+wp lw-scan notify level review        # alerts (default) or review
+wp lw-scan notify level               # print the current level
+wp lw-scan notify recipients ops@example.com,dev@example.com
+wp lw-scan notify recipients --clear  # back to the site admin address
+wp lw-scan notify limit 10            # items per e-mail: 10, 20, 50 or all
+wp lw-scan notify limit               # print the current cap
+wp lw-scan notify test                # send a test e-mail and report whether wp_mail() took it
+```
+
+One bad address fails the whole `recipients` call rather than storing half a list, and `status` says out loud when mail is going to the site's admin address because nothing was configured.
+
 ## Abilities and HelloPack
 
 Four abilities are registered in the `lw-scan` category when the WordPress Abilities API is present, each behind a `manage_options` permission callback: `lw-scan/run` (starts a scan and returns its run id without blocking), `lw-scan/status`, `lw-scan/findings` and `lw-scan/acknowledge`. That is what lets LW Site Manager's MCP server — or any other Abilities client — drive the scanner.
 
 On a site running HelloPack Client, LW Scan adds an `lw_scan` status check: new alerts, a failed last scan or scans that stopped running all surface there. Review-severity findings do not — they are mostly benign matches best triaged in the admin UI, not surfaced as a site-health warning. The check is read-only, makes no HTTP request, and its details carry no filesystem path.
+
+## Notifications
+
+Everything about who hears from the scanner is on **LW Plugins → Scan → Notifications**:
+
+| control | what it does |
+|---|---|
+| Send e-mail | **Off**, **New alerts only** (the default) or **New alerts + review items**. Off means no scan e-mail at all — the warning about repeatedly failing scheduled scans included. |
+| Recipients | Comma-separated. Empty means the site's admin address, and the field names that address so it is never a surprise. |
+| Maximum items per e-mail | 10, 20 (the default), 50 or All. Above the cap the body lists the first N and ends with `… and N more — see the Findings tab`. The subject keeps the true total. |
+| Admin notice | The persistent notice shown while new alerts exist. Independent of the e-mail switch. |
+| Send a test e-mail | Mails the saved recipients and reports whether WordPress accepted the message. |
+
+There are no "all clear" e-mails, and a failure streak is mailed once, not once per failed run.
+
+**The first scan is a baseline.** A first scan on a site that has been running for a while reports everything already there — vulnerable plugins, libraries that use dynamic code, core files somebody once edited. That is a list to read once, not an incident, so the first completed run records its findings and sends nothing; the admin notice and the tab say so. Every run after it mails what is new.
+
+A site that was already scanning before 1.3.0 is not given a fresh baseline: an install with a finished run behind it keeps mailing exactly as it did.
 
 ## Status endpoint
 

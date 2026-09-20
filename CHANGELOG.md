@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.3.0] - 2026-09-20
+
+### Added
+- A Notifications tab: the e-mail switch (Off / New alerts only / New alerts + review items), the recipients, a per-e-mail item cap (10 / 20 / 50 / All), the admin notice and a "Send a test e-mail" button.
+- `wp lw-scan notify` WP-CLI command — `status`, `enable`, `disable`, `level`, `recipients`, `limit` and `test`.
+
+### Changed
+- E-mail can be switched off entirely. Off stops the failure-streak warning too.
+- A new-findings e-mail lists at most 20 items by default and links to the Findings tab for the rest; the subject still carries the true total.
+- The first completed scan on a site is a baseline: it records what is already there and sends no e-mail. A site that has scanned before keeps mailing exactly as it did.
+- The recipients field says which address is used when it is left empty.
+- The notification settings moved off the Settings tab onto the new one.
+
 ## [1.2.1] - 2026-09-19
 
 ### Changed
