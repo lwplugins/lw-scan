@@ -25,12 +25,19 @@ defined( 'ABSPATH' ) || exit;
  * WP-CLI process, the same reason `EndpointCommand` is split this way. This
  * class only turns `NotifyCli`'s plain result arrays into
  * `WP_CLI::success()`/`::error()`/`::line()` calls.
+ *
+ * `__invoke()`'s docblock is what `wp help lw-scan notify` prints, so it
+ * stays user-facing — and its first line is a whole sentence on its own,
+ * because WP-CLI lifts exactly that line into the subcommand list of
+ * `wp help lw-scan` and cuts a two-line summary in half there.
  */
 final class NotifyCommand {
 
 	/**
-	 * Show or change who hears from the scanner: the e-mail switch, what it
-	 * reports, who receives it and how long one message may get.
+	 * Show or change the scan e-mail settings.
+	 *
+	 * The switch, what it reports, who receives it and how long one message
+	 * may get: the Notifications tab from the terminal.
 	 *
 	 * ## OPTIONS
 	 *

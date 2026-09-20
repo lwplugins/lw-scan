@@ -61,7 +61,7 @@
         "includes/CLI/Formatter.php": "d873a706856a1f842e0a2acdbd4cf407",
         "includes/CLI/IndexCommand.php": "0a65d9fc57bc9d3a2b0ddcd035dba7c1",
         "includes/CLI/NotifyCli.php": "2c373f320f9076c5c98116a22c890cb4",
-        "includes/CLI/NotifyCommand.php": "98ffafc2cf733588233d0548718dfabe",
+        "includes/CLI/NotifyCommand.php": "12238efcd088ae07711ef5e7658ea335",
         "includes/CLI/RunCommand.php": "ad3676d371f51da483e613578bbbc75a",
         "includes/CLI/RunGuard.php": "ade02a503e09f402c145077d844d77c5",
         "includes/CLI/StateCommand.php": "a040eac4c7c7e48d2c1ba0a82c71b2c5",
