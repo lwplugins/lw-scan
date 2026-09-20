@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\Scan\Admin;
 
+use LightweightPlugins\Scan\Admin\Settings\AfterFormInterface;
 use LightweightPlugins\Scan\Admin\Settings\TabInterface;
 use LightweightPlugins\Scan\Db\FindingsRepository;
 use LightweightPlugins\Scan\Db\Schema;
@@ -20,7 +21,9 @@ defined( 'ABSPATH' ) || exit;
  * then hands over to the active tab. Tabs are real `?tab=` links rather
  * than client-side panels, so each one loads only its own data. Only a tab that declares `has_save()` is wrapped in the
  * `options.php` settings form, so the read-only tabs never post the
- * options array by accident.
+ * options array by accident. A tab that also implements
+ * `Settings\AfterFormInterface` gets a slot right after that form closes,
+ * for a write of its own that cannot live in a nested form.
  */
 final class SettingsRenderer {
 
@@ -67,6 +70,9 @@ final class SettingsRenderer {
 								<span class="lw-scan-muted lw-scan-small"><?php esc_html_e( 'Settings affect scanning and notifications only. Nothing here modifies files or database rows.', 'lw-scan' ); ?></span>
 							</div>
 						</form>
+						<?php if ( $tab instanceof AfterFormInterface ) : ?>
+							<?php $tab->after_form(); ?>
+						<?php endif; ?>
 					<?php else : ?>
 						<?php $tab->render(); ?>
 					<?php endif; ?>

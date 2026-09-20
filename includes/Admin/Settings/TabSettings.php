@@ -14,9 +14,10 @@ use LightweightPlugins\Scan\Options;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Every option of spec §4.4, in the mockup's three groups. This is the
- * only tab wrapped in the `options.php` form, so it is the only one with a
- * Save button; `Admin\SettingsSanitizer` validates what it posts.
+ * How and how deeply the scanner runs (spec §4.4). Who hears about what it
+ * finds moved to the Notifications tab in 1.3.0; both tabs post into the
+ * same `lw_scan_options` row through `Admin\SettingsSanitizer`, which is why
+ * an option a form does not post is carried over rather than reset.
  */
 final class TabSettings implements TabInterface {
 
@@ -41,7 +42,6 @@ final class TabSettings implements TabInterface {
 	public function render(): void {
 		$this->schedule_card();
 		$this->depth_card();
-		$this->notifications_card();
 	}
 
 	private function schedule_card(): void {
@@ -158,47 +158,6 @@ final class TabSettings implements TabInterface {
 						);
 						?>
 					</td>
-				</tr>
-			</table>
-		</div>
-		<?php
-	}
-
-	private function notifications_card(): void {
-		?>
-		<div class="lw-scan-card">
-			<h2 class="lw-scan-section-title"><?php esc_html_e( 'Notifications', 'lw-scan' ); ?></h2>
-			<table class="form-table" role="presentation">
-				<tr>
-					<th scope="row"><label for="notify_emails"><?php esc_html_e( 'Recipients', 'lw-scan' ); ?></label></th>
-					<td>
-						<?php
-						$this->render_text(
-							'notify_emails',
-							implode( ', ', (array) Options::get( 'notify_emails', [] ) ),
-							__( 'Comma-separated. Leave empty to use the site admin e-mail.', 'lw-scan' )
-						);
-						?>
-					</td>
-				</tr>
-				<tr>
-					<th scope="row"><?php esc_html_e( 'Send e-mail for', 'lw-scan' ); ?></th>
-					<td>
-						<?php
-						$this->render_segment(
-							'notify_level',
-							[
-								'alert'  => __( 'New alerts only', 'lw-scan' ),
-								'review' => __( 'New alerts + review items', 'lw-scan' ),
-							],
-							__( 'No "all clear" e-mails. After three consecutive failed runs one warning is sent, then silence until a run succeeds.', 'lw-scan' )
-						);
-						?>
-					</td>
-				</tr>
-				<tr>
-					<th scope="row"><?php esc_html_e( 'Admin notice', 'lw-scan' ); ?></th>
-					<td><?php $this->render_toggle( 'admin_notice', __( 'Show a persistent notice while new alerts exist', 'lw-scan' ) ); ?></td>
 				</tr>
 			</table>
 		</div>

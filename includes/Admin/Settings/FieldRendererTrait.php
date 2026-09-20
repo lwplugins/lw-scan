@@ -72,8 +72,9 @@ trait FieldRendererTrait {
 	}
 
 	protected function render_toggle( string $key, string $label, string $description = '' ): void {
+		// The hidden companion makes an unchecked box post "0" — see Admin\SettingsSanitizer on why absent must mean "not this form's".
 		printf(
-			'<label class="lw-scan-toggle"><input type="checkbox" class="lw-scan-switch" name="%1$s" value="1" %3$s /> <span>%2$s</span></label>',
+			'<input type="hidden" name="%1$s" value="0" /><label class="lw-scan-toggle"><input type="checkbox" class="lw-scan-switch" name="%1$s" value="1" %3$s /> <span>%2$s</span></label>',
 			esc_attr( $this->field_name( $key ) ),
 			esc_html( $label ),
 			checked( (bool) Options::get( $key ), true, false )

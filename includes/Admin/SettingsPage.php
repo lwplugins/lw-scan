@@ -12,6 +12,7 @@ namespace LightweightPlugins\Scan\Admin;
 use LightweightPlugins\Scan\Admin\Settings\TabFindings;
 use LightweightPlugins\Scan\Admin\Settings\TabHealth;
 use LightweightPlugins\Scan\Admin\Settings\TabInterface;
+use LightweightPlugins\Scan\Admin\Settings\TabNotifications;
 use LightweightPlugins\Scan\Admin\Settings\TabScan;
 use LightweightPlugins\Scan\Admin\Settings\TabSettings;
 use LightweightPlugins\Scan\Admin\Settings\TabStatus;
@@ -20,12 +21,13 @@ use LightweightPlugins\Scan\Options;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Spec §11.1: one submenu page under the shared "LW Plugins" menu, five
+ * Spec §11.1: one submenu page under the shared "LW Plugins" menu, six
  * tabs routed by `?tab=`, and the assets loaded on this screen only. The
- * Save button — and the `options.php` form around it — exists on the
- * `settings` tab alone; Scan, Findings and Health are read/act views
- * driven by AJAX, and Status posts its own two small forms to
- * `admin-post.php` (`Admin\Post\StatusEndpointHandler`).
+ * Save button — and the `options.php` form around it — belongs to the
+ * `settings` and `notifications` tabs; Scan, Findings and Health are
+ * read/act views driven by AJAX, and Status posts its own two small forms
+ * to `admin-post.php` (`Admin\Post\StatusEndpointHandler`), as does the
+ * Notifications tab's test e-mail (`Admin\Post\NotifyTestHandler`).
  */
 final class SettingsPage {
 
@@ -47,6 +49,7 @@ final class SettingsPage {
 		$this->tabs = [
 			new TabScan(),
 			new TabFindings(),
+			new TabNotifications(),
 			new TabSettings(),
 			new TabHealth(),
 			new TabStatus(),
@@ -174,7 +177,7 @@ final class SettingsPage {
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only navigation parameter; it selects a panel and changes nothing.
 		$tab = isset( $_GET['tab'] ) ? sanitize_key( wp_unslash( $_GET['tab'] ) ) : '';
 
-		return in_array( $tab, [ 'scan', 'findings', 'settings', 'health', 'status' ], true ) ? $tab : 'scan';
+		return in_array( $tab, [ 'scan', 'findings', 'notifications', 'settings', 'health', 'status' ], true ) ? $tab : 'scan';
 	}
 
 	/**

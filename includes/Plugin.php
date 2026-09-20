@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace LightweightPlugins\Scan;
 
 use LightweightPlugins\Scan\Admin\Ajax\Handlers;
+use LightweightPlugins\Scan\Admin\Post\NotifyTestHandler;
 use LightweightPlugins\Scan\Admin\Post\StatusEndpointHandler;
 use LightweightPlugins\Scan\Admin\SettingsPage;
 use LightweightPlugins\Scan\CLI\Commands;
@@ -75,6 +76,7 @@ final class Plugin {
 			SettingsPage::register();
 			Handlers::register();
 			StatusEndpointHandler::register();
+			NotifyTestHandler::register();
 		}
 
 		if ( defined( 'WP_CLI' ) && WP_CLI ) {
