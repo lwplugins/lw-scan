@@ -57,6 +57,7 @@ final class Commands {
 		WP_CLI::add_command( 'lw-scan index', IndexCommand::class );
 		WP_CLI::add_command( 'lw-scan stop', StopCommand::class );
 		WP_CLI::add_command( 'lw-scan endpoint', EndpointCommand::class );
+		WP_CLI::add_command( 'lw-scan notify', NotifyCommand::class );
 
 		self::state( 'ack', 'acknowledged', 'Acknowledge findings: seen, decided, no longer new.' );
 		self::state( 'ignore', 'ignored', 'Ignore findings: do not report them again.' );

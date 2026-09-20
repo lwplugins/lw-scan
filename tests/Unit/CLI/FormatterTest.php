@@ -323,4 +323,72 @@ final class FormatterTest extends MonkeyTestCase {
 
 		$this->assertSame( 'none', $values['key'] );
 	}
+	/**
+	 * @param array<string, mixed> $overrides
+	 * @return array{enabled:bool, level:string, recipients:string[], uses_admin_email:bool, limit:int, baseline:bool}
+	 */
+	private function notify_status( array $overrides = [] ): array {
+		/** @var array{enabled:bool, level:string, recipients:string[], uses_admin_email:bool, limit:int, baseline:bool} $status */
+		$status = array_merge(
+			[
+				'enabled'          => true,
+				'level'            => 'alerts',
+				'recipients'       => [ 'ops@example.test' ],
+				'uses_admin_email' => false,
+				'limit'            => 20,
+				'baseline'         => true,
+			],
+			$overrides
+		);
+
+		return $status;
+	}
+
+	public function test_notify_summary_reads_as_one_sentence(): void {
+		$this->assertSame(
+			'Notifications: on, new alerts only, to ops@example.test, up to 20 items per e-mail, baseline taken',
+			Formatter::notify_summary( $this->notify_status() )
+		);
+	}
+
+	public function test_notify_summary_names_the_admin_fallback_and_the_missing_baseline(): void {
+		$line = Formatter::notify_summary(
+			$this->notify_status(
+				[
+					'enabled'          => false,
+					'level'            => 'review',
+					'recipients'       => [ 'admin@example.test' ],
+					'uses_admin_email' => true,
+					'limit'            => 0,
+					'baseline'         => false,
+				]
+			)
+		);
+
+		$this->assertSame(
+			'Notifications: off, new alerts + review items, to the site admin (admin@example.test), all items per e-mail, baseline not taken yet',
+			$line
+		);
+	}
+
+	public function test_notify_summary_says_nobody_when_there_is_no_address_at_all(): void {
+		$line = Formatter::notify_summary( $this->notify_status( [ 'recipients' => [] ] ) );
+
+		$this->assertStringContainsString( 'to nobody', $line );
+	}
+
+	public function test_notify_status_rows_are_shaped_for_format_items(): void {
+		foreach ( Formatter::notify_status_rows( $this->notify_status() ) as $row ) {
+			$this->assertSame( Formatter::SUMMARY_COLUMNS, array_keys( $row ) );
+			$this->assertIsString( $row['value'] );
+		}
+	}
+
+	public function test_notify_status_rows_carry_the_switch_and_the_cap(): void {
+		$values = $this->by_metric( Formatter::notify_status_rows( $this->notify_status( [ 'enabled' => false, 'limit' => 0 ] ) ) );
+
+		$this->assertSame( 'off', $values['e-mail'] );
+		$this->assertSame( 'all items', $values['per e-mail'] );
+		$this->assertSame( 'taken', $values['baseline'] );
+	}
 }

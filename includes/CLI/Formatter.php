@@ -165,6 +165,75 @@ final class Formatter {
 	}
 
 	/**
+	 * The one-line summary `wp lw-scan notify status` prints by default.
+	 *
+	 * @param array{enabled:bool, level:string, recipients:string[], uses_admin_email:bool, limit:int, baseline:bool} $status `CLI\NotifyCli::status()` output.
+	 */
+	public static function notify_summary( array $status ): string {
+		return sprintf(
+			'Notifications: %s, %s, to %s, %s per e-mail, baseline %s',
+			$status['enabled'] ? 'on' : 'off',
+			self::notify_level_label( $status['level'] ),
+			self::notify_recipients( $status ),
+			self::notify_limit( $status['limit'] ),
+			$status['baseline'] ? 'taken' : 'not taken yet'
+		);
+	}
+
+	/**
+	 * The same facts as `notify_summary()`, as metric/value rows for
+	 * `wp lw-scan notify status --format=<table|json|yaml>`.
+	 *
+	 * @param array{enabled:bool, level:string, recipients:string[], uses_admin_email:bool, limit:int, baseline:bool} $status `CLI\NotifyCli::status()` output.
+	 * @return array<int, array{metric:string, value:string}>
+	 */
+	public static function notify_status_rows( array $status ): array {
+		return self::metric_rows(
+			[
+				'e-mail'     => $status['enabled'] ? 'on' : 'off',
+				'level'      => self::notify_level_label( $status['level'] ),
+				'recipients' => self::notify_recipients( $status ),
+				'per e-mail' => self::notify_limit( $status['limit'] ),
+				'baseline'   => $status['baseline'] ? 'taken' : 'not taken yet',
+			]
+		);
+	}
+
+	/**
+	 * What a notify level means, spelled out as the Notifications tab
+	 * spells it. The one place either the command's messages or its tables
+	 * get the wording from.
+	 *
+	 * @param string $level `alerts`|`review`, as `CLI\NotifyCli` reports it.
+	 */
+	public static function notify_level_label( string $level ): string {
+		return 'review' === $level ? 'new alerts + review items' : 'new alerts only';
+	}
+
+	/**
+	 * Who mail reaches, saying out loud when that is the site's admin
+	 * address because nothing was configured.
+	 *
+	 * @param array{recipients:string[], uses_admin_email:bool} $status `CLI\NotifyCli::status()` output.
+	 */
+	private static function notify_recipients( array $status ): string {
+		if ( [] === $status['recipients'] ) {
+			return 'nobody';
+		}
+
+		$list = implode( ', ', $status['recipients'] );
+
+		return $status['uses_admin_email'] ? sprintf( 'the site admin (%s)', $list ) : $list;
+	}
+
+	/**
+	 * @param int $limit Findings one e-mail may list, 0 for all of them.
+	 */
+	private static function notify_limit( int $limit ): string {
+		return 0 === $limit ? 'all items' : sprintf( 'up to %d items', $limit );
+	}
+
+	/**
 	 * A timestamp as UTC, or a dash when there is none.
 	 *
 	 * @param int $ts Unix timestamp; 0 means "never".
