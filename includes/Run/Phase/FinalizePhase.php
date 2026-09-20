@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace LightweightPlugins\Scan\Run\Phase;
 
 use LightweightPlugins\Scan\Findings\Severity;
+use LightweightPlugins\Scan\Notify\Baseline;
 use LightweightPlugins\Scan\Options;
 use LightweightPlugins\Scan\Run\Context;
 use LightweightPlugins\Scan\Run\Cursor;
@@ -29,6 +30,11 @@ defined( 'ABSPATH' ) || exit;
  * rather than accumulated per phase: `FilesPhase` only ever counted its own
  * `file` findings, so the run stats disagreed with `wp lw-scan status` and
  * HelloPack by exactly the integrity/db/vulnerability findings.
+ *
+ * Notifying is gated on `Notify\Baseline`: the first completed run on a site
+ * that has never mailed is a baseline, not an incident, so it records its
+ * findings and sends nothing. The same `State::merge()` that closes the run
+ * out writes the flag, so a finished run still costs one state write.
  */
 final class FinalizePhase implements PhaseInterface {
 
@@ -49,11 +55,16 @@ final class FinalizePhase implements PhaseInterface {
 	/** @var callable|null Overrides the Scheduler-backed next_due computation (tests). */
 	private $next_due_provider;
 
+	/** @var Baseline|null First-scan baseline state; built on first use so no constructor touches the database. */
+	private ?Baseline $baseline;
+
 	/**
 	 * @param callable|null $next_due_provider Returns the next due timestamp; defaults to Run\Scheduler when it exists.
+	 * @param Baseline|null $baseline          First-scan baseline state; the State/runs-table-backed one when null.
 	 */
-	public function __construct( ?callable $next_due_provider = null ) {
+	public function __construct( ?callable $next_due_provider = null, ?Baseline $baseline = null ) {
 		$this->next_due_provider = $next_due_provider;
+		$this->baseline          = $baseline;
 	}
 
 	public function run( Context $ctx, callable $deadline ): bool {
@@ -67,7 +78,11 @@ final class FinalizePhase implements PhaseInterface {
 
 		self::count_findings( $ctx, $new );
 
-		if ( [] !== $new && class_exists( self::MAILER ) ) {
+		$baseline = $this->baseline ?? new Baseline();
+
+		// The first completed run on a site that has never mailed is the
+		// baseline: it records what is already there and sends nothing.
+		if ( [] !== $new && $baseline->taken() && class_exists( self::MAILER ) ) {
 			$run = $ctx->runs->get( $ctx->run_id );
 
 			call_user_func( [ self::MAILER, 'send_new_findings' ], is_array( $run ) ? $run : [], $new, $ctx->options );
@@ -85,10 +100,13 @@ final class FinalizePhase implements PhaseInterface {
 		Cursor::clear();
 
 		State::merge(
-			[
-				'last_run_id'     => $ctx->run_id,
-				'last_success_at' => time(),
-			]
+			array_merge(
+				[
+					'last_run_id'     => $ctx->run_id,
+					'last_success_at' => time(),
+				],
+				$baseline->record_finished_run( $ctx->run_id )
+			)
 		);
 
 		$this->reschedule( (string) $cursor->get( 'trigger', '' ) );

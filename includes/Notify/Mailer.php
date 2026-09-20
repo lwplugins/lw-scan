@@ -25,6 +25,16 @@ defined( 'ABSPATH' ) || exit;
  * vulnerability finding's reason is "Some Plugin XSS — installed 1.0,
  * patched in 1.1", so a line separated the same way cannot be split back
  * into its parts by eye or by anything else.
+ *
+ * Both triggers answer to the Notifications tab's switch (`Preferences`):
+ * off means no scan e-mail at all, the failure-streak warning included.
+ * `send_test()` is the exception — an explicit click on "Send a test
+ * e-mail" is asking whether delivery works, which is a fair question to ask
+ * while notifications are off.
+ *
+ * The body is capped (`notify_limit`, 20 by default) while the subject
+ * keeps the true total: a first scan on an existing site surfaces the whole
+ * backlog at once, and a wall of 78 lines in an inbox is not a report.
  */
 final class Mailer {
 
@@ -32,8 +42,9 @@ final class Mailer {
 
 	/**
 	 * Mails the recipients about the new findings from one run, filtered
-	 * by `options['notify_level']`. Sends nothing (and returns false) when
-	 * the filtered list, or the recipient list, is empty.
+	 * by the configured level. Sends nothing (and returns false) when
+	 * notifications are off, or the filtered list, or the recipient list,
+	 * is empty.
 	 *
 	 * @param array<string, mixed>             $run      Run row (unused; kept for interface symmetry with send_failure_streak()).
 	 * @param array<int, array<string, mixed>> $findings New findings, as returned by FindingsRepository::new_since().
@@ -43,26 +54,27 @@ final class Mailer {
 	public static function send_new_findings( array $run, array $findings, array $options ): bool {
 		unset( $run );
 
-		$level    = (string) ( $options['notify_level'] ?? 'alert' );
-		$filtered = self::filter_by_level( $findings, $level );
+		$prefs = new Preferences( $options );
+
+		if ( ! $prefs->enabled() ) {
+			return false;
+		}
+
+		$filtered = self::filter_by_level( $findings, $prefs->level() );
 
 		if ( [] === $filtered ) {
 			return false;
 		}
 
-		$to = self::recipients( $options );
+		$to = $prefs->recipients();
 
 		if ( [] === $to ) {
 			return false;
 		}
 
-		$count   = count( $filtered );
-		$subject = self::subject( (string) get_bloginfo( 'name' ), $level, $count );
+		$subject = self::subject( (string) get_bloginfo( 'name' ), $prefs->level(), count( $filtered ) );
 
-		$lines = array_map( [ self::class, 'format_finding_line' ], $filtered );
-		$body  = implode( "\n", $lines ) . "\n\n" . self::findings_link();
-
-		return (bool) wp_mail( $to, $subject, $body );
+		return (bool) wp_mail( $to, $subject, self::findings_body( $filtered, $prefs->limit() ) );
 	}
 
 	/**
@@ -74,7 +86,13 @@ final class Mailer {
 	 * @return bool Whether wp_mail() reported success.
 	 */
 	public static function send_failure_streak( array $run, array $options ): bool {
-		$to = self::recipients( $options );
+		$prefs = new Preferences( $options );
+
+		if ( ! $prefs->enabled() ) {
+			return false;
+		}
+
+		$to = $prefs->recipients();
 
 		if ( [] === $to ) {
 			return false;
@@ -95,6 +113,58 @@ final class Mailer {
 			. self::findings_link();
 
 		return (bool) wp_mail( $to, $subject, $body );
+	}
+
+	/**
+	 * Mails the configured recipients a short message proving delivery
+	 * works, from the Notifications tab's button. Sends whatever the
+	 * switch says: the question it answers is whether `wp_mail()` reaches
+	 * the address at all.
+	 *
+	 * @param array<string, mixed> $options Plugin options (Options::all()).
+	 * @return bool Whether wp_mail() reported success.
+	 */
+	public static function send_test( array $options ): bool {
+		$to = ( new Preferences( $options ) )->recipients();
+
+		if ( [] === $to ) {
+			return false;
+		}
+
+		$subject = sprintf(
+			/* translators: %s: site name. */
+			__( '[%s] LW Scan: test e-mail', 'lw-scan' ),
+			(string) get_bloginfo( 'name' )
+		);
+
+		$body = __( 'This is a test e-mail from LW Scan. Notification e-mails reach this address.', 'lw-scan' )
+			. "\n\n" . self::notifications_link();
+
+		return (bool) wp_mail( $to, $subject, $body );
+	}
+
+	/**
+	 * The plain-text body of a new-findings e-mail: one line per finding up
+	 * to the cap, then what the cap left out, then the link to the
+	 * Findings tab.
+	 *
+	 * @param array<int, array<string, mixed>> $findings Findings already filtered by level.
+	 * @param int                              $limit    Maximum lines, 0 for all of them.
+	 */
+	private static function findings_body( array $findings, int $limit ): string {
+		$shown = $limit > 0 ? array_slice( $findings, 0, $limit ) : $findings;
+		$rest  = count( $findings ) - count( $shown );
+		$lines = array_map( [ self::class, 'format_finding_line' ], $shown );
+
+		if ( $rest > 0 ) {
+			$lines[] = sprintf(
+				/* translators: %d: number of new findings the e-mail did not list. */
+				__( '… and %d more — see the Findings tab', 'lw-scan' ),
+				$rest
+			);
+		}
+
+		return implode( "\n", $lines ) . "\n\n" . self::findings_link();
 	}
 
 	/**
@@ -207,35 +277,11 @@ final class Mailer {
 		);
 	}
 
-	/**
-	 * The recipient list: `options['notify_emails']` when non-empty,
-	 * otherwise the site's admin_email, filtered down to addresses
-	 * is_email() accepts.
-	 *
-	 * @param array<string, mixed> $options Plugin options.
-	 * @return string[]
-	 */
-	private static function recipients( array $options ): array {
-		$emails = $options['notify_emails'] ?? [];
-
-		if ( ! is_array( $emails ) || [] === $emails ) {
-			$admin  = get_option( 'admin_email' );
-			$emails = false !== $admin ? [ $admin ] : [];
-		}
-
-		$valid = [];
-		foreach ( $emails as $email ) {
-			$email = (string) $email;
-
-			if ( is_email( $email ) ) {
-				$valid[] = $email;
-			}
-		}
-
-		return array_values( array_unique( $valid ) );
-	}
-
 	private static function findings_link(): string {
 		return (string) admin_url( 'admin.php?page=lw-scan&tab=findings' );
+	}
+
+	private static function notifications_link(): string {
+		return (string) admin_url( 'admin.php?page=lw-scan&tab=notifications' );
 	}
 }

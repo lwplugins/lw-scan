@@ -29,8 +29,10 @@ final class OptionsTest extends MonkeyTestCase {
 				'max_file_size',
 				'excluded_paths',
 				'follow_symlinks',
+				'notify_enabled',
 				'notify_emails',
 				'notify_level',
+				'notify_limit',
 				'admin_notice',
 				'next_due',
 				'last_auto_run',
@@ -58,8 +60,10 @@ final class OptionsTest extends MonkeyTestCase {
 			$defaults['excluded_paths']
 		);
 		$this->assertFalse( $defaults['follow_symlinks'] );
+		$this->assertTrue( $defaults['notify_enabled'] );
 		$this->assertSame( [], $defaults['notify_emails'] );
 		$this->assertSame( 'alert', $defaults['notify_level'] );
+		$this->assertSame( 20, $defaults['notify_limit'] );
 		$this->assertTrue( $defaults['admin_notice'] );
 		$this->assertSame( 0, $defaults['next_due'] );
 		$this->assertSame( 0, $defaults['last_auto_run'] );

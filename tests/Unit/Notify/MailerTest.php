@@ -258,4 +258,192 @@ final class MailerTest extends MonkeyTestCase {
 
 		$this->assertFalse( Mailer::send_failure_streak( [ 'error' => 'x' ], [ 'notify_emails' => [] ] ) );
 	}
+
+	public function test_the_off_switch_sends_no_finding_mail_at_all(): void {
+		Functions\expect( 'wp_mail' )->never();
+
+		$options = [
+			'notify_enabled' => false,
+			'notify_level'   => 'alert',
+			'notify_emails'  => [ 'a@example.test' ],
+		];
+
+		$this->assertFalse( Mailer::send_new_findings( [], [ self::finding() ], $options ) );
+	}
+
+	public function test_the_off_switch_stops_the_failure_streak_warning_too(): void {
+		Functions\expect( 'wp_mail' )->never();
+
+		$options = [
+			'notify_enabled' => false,
+			'notify_emails'  => [ 'a@example.test' ],
+		];
+
+		$this->assertFalse( Mailer::send_failure_streak( [ 'error' => 'disk full' ], $options ) );
+	}
+
+	/**
+	 * @param int $count How many alert findings to build.
+	 * @return array<int, array<string, mixed>>
+	 */
+	private static function alerts( int $count ): array {
+		$findings = [];
+
+		for ( $i = 0; $i < $count; $i++ ) {
+			$findings[] = self::finding( [ 'locator' => 'wp-content/uploads/x' . $i . '.php' ] );
+		}
+
+		return $findings;
+	}
+
+	public function test_the_cap_shortens_the_body_but_not_the_subject(): void {
+		$seen = null;
+
+		Functions\when( 'wp_mail' )->alias(
+			static function ( $to, $subject, $body ) use ( &$seen ) {
+				unset( $to );
+				$seen = [ $subject, $body ];
+
+				return true;
+			}
+		);
+
+		Mailer::send_new_findings(
+			[],
+			self::alerts( 78 ),
+			[
+				'notify_level'  => 'alert',
+				'notify_limit'  => 10,
+				'notify_emails' => [ 'a@example.test' ],
+			]
+		);
+
+		[ $subject, $body ] = $seen;
+
+		$this->assertSame( '[Example Site] LW Scan: 78 new alerts', $subject, 'The subject must keep the true total.' );
+		$this->assertStringContainsString( 'wp-content/uploads/x9.php', $body );
+		$this->assertStringNotContainsString( 'wp-content/uploads/x10.php', $body );
+		$this->assertStringContainsString( '… and 68 more — see the Findings tab', $body );
+		$this->assertStringContainsString( 'page=lw-scan&tab=findings', $body );
+	}
+
+	public function test_the_default_cap_is_twenty_when_the_option_is_missing(): void {
+		$seen = '';
+
+		Functions\when( 'wp_mail' )->alias(
+			static function ( $to, $subject, $body ) use ( &$seen ) {
+				unset( $to, $subject );
+				$seen = (string) $body;
+
+				return true;
+			}
+		);
+
+		Mailer::send_new_findings(
+			[],
+			self::alerts( 25 ),
+			[
+				'notify_level'  => 'alert',
+				'notify_emails' => [ 'a@example.test' ],
+			]
+		);
+
+		$this->assertStringContainsString( 'wp-content/uploads/x19.php', $seen );
+		$this->assertStringNotContainsString( 'wp-content/uploads/x20.php', $seen );
+		$this->assertStringContainsString( '… and 5 more', $seen );
+	}
+
+	public function test_the_all_cap_lists_every_finding_and_adds_no_tail_line(): void {
+		$seen = '';
+
+		Functions\when( 'wp_mail' )->alias(
+			static function ( $to, $subject, $body ) use ( &$seen ) {
+				unset( $to, $subject );
+				$seen = (string) $body;
+
+				return true;
+			}
+		);
+
+		Mailer::send_new_findings(
+			[],
+			self::alerts( 25 ),
+			[
+				'notify_level'  => 'alert',
+				'notify_limit'  => 0,
+				'notify_emails' => [ 'a@example.test' ],
+			]
+		);
+
+		$this->assertStringContainsString( 'wp-content/uploads/x24.php', $seen );
+		$this->assertStringNotContainsString( 'more — see the Findings tab', $seen );
+	}
+
+	public function test_a_list_shorter_than_the_cap_adds_no_tail_line(): void {
+		$seen = '';
+
+		Functions\when( 'wp_mail' )->alias(
+			static function ( $to, $subject, $body ) use ( &$seen ) {
+				unset( $to, $subject );
+				$seen = (string) $body;
+
+				return true;
+			}
+		);
+
+		Mailer::send_new_findings(
+			[],
+			self::alerts( 3 ),
+			[
+				'notify_level'  => 'alert',
+				'notify_limit'  => 10,
+				'notify_emails' => [ 'a@example.test' ],
+			]
+		);
+
+		$this->assertStringNotContainsString( 'more — see the Findings tab', $seen );
+	}
+
+	public function test_send_test_mails_the_configured_recipients(): void {
+		Functions\when( 'wp_mail' )->alias(
+			function ( $to, $subject, $body ) {
+				$this->assertSame( [ 'a@example.test' ], $to );
+				$this->assertStringContainsString( 'test e-mail', $subject );
+				$this->assertStringContainsString( 'page=lw-scan&tab=notifications', $body );
+
+				return true;
+			}
+		);
+
+		$this->assertTrue( Mailer::send_test( [ 'notify_emails' => [ 'a@example.test' ] ] ) );
+	}
+
+	public function test_send_test_falls_back_to_the_admin_address_and_works_while_switched_off(): void {
+		Functions\when( 'get_option' )->justReturn( 'admin@example.test' );
+
+		Functions\when( 'wp_mail' )->alias(
+			function ( $to, $subject, $body ) {
+				unset( $subject, $body );
+				$this->assertSame( [ 'admin@example.test' ], $to );
+
+				return true;
+			}
+		);
+
+		$this->assertTrue(
+			Mailer::send_test(
+				[
+					'notify_enabled' => false,
+					'notify_emails'  => [],
+				]
+			)
+		);
+	}
+
+	public function test_send_test_returns_false_when_there_is_nobody_to_mail(): void {
+		Functions\expect( 'wp_mail' )->never();
+		Functions\when( 'get_option' )->justReturn( false );
+
+		$this->assertFalse( Mailer::send_test( [ 'notify_emails' => [] ] ) );
+	}
 }

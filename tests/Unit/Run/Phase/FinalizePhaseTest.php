@@ -13,6 +13,7 @@ use Brain\Monkey\Functions;
 use LightweightPlugins\Scan\Db\FilesRepositoryInterface;
 use LightweightPlugins\Scan\Db\FindingsRepositoryInterface;
 use LightweightPlugins\Scan\Db\RunsRepositoryInterface;
+use LightweightPlugins\Scan\Notify\Baseline;
 use LightweightPlugins\Scan\Options;
 use LightweightPlugins\Scan\Run\Context;
 use LightweightPlugins\Scan\Run\Cursor;
@@ -76,6 +77,16 @@ final class FinalizePhaseTest extends MonkeyTestCase {
 			}
 		);
 
+		// The mailer really runs from this phase, so the WordPress calls it
+		// makes have to exist; each notification test says what it expects
+		// of wp_mail() itself.
+		Functions\stubTranslationFunctions();
+		Functions\when( 'is_email' )->alias(
+			static fn ( $email ) => (bool) filter_var( (string) $email, FILTER_VALIDATE_EMAIL )
+		);
+		Functions\when( 'get_bloginfo' )->justReturn( 'Example Site' );
+		Functions\when( 'admin_url' )->alias( static fn ( string $path = '' ) => 'https://example.test/wp-admin/' . $path );
+
 		$this->files    = Mockery::mock( FilesRepositoryInterface::class );
 		$this->findings = Mockery::mock( FindingsRepositoryInterface::class );
 		$this->runs     = Mockery::mock( RunsRepositoryInterface::class );
@@ -130,6 +141,17 @@ final class FinalizePhaseTest extends MonkeyTestCase {
 		};
 	}
 
+	/**
+	 * A phase whose baseline is already behind it: what every test that is
+	 * not about the baseline wants, and what keeps `Baseline`'s own
+	 * runs-table probe — which needs a database — out of their way.
+	 *
+	 * @param callable|null $next_due Overrides the next-due computation.
+	 */
+	private static function phase( ?callable $next_due = null ): FinalizePhase {
+		return new FinalizePhase( $next_due, self::baseline( true ) );
+	}
+
 	public function test_full_scope_deletes_unseen_files_and_their_findings(): void {
 		$this->allow_run_close();
 		$this->files->shouldReceive( 'delete_unseen' )->once()->with( self::RUN_ID )->andReturn( [ 5, 6 ] );
@@ -137,7 +159,7 @@ final class FinalizePhaseTest extends MonkeyTestCase {
 
 		$ctx = $this->context( 'full' );
 
-		$this->assertTrue( ( new FinalizePhase() )->run( $ctx, self::never_due() ) );
+		$this->assertTrue( self::phase()->run( $ctx, self::never_due() ) );
 		$this->assertSame( 2, $ctx->stats->to_array()['files']['deleted'] );
 	}
 
@@ -146,7 +168,7 @@ final class FinalizePhaseTest extends MonkeyTestCase {
 		$this->files->shouldReceive( 'delete_unseen' )->never();
 		$this->findings->shouldReceive( 'delete_for_files' )->never();
 
-		$this->assertTrue( ( new FinalizePhase() )->run( $this->context( 'path' ), self::never_due() ) );
+		$this->assertTrue( self::phase()->run( $this->context( 'path' ), self::never_due() ) );
 	}
 
 	public function test_finalize_finishes_the_run_prunes_history_and_clears_the_cursor(): void {
@@ -155,7 +177,7 @@ final class FinalizePhaseTest extends MonkeyTestCase {
 		$this->runs->shouldReceive( 'finish' )->once()->with( self::RUN_ID, 'done', Mockery::type( 'array' ) )->andReturnNull();
 		$this->runs->shouldReceive( 'prune' )->once()->with( 50 )->andReturnNull();
 
-		( new FinalizePhase() )->run( $this->context( 'changed' ), self::never_due() );
+		self::phase()->run( $this->context( 'changed' ), self::never_due() );
 
 		$this->assertNull( Cursor::load() );
 		$this->assertSame( self::RUN_ID, State::get( 'last_run_id' ) );
@@ -187,7 +209,7 @@ final class FinalizePhaseTest extends MonkeyTestCase {
 		$ctx->stats->inc( 'findings.new' );
 		$ctx->stats->inc( 'findings.alerts_new' );
 
-		( new FinalizePhase() )->run( $ctx, self::never_due() );
+		self::phase()->run( $ctx, self::never_due() );
 
 		$findings = $ctx->stats->to_array()['findings'];
 
@@ -196,11 +218,81 @@ final class FinalizePhaseTest extends MonkeyTestCase {
 		$this->assertSame( 1, $findings['review_new'] );
 	}
 
+	/**
+	 * @param bool $answer What the injected baseline probe reports.
+	 */
+	private static function baseline( bool $answer ): Baseline {
+		return new Baseline(
+			static function () use ( $answer ): bool {
+				return $answer;
+			}
+		);
+	}
+
+	/**
+	 * Two alert findings and a recipient to mail them to, so the only thing
+	 * left deciding whether wp_mail() runs is the baseline.
+	 */
+	private function with_mailable_findings(): void {
+		$this->new_findings = [
+			[
+				'type'     => 'file',
+				'severity' => 'alert',
+				'locator'  => 'wp-content/uploads/a.php',
+			],
+			[
+				'type'     => 'file',
+				'severity' => 'alert',
+				'locator'  => 'wp-content/uploads/b.php',
+			],
+		];
+
+		$this->option_store[ Options::OPTION_NAME ] = [ 'notify_emails' => [ 'ops@example.test' ] ];
+
+		$this->allow_run_close();
+		$this->runs->shouldReceive( 'get' )->andReturn( [] );
+		$this->files->shouldReceive( 'delete_unseen' )->andReturn( [] );
+	}
+
+	public function test_the_first_finished_run_mails_nothing_and_records_the_baseline(): void {
+		Functions\expect( 'wp_mail' )->never();
+		$this->with_mailable_findings();
+
+		( new FinalizePhase( null, self::baseline( false ) ) )->run( $this->context( 'changed' ), self::never_due() );
+
+		$this->assertTrue( State::get( Baseline::DONE_KEY ) );
+		$this->assertSame( self::RUN_ID, State::get( Baseline::RUN_KEY ) );
+	}
+
+	public function test_a_run_after_the_baseline_mails_as_configured(): void {
+		Functions\expect( 'wp_mail' )->once()->andReturn( true );
+		$this->with_mailable_findings();
+
+		( new FinalizePhase( null, self::baseline( true ) ) )->run( $this->context( 'changed' ), self::never_due() );
+	}
+
+	/**
+	 * The migration: an install that has been mailing since 1.0 has no
+	 * baseline flag, and must not be silenced by the upgrade that
+	 * introduced one.
+	 */
+	public function test_an_install_with_an_earlier_finished_run_keeps_mailing_through_the_upgrade(): void {
+		Functions\expect( 'wp_mail' )->once()->andReturn( true );
+		$this->with_mailable_findings();
+
+		State::set( 'last_success_at', 1789000000 );
+
+		// No injected probe: this is Baseline's own State-first migration.
+		( new FinalizePhase() )->run( $this->context( 'changed' ), self::never_due() );
+
+		$this->assertNull( State::get( Baseline::RUN_KEY ), 'An already-mailing site has no baseline run to record.' );
+	}
+
 	public function test_next_due_is_refreshed_for_a_cron_trigger(): void {
 		$this->allow_run_close();
 		$this->files->shouldReceive( 'delete_unseen' )->andReturn( [] );
 
-		$phase = new FinalizePhase(
+		$phase = self::phase(
 			static function (): int {
 				return 1234;
 			}
@@ -217,7 +309,7 @@ final class FinalizePhaseTest extends MonkeyTestCase {
 		$this->allow_run_close();
 		$this->files->shouldReceive( 'delete_unseen' )->andReturn( [] );
 
-		$phase = new FinalizePhase(
+		$phase = self::phase(
 			static function (): int {
 				return 1234;
 			}

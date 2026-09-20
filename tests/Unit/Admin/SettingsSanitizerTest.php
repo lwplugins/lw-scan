@@ -45,6 +45,9 @@ final class SettingsSanitizerTest extends MonkeyTestCase {
 			static fn ( $value ): string => trim( strip_tags( (string) $value ) )
 		);
 		Functions\when( 'absint' )->alias( static fn ( $value ): int => abs( (int) $value ) );
+		Functions\when( 'sanitize_key' )->alias(
+			static fn ( $value ): string => (string) preg_replace( '/[^a-z0-9_\-]/', '', strtolower( (string) $value ) )
+		);
 		Functions\when( 'is_email' )->alias(
 			static fn ( $value ) => false !== filter_var( (string) $value, FILTER_VALIDATE_EMAIL ) ? (string) $value : false
 		);
@@ -111,13 +114,75 @@ final class SettingsSanitizerTest extends MonkeyTestCase {
 		$this->assertSame( 524288, SettingsSanitizer::sanitize( [ 'max_file_size' => '524288' ] )['max_file_size'] );
 	}
 
-	public function test_booleans_are_off_when_the_checkbox_is_absent(): void {
-		$out = SettingsSanitizer::sanitize( [] );
+	/**
+	 * Every checkbox renders a hidden `0` companion, so an unchecked box
+	 * still posts its key — which is what lets an absent key mean "another
+	 * tab's form posted this, leave it alone".
+	 */
+	public function test_booleans_are_off_when_the_checkbox_posts_zero(): void {
+		$out = SettingsSanitizer::sanitize(
+			[
+				'bundle_auto_update' => '0',
+				'heuristics'         => '0',
+				'follow_symlinks'    => '0',
+				'admin_notice'       => '0',
+			]
+		);
 
 		$this->assertFalse( $out['bundle_auto_update'] );
 		$this->assertFalse( $out['heuristics'] );
 		$this->assertFalse( $out['follow_symlinks'] );
 		$this->assertFalse( $out['admin_notice'] );
+	}
+
+	/**
+	 * Settings and Notifications are two forms over one option row. Saving
+	 * one must not switch off the other's checkboxes.
+	 */
+	public function test_booleans_absent_from_the_form_keep_the_stored_value(): void {
+		$this->stored['heuristics']   = true;
+		$this->stored['admin_notice'] = true;
+
+		$out = SettingsSanitizer::sanitize( [ 'notify_send' => 'alert' ] );
+
+		$this->assertTrue( $out['heuristics'], 'Saving the Notifications tab must not disable the heuristic layer.' );
+		$this->assertTrue( $out['admin_notice'] );
+	}
+
+	public function test_the_send_control_maps_off_to_the_switch_without_losing_the_level(): void {
+		$out = SettingsSanitizer::sanitize( [ 'notify_send' => 'off' ] );
+
+		$this->assertFalse( $out['notify_enabled'] );
+		$this->assertSame( 'review', $out['notify_level'], 'Switching off must remember the level for when it is switched back on.' );
+	}
+
+	public function test_the_send_control_maps_a_level_to_the_switch_and_the_level(): void {
+		$out = SettingsSanitizer::sanitize( [ 'notify_send' => 'alert' ] );
+
+		$this->assertTrue( $out['notify_enabled'] );
+		$this->assertSame( 'alert', $out['notify_level'] );
+	}
+
+	public function test_an_unknown_send_control_value_changes_nothing(): void {
+		$this->stored['notify_enabled'] = true;
+
+		$out = SettingsSanitizer::sanitize( [ 'notify_send' => 'sometimes' ] );
+
+		$this->assertTrue( $out['notify_enabled'] );
+		$this->assertSame( 'review', $out['notify_level'] );
+	}
+
+	public function test_the_send_control_is_not_stored_as_an_option(): void {
+		$this->assertArrayNotHasKey( 'notify_send', SettingsSanitizer::sanitize( [ 'notify_send' => 'off' ] ) );
+	}
+
+	public function test_notify_limit_accepts_only_the_offered_caps(): void {
+		$this->stored['notify_limit'] = 50;
+
+		$this->assertSame( 10, SettingsSanitizer::sanitize( [ 'notify_limit' => '10' ] )['notify_limit'] );
+		$this->assertSame( 0, SettingsSanitizer::sanitize( [ 'notify_limit' => '0' ] )['notify_limit'] );
+		$this->assertSame( 50, SettingsSanitizer::sanitize( [ 'notify_limit' => '33' ] )['notify_limit'] );
+		$this->assertSame( 50, SettingsSanitizer::sanitize( [] )['notify_limit'], 'An absent cap belongs to the other tab\'s form.' );
 	}
 
 	public function test_excluded_paths_are_normalized_and_deduplicated(): void {

@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\Scan\Admin;
 
+use LightweightPlugins\Scan\Notify\Preferences;
 use LightweightPlugins\Scan\Options;
 
 defined( 'ABSPATH' ) || exit;
@@ -41,6 +42,19 @@ defined( 'ABSPATH' ) || exit;
  * save can never drop the marker and send the site through an upgrade it
  * has already done. Moving the `Upgrader` call to a later hook would break
  * that: the carry would swallow its write.
+ *
+ * Since 1.3.0 the options row is written by two forms — the Settings tab and
+ * the Notifications tab — so "absent" has to keep meaning "not mine". Every
+ * checkbox renders a hidden `0` companion (`FieldRendererTrait`), so a form
+ * that owns a boolean always posts it, and a boolean that does not arrive is
+ * carried over instead of being read as unchecked. Without that, saving
+ * Notifications would switch the heuristic layer off, and saving Settings
+ * would switch notifications off.
+ *
+ * `notify_send` is the one field that is not an option: the Notifications
+ * tab's three-state control posts it as `off|alert|review`, and
+ * `normalize_send()` decomposes it into the switch and the level. Keeping
+ * them apart is what lets "Off" remember the level to come back to.
  */
 final class SettingsSanitizer {
 
@@ -50,8 +64,8 @@ final class SettingsSanitizer {
 	/** Values `scope` may take from the settings form (spec §4.4). */
 	private const SCOPES = [ 'changed', 'full', 'db' ];
 
-	/** Values `notify_level` may take. */
-	private const NOTIFY_LEVELS = [ 'alert', 'review' ];
+	/** The Notifications tab's three-state control; not an option of its own. */
+	public const SEND_FIELD = 'notify_send';
 
 	/** Per-file byte limits offered by the form. */
 	private const FILE_SIZES = [ 524288, 1048576, 2097152, 5242880, 10485760 ];
@@ -67,7 +81,7 @@ final class SettingsSanitizer {
 	 * @return array<string, mixed>
 	 */
 	public static function sanitize( $input ): array {
-		$input     = is_array( $input ) ? $input : [];
+		$input     = self::normalize_send( is_array( $input ) ? $input : [] );
 		$current   = Options::stored();
 		$sanitized = [];
 
@@ -93,6 +107,38 @@ final class SettingsSanitizer {
 	}
 
 	/**
+	 * Turns the Notifications tab's `notify_send` control into the two
+	 * options behind it, and drops the field itself — it is never stored.
+	 * An unrecognised value (or none) leaves both options to the ordinary
+	 * "absent means keep what we had" path.
+	 *
+	 * @param array<string, mixed> $input Submitted values.
+	 * @return array<string, mixed>
+	 */
+	private static function normalize_send( array $input ): array {
+		if ( ! array_key_exists( self::SEND_FIELD, $input ) ) {
+			return $input;
+		}
+
+		$send = sanitize_key( (string) $input[ self::SEND_FIELD ] );
+
+		unset( $input[ self::SEND_FIELD ] );
+
+		if ( 'off' === $send ) {
+			$input['notify_enabled'] = '0';
+
+			return $input;
+		}
+
+		if ( in_array( $send, Preferences::LEVELS, true ) ) {
+			$input['notify_enabled'] = '1';
+			$input['notify_level']   = $send;
+		}
+
+		return $input;
+	}
+
+	/**
 	 * @param string $key      Option key.
 	 * @param mixed  $default  Default value, which also declares the type.
 	 * @param mixed  $fallback Currently stored value.
@@ -101,7 +147,15 @@ final class SettingsSanitizer {
 	 */
 	private static function value( string $key, $default, $fallback, $value ) {
 		if ( is_bool( $default ) ) {
-			return ! empty( $value );
+			// Absent means the posting form does not own this checkbox: an
+			// unchecked one posts "0" through its hidden companion.
+			return null === $value ? (bool) $fallback : ! empty( $value );
+		}
+
+		if ( 'notify_limit' === $key ) {
+			return null === $value || ! in_array( (int) $value, Preferences::LIMIT_CHOICES, true )
+				? (int) $fallback
+				: (int) $value;
 		}
 
 		if ( 'excluded_paths' === $key ) {
@@ -136,7 +190,7 @@ final class SettingsSanitizer {
 		$allowed = [
 			'schedule'     => self::SCHEDULES,
 			'scope'        => self::SCOPES,
-			'notify_level' => self::NOTIFY_LEVELS,
+			'notify_level' => Preferences::LEVELS,
 		];
 
 		$submitted = null === $value ? '' : sanitize_text_field( (string) $value );
