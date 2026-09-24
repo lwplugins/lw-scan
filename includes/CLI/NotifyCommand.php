@@ -16,7 +16,7 @@ use WP_CLI\Utils;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * The Notifications tab (`Admin\Settings\TabNotifications`) as a command:
+ * The Notifications tab (`Rest\SettingsController`) as a command:
  * the same options underneath (through `NotifyCli`), so a CLI call and an
  * admin-screen save leave identical state.
  *

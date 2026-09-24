@@ -9,14 +9,12 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\Scan;
 
-use LightweightPlugins\Scan\Admin\Ajax\Handlers;
-use LightweightPlugins\Scan\Admin\Post\NotifyTestHandler;
-use LightweightPlugins\Scan\Admin\Post\StatusEndpointHandler;
 use LightweightPlugins\Scan\Admin\SettingsPage;
 use LightweightPlugins\Scan\CLI\Commands;
 use LightweightPlugins\Scan\Db\Schema;
 use LightweightPlugins\Scan\HelloPack\StatusCheck;
 use LightweightPlugins\Scan\Notify\AdminNotice;
+use LightweightPlugins\Scan\Rest\Routes;
 use LightweightPlugins\Scan\Run\CatchUp;
 use LightweightPlugins\Scan\Run\Scheduler;
 use LightweightPlugins\Scan\SiteManager\Abilities;
@@ -47,7 +45,12 @@ final class Plugin {
 	 * - Run\Scheduler                the two WP-Cron hooks and the
 	 *                                settings-save reschedule
 	 * - Run\CatchUp                  the missed-schedule recovery, on `init`
-	 * - Admin\*                      is_admin() only
+	 * - Admin\SettingsPage, AdminNotice  is_admin() only: the menu entry,
+	 *                                the React mount point and its assets
+	 * - Rest\Routes                  the React admin's `lw-scan/v1`
+	 *                                routes, on `rest_api_init` — every
+	 *                                request type, since REST requests are
+	 *                                not admin requests
 	 * - CLI\Commands                 WP_CLI only
 	 * - SiteManager\Abilities        the four `lw-scan/*` abilities
 	 * - HelloPack\StatusCheck        the `lw_scan` status check
@@ -74,10 +77,9 @@ final class Plugin {
 		if ( is_admin() ) {
 			AdminNotice::register();
 			SettingsPage::register();
-			Handlers::register();
-			StatusEndpointHandler::register();
-			NotifyTestHandler::register();
 		}
+
+		Routes::register();
 
 		if ( defined( 'WP_CLI' ) && WP_CLI ) {
 			Commands::register();

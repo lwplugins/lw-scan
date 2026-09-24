@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\Scan\CLI;
 
-use LightweightPlugins\Scan\Admin\Ajax\AjaxGuard;
+use LightweightPlugins\Scan\Run\ActiveRun;
 use LightweightPlugins\Scan\Run\Cursor;
 use WP_CLI;
 use WP_CLI\Utils;
@@ -17,7 +17,7 @@ use WP_CLI\Utils;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * The CLI counterpart of `Admin\Ajax\AjaxGuardTrait::refuse_if_run_active()`
+ * The CLI counterpart of `Rest\Errors::busy_if_run_active()`
  * — and it reuses the same predicate, so both entry points agree on what
  * "a run is in progress" means. Swapping the signature pack or emptying
  * the file index under a live cursor would invalidate state a running
@@ -36,7 +36,7 @@ final class RunGuard {
 			return;
 		}
 
-		if ( AjaxGuard::run_active( Cursor::load() ) ) {
+		if ( ActiveRun::run_active( Cursor::load() ) ) {
 			WP_CLI::error( 'A scan is in progress. Stop it first or pass --force.', 2 );
 		}
 	}

@@ -20,7 +20,7 @@
 declare(strict_types=1);
 
 const MANIFEST   = 'checksums.json';
-const DIRECTORIES = [ 'includes', 'assets' ];
+const DIRECTORIES = [ 'includes', 'assets', 'build' ];
 const ROOT_FILES = [ 'lw-scan.php', 'uninstall.php' ];
 const EXTENSIONS = [ 'php', 'js', 'css' ];
 

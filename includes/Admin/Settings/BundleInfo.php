@@ -63,4 +63,21 @@ final class BundleInfo {
 			Format::datetime( self::checked_at() )
 		);
 	}
+
+	/**
+	 * The four facts together, for the REST payloads (`GET /scan` hero,
+	 * `GET /health`). `describe` is plain text there: number_format_i18n()
+	 * returns an HTML entity (&nbsp;) as the thousands separator in some
+	 * locales, which a React text node would print literally.
+	 *
+	 * @return array{version:int, count:int, checked_at:int, describe:string}
+	 */
+	public static function summary(): array {
+		return [
+			'version'    => self::version(),
+			'count'      => self::signature_count(),
+			'checked_at' => self::checked_at(),
+			'describe'   => html_entity_decode( self::describe(), ENT_QUOTES | ENT_HTML5, 'UTF-8' ),
+		];
+	}
 }

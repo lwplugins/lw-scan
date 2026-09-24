@@ -16,7 +16,7 @@ use WP_CLI\Utils;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * The Status tab (`Admin\Settings\TabStatus`) as a command: same
+ * The Status tab (`Rest\StatusEndpointController`) as a command: same
  * `Status\EndpointSettings` object underneath (through `EndpointCli`), so
  * a CLI call and an admin-screen click leave identical state. `endpoint`
  * is its own top-level command — not a `status` sub-command — because

@@ -21,8 +21,8 @@ defined( 'ABSPATH' ) || exit;
  * into `WP_CLI::success()`/`::error()`/`::line()` calls.
  *
  * Every write goes through the one `EndpointSettings` instance this class
- * was built with — the same object `Admin\Post\StatusEndpointHandler` and
- * `Admin\Settings\TabStatus` use — so a CLI call and an admin-screen click
+ * was built with — the same object `Rest\StatusEndpointController` uses —
+ * so a CLI call and an admin-screen click
  * leave the site in identical state. An authenticated CLI call is the same
  * trust level as the admin screen, so `url()` and `enable()` provision a
  * missing key exactly as opening the Status tab does; a public request

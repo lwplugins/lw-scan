@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
 
 /**
  * Every entry point that restates findings — the Findings tab's row and
- * bulk actions (`Admin\Ajax\FindingStateHandler`) and the
+ * bulk actions (`Rest\FindingsController::set_state()`) and the
  * `lw-scan/acknowledge` ability (`SiteManager\AbilityCallbacks`) — takes a
  * list of ids from an untrusted caller and hands it to
  * `Db\FindingsRepository::set_state()`. They agree on what a usable list

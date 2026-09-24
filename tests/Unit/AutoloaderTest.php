@@ -72,7 +72,7 @@ final class AutoloaderTest extends TestCase {
 			'Activator'              => [ 'LightweightPlugins\\Scan\\Activator' ],
 			'Db\\Schema'             => [ 'LightweightPlugins\\Scan\\Db\\Schema' ],
 			'Run\\Runner'            => [ 'LightweightPlugins\\Scan\\Run\\Runner' ],
-			'Admin\\Settings\\TabScan' => [ 'LightweightPlugins\\Scan\\Admin\\Settings\\TabScan' ],
+			'Rest\\Routes'           => [ 'LightweightPlugins\\Scan\\Rest\\Routes' ],
 			'CLI\\RunCommand'        => [ 'LightweightPlugins\\Scan\\CLI\\RunCommand' ],
 		];
 	}

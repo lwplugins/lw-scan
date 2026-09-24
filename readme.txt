@@ -4,7 +4,7 @@ Tags: security, malware, scanner, antivirus, vulnerability
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 1.3.0
+Stable tag: 1.4.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -99,12 +99,22 @@ Everything goes: the settings, the run state, the three scan tables and the `wp-
 
 == Changelog ==
 
+= 1.4.0 =
+* New: A new admin interface built with WordPress's own React components — side navigation, a top bar with Save (and Cmd/Ctrl+S), loading placeholders and a phone-friendly layout.
+* New: The Scan tab follows a running scan live and starts, stops and resumes without page reloads.
+* New: The Findings tab loads page by page with filter chips, search, per-row and bulk actions and a details window.
+* New: A confirmation before rebuilding the file index.
+* New: A REST API (lw-scan/v1, administrators only) behind the new interface.
+* Fix: Saving one settings tab no longer empties the notification recipients or the excluded paths of the other.
+* Change: The admin notice is off by default; switch it on from the Notifications tab. A site that already saved the setting keeps what it chose.
+* Change: `wp lw-scan notify` has a one-line description in `wp help`.
+* Change: The classic admin screens are replaced; links to the old ?tab= addresses keep working.
+
 = 1.3.0 =
 * New: A Notifications tab with an e-mail off switch, the recipients, a per-e-mail item cap and a "Send a test e-mail" button.
 * New: `wp lw-scan notify` WP-CLI command — status, enable, disable, level, recipients, limit and test.
 * Change: E-mail can be switched off entirely; off stops the failure-streak warning too.
 * Change: A new-findings e-mail lists at most 20 items by default and links to the Findings tab for the rest; the subject keeps the true total.
-* Change: The admin notice is off by default; switch it on from the Notifications tab. A site that already saved the setting keeps what it chose.
 * Change: The first completed scan on a site is a baseline — it records what is already there and sends no e-mail. A site that has scanned before keeps mailing as it did.
 * Change: The recipients field says which address is used when it is left empty.
 

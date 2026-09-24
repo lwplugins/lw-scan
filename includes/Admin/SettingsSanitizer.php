@@ -23,33 +23,25 @@ defined( 'ABSPATH' ) || exit;
  * writer, and a runtime `lw_scan_options` filter must not be baked into
  * the database by a Settings save.
  *
+ * The only caller is the React admin's `POST /settings`
+ * (`Rest\SettingsInput`), which lays the request body over the stored
+ * option before handing it here, so every key arrives and a key the client
+ * did not send keeps its stored value. The rules below still read an
+ * absent value defensively, for any other caller:
+ *
  * `next_due` and `last_auto_run` are runtime bookkeeping with no form
- * fields, so the settings form never submits them and they are carried
- * over. They must NOT be pinned to the stored value unconditionally: once
- * `register_setting()` has run, this callback fires on *every*
- * `update_option( 'lw_scan_options', ... )` — including `Run\Scheduler`'s
- * and `Run\Phase\FinalizePhase`'s own `Options::update()` during an
- * admin-assisted run — and reverting them there would stop the schedule
- * from ever moving forward. Present in the input means "a writer meant
- * this"; absent means "the form posted, keep what we had".
+ * fields: present in the input means "a writer meant this", absent means
+ * "keep what we had". They must never be pinned to the stored value
+ * unconditionally, or the schedule could stop moving forward.
  *
- * `plugin_version` is different again: it is `Upgrader`'s marker, and no
- * writer other than `Upgrader` has any business setting it, so it is
- * carried over from the stored value whatever the input says. That is safe
- * because `Upgrader` runs from `Plugin::init_components()` during plugin
- * load — long before `admin_init` registers this callback — so its own
- * write never passes through here, while the carry guarantees a settings
- * save can never drop the marker and send the site through an upgrade it
- * has already done. Moving the `Upgrader` call to a later hook would break
- * that: the carry would swallow its write.
+ * `plugin_version` is `Upgrader`'s marker, and no writer other than
+ * `Upgrader` has any business setting it, so it is carried over from the
+ * stored value whatever the input says — a settings save can never drop
+ * the marker and send the site through an upgrade it has already done.
+ * (`Upgrader` writes through `Options::update()`, never through here.)
  *
- * Since 1.3.0 the options row is written by two forms — the Settings tab and
- * the Notifications tab — so "absent" has to keep meaning "not mine". Every
- * checkbox renders a hidden `0` companion (`FieldRendererTrait`), so a form
- * that owns a boolean always posts it, and a boolean that does not arrive is
- * carried over instead of being read as unchecked. Without that, saving
- * Notifications would switch the heuristic layer off, and saving Settings
- * would switch notifications off.
+ * An absent boolean is carried over rather than read as unchecked, so a
+ * save that does not own a switch cannot turn it off.
  *
  * `notify_send` is the one field that is not an option: the Notifications
  * tab's three-state control posts it as `off|alert|review`, and
@@ -68,7 +60,7 @@ final class SettingsSanitizer {
 	public const SEND_FIELD = 'notify_send';
 
 	/** Per-file byte limits offered by the form. */
-	private const FILE_SIZES = [ 524288, 1048576, 2097152, 5242880, 10485760 ];
+	public const FILE_SIZES = [ 524288, 1048576, 2097152, 5242880, 10485760 ];
 
 	/** Runtime bookkeeping: no form fields, written by the scheduler/finalize. */
 	private const BOOKKEEPING = [ 'next_due', 'last_auto_run' ];

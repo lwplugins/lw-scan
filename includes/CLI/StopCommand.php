@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\Scan\CLI;
 
-use LightweightPlugins\Scan\Admin\Ajax\AjaxGuard;
+use LightweightPlugins\Scan\Run\ActiveRun;
 use LightweightPlugins\Scan\Run\Cursor;
 use LightweightPlugins\Scan\Run\StopFlag;
 use WP_CLI;
@@ -38,7 +38,7 @@ final class StopCommand {
 	public function __invoke( array $args, array $assoc ): void {
 		unset( $args, $assoc );
 
-		if ( ! AjaxGuard::run_active( Cursor::load() ) ) {
+		if ( ! ActiveRun::run_active( Cursor::load() ) ) {
 			WP_CLI::error( 'No scan is in progress.' );
 		}
 

@@ -18,7 +18,7 @@ defined( 'ABSPATH' ) || exit;
 
 /**
  * `rebuild` does exactly what the Health tab's button does
- * (`Admin\Ajax\IndexHandler`): empties the file index and the findings
+ * (`Rest\HealthController::index()`): empties the file index and the findings
  * derived purely from it — `file` and `integrity` — so the next scan
  * starts from a clean slate. `db` and `vulnerability` findings are not
  * file-index derived and are left alone.
