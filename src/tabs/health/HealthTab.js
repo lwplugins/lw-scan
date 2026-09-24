@@ -32,6 +32,12 @@ const VARIANT = {
 	ok: 'ok',
 };
 const ICON = { critical: 'critical', warning: 'warning', ok: 'ok' };
+const STATUS_LABEL = {
+	critical: __( 'Critical', 'lw-scan' ),
+	warning: __( 'Warning', 'lw-scan' ),
+	info: __( 'Info', 'lw-scan' ),
+	ok: __( 'OK', 'lw-scan' ),
+};
 
 function verdictText( report ) {
 	const warnings = report.rows.filter(
@@ -158,7 +164,7 @@ export default function HealthTab() {
 							<StatusBadge
 								status={ VARIANT[ row.status ] || 'idle' }
 							>
-								{ row.status }
+								{ STATUS_LABEL[ row.status ] || row.status }
 							</StatusBadge>
 						</li>
 					) ) }

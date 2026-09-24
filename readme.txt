@@ -4,7 +4,7 @@ Tags: security, malware, scanner, antivirus, vulnerability
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 1.4.1
+Stable tag: 1.4.2
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -98,6 +98,12 @@ The plugin activates and scans files on multisite, but the database scan covers 
 Everything goes: the settings, the run state, the three scan tables and the `wp-content/lw-scan` directory with the signature bundle and its caches. The cleanup covers the site it runs on, so a network install may leave per-site options behind. A re-install starts from a clean scan.
 
 == Changelog ==
+
+= 1.4.2 =
+* New: Hungarian (hu_HU) translation, and a fresh lw-scan.pot template covering the React admin.
+* Fix: The React admin now loads its translations from the plugin's own languages folder, so it is no longer left in English.
+* Fix: The Health tab's checks list and the Scan tab's live feed show label, detail and status in aligned columns instead of running together.
+* Fix: The status badges in the checks list are translatable (OK, Warning, Critical, Info) instead of the raw status code.
 
 = 1.4.1 =
 * Fix: The admin screen fills the whole content area again instead of sitting inside the core .wrap margins.

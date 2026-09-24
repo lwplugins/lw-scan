@@ -1,0 +1,1547 @@
+# Copyright (C) 2026 LW Plugins
+# This file is distributed under the GPL-2.0-or-later.
+msgid ""
+msgstr ""
+"Project-Id-Version: LW Scan 1.4.1\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/lw-scan\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-09-24T18:03:30+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: lw-scan\n"
+
+#. Plugin Name of the plugin
+#: lw-scan.php
+msgid "LW Scan"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: lw-scan.php
+msgid "https://github.com/lwplugins/lw-scan"
+msgstr ""
+
+#. Description of the plugin
+#: lw-scan.php
+msgid "Lightweight malware scanner for WordPress — files, database and vulnerable software. Reports only, never modifies your site."
+msgstr ""
+
+#. Author of the plugin
+#: lw-scan.php
+#: includes/Admin/ParentPage.php:78
+#: includes/Admin/ParentPage.php:79
+#: includes/Admin/ParentPage.php:94
+msgid "LW Plugins"
+msgstr ""
+
+#. Author URI of the plugin
+#: lw-scan.php
+msgid "https://lwplugins.com"
+msgstr ""
+
+#: includes/Admin/ParentPage.php:95
+msgid "Lightweight plugins for WordPress - minimal footprint, maximum impact."
+msgstr ""
+
+#: includes/Admin/ParentPage.php:144
+msgid "Active"
+msgstr ""
+
+#: includes/Admin/ParentPage.php:151
+#: build/index.js:1
+msgid "Settings"
+msgstr ""
+
+#: includes/Admin/ParentPage.php:155
+msgid "Get Plugin"
+msgstr ""
+
+#: includes/Admin/Settings/BundleInfo.php:55
+msgid "no signature bundle installed yet"
+msgstr ""
+
+#. translators: 1: bundle version. 2: rule count. 3: when the backend was last checked.
+#: includes/Admin/Settings/BundleInfo.php:60
+#, php-format
+msgid "signatures %1$s (%2$s rules, checked %3$s)"
+msgstr ""
+
+#. translators: %s: time of day, e.g. 03:12.
+#. translators: %s: time of day, e.g. 14:02.
+#: includes/Admin/Settings/Format.php:35
+#: build/index.js:1
+#, php-format,js-format
+msgid "today %s"
+msgstr ""
+
+#. translators: 1: number of files. 2: number of database rows. 3: number of plugins/themes checked.
+#. translators: 1: files, 2: database rows, 3: packages.
+#: includes/Admin/Settings/RunStatsView.php:82
+#: build/index.js:9
+#, php-format,js-format
+msgid "%1$s files · %2$s DB rows · %3$s packages"
+msgstr ""
+
+#: includes/Admin/Settings/VulnRecord.php:88
+msgid "no fix available"
+msgstr ""
+
+#. translators: %s: version the vulnerability is fixed in.
+#: includes/Admin/Settings/VulnRecord.php:90
+#, php-format
+msgid "patched in %s"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:66
+#: includes/Admin/SettingsPage.php:67
+#: build/index.js:1
+msgid "Scan"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:118
+msgid "The LW Scan admin interface is missing (build/index.js). Reinstall the plugin from a release package, or run \"npm run build\" in a development checkout."
+msgstr ""
+
+#: includes/Health/Checks/BackendCheck.php:29
+msgid "Signature backend"
+msgstr ""
+
+#: includes/Health/Checks/BackendCheck.php:38
+msgid "The signature backend has not been checked yet."
+msgstr ""
+
+#. translators: %s: human-readable time difference, e.g. "2 hours".
+#: includes/Health/Checks/BackendCheck.php:46
+#, php-format
+msgid "Last checked %s ago."
+msgstr ""
+
+#: includes/Health/Checks/BundleCheck.php:51
+#: build/index.js:17
+msgid "Signature bundle"
+msgstr ""
+
+#: includes/Health/Checks/BundleCheck.php:58
+msgid "No signature pack yet — the first scan downloads it."
+msgstr ""
+
+#. translators: %d: signature pack version.
+#: includes/Health/Checks/BundleCheck.php:63
+#, php-format
+msgid "The files of signature pack v%d are missing — the next scan downloads them again."
+msgstr ""
+
+#. translators: 1: signature pack version. 2: number of signatures.
+#: includes/Health/Checks/BundleCheck.php:69
+#, php-format
+msgid "Signature pack v%1$d, %2$s signature."
+msgid_plural "Signature pack v%1$d, %2$s signatures."
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/Health/Checks/CronCheck.php:39
+msgid "WP-Cron"
+msgstr ""
+
+#: includes/Health/Checks/CronCheck.php:49
+msgid "DISABLE_WP_CRON is set — a system cron runner is expected to trigger scheduled scans."
+msgstr ""
+
+#: includes/Health/Checks/CronCheck.php:50
+msgid "Built-in WP-Cron (triggered by site visits)."
+msgstr ""
+
+#: includes/Health/Checks/CronCheck.php:68
+msgid "The server can reach its own site for WP-Cron."
+msgstr ""
+
+#: includes/Health/Checks/CronCheck.php:69
+msgid "The server cannot reach its own site — scheduled scans only progress via site traffic, WP-CLI, or a system cron runner."
+msgstr ""
+
+#: includes/Health/Checks/MemoryCheck.php:68
+msgid "Memory & time budget"
+msgstr ""
+
+#. translators: %s: per-tick time budget in seconds.
+#: includes/Health/Checks/MemoryCheck.php:78
+#, php-format
+msgid "memory_limit is unlimited; per-tick time budget %ss."
+msgstr ""
+
+#. translators: %s: memory_limit ini value, e.g. "64M".
+#: includes/Health/Checks/MemoryCheck.php:88
+#, php-format
+msgid "memory_limit is %s — scans need at least 128 MB."
+msgstr ""
+
+#. translators: 1: memory in use. 2: memory_limit. 3: memory left for a tick.
+#: includes/Health/Checks/MemoryCheck.php:118
+#, php-format
+msgid "WordPress and your plugins already use %1$s of the %2$s memory_limit, leaving %3$s; a scan tick needs about 20 MB. Raise memory_limit or run scans with WP-CLI."
+msgstr ""
+
+#. translators: 1: memory_limit. 2: memory free after WordPress loads. 3: per-tick time budget in seconds.
+#: includes/Health/Checks/MemoryCheck.php:130
+#, php-format
+msgid "memory_limit %1$s, %2$s free after WordPress loads; per-tick time budget %3$ss."
+msgstr ""
+
+#: includes/Health/Checks/PcreCheck.php:44
+msgid "PCRE engine"
+msgstr ""
+
+#: includes/Health/Checks/PcreCheck.php:54
+msgid "The host does not allow raising pcre.backtrack_limit/pcre.recursion_limit — very large files may silently fail to match."
+msgstr ""
+
+#: includes/Health/Checks/PcreCheck.php:62
+msgid "PCRE JIT is disabled — regex matching will be slower on large sites."
+msgstr ""
+
+#: includes/Health/Checks/PcreCheck.php:69
+msgid "PCRE limits tuned and JIT enabled."
+msgstr ""
+
+#: includes/Health/Checks/StorageCheck.php:40
+msgid "Storage directory"
+msgstr ""
+
+#. translators: %s: absolute storage directory path.
+#: includes/Health/Checks/StorageCheck.php:50
+#, php-format
+msgid "%s is not writable — the signature bundle cannot be stored and scans cannot start."
+msgstr ""
+
+#. translators: 1: absolute storage directory path. 2: human-readable size, e.g. "4 MB".
+#: includes/Health/Checks/StorageCheck.php:58
+#, php-format
+msgid "%1$s is writable, guard files in place (%2$s used)."
+msgstr ""
+
+#: includes/Health/Checks/TablesCheck.php:37
+msgid "Database tables"
+msgstr ""
+
+#. translators: %s: comma-separated list of missing table names.
+#: includes/Health/Checks/TablesCheck.php:48
+#, php-format
+msgid "The plugin's database tables are missing (%s) — deactivate and reactivate the plugin."
+msgstr ""
+
+#. translators: 1: table name. 2: row count.
+#: includes/Health/Checks/TablesCheck.php:81
+#, php-format
+msgid "%1$s (%2$s rows)"
+msgstr ""
+
+#: includes/Health/Checks/TablesCheck.php:89
+msgid "all InnoDB"
+msgstr ""
+
+#. translators: %s: comma-separated list of "table (engine)".
+#: includes/Health/Checks/TablesCheck.php:91
+#, php-format
+msgid "not InnoDB: %s"
+msgstr ""
+
+#: includes/Health/Checks/TokenizerCheck.php:27
+msgid "Tokenizer extension"
+msgstr ""
+
+#: includes/Health/Checks/TokenizerCheck.php:34
+msgid "The tokenizer extension is not available — the heuristic layer is disabled."
+msgstr ""
+
+#: includes/Health/Checks/TokenizerCheck.php:41
+msgid "Tokenizer extension available."
+msgstr ""
+
+#: includes/HelloPack/StatusCheck.php:99
+#: includes/SiteManager/Abilities.php:64
+msgid "Malware scan"
+msgstr ""
+
+#: includes/HelloPack/StatusCheck.php:103
+msgid "New alerts from the last scan, and whether scans still run on schedule."
+msgstr ""
+
+#: includes/HelloPack/StatusCheck.php:178
+#: build/index.js:6
+#: build/index.js:13
+msgid "No scan has run yet."
+msgstr ""
+
+#. translators: %d: number of new alert-severity findings.
+#: includes/HelloPack/StatusCheck.php:222
+#, php-format
+msgid "%d new alert."
+msgid_plural "%d new alerts."
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/HelloPack/StatusCheck.php:237
+msgid "The last scan failed."
+msgstr ""
+
+#: includes/HelloPack/StatusCheck.php:241
+msgid "No scan has completed successfully yet."
+msgstr ""
+
+#: includes/HelloPack/StatusCheck.php:247
+msgid "No successful scan in the last two scheduled windows."
+msgstr ""
+
+#. translators: %s: human-readable time span, e.g. "11 minutes".
+#: includes/HelloPack/StatusCheck.php:262
+#, php-format
+msgid "Last scan clean, %s ago."
+msgstr ""
+
+#. translators: %d: number of new alert-level findings.
+#: includes/Notify/AdminNotice.php:53
+#, php-format
+msgid "%d new alert found by LW Scan."
+msgid_plural "%d new alerts found by LW Scan."
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/Notify/AdminNotice.php:58
+msgid "This was the first scan, so these are a baseline of what is already on the site — no e-mail was sent. Later scans report only what is new."
+msgstr ""
+
+#: includes/Notify/AdminNotice.php:65
+msgid "Review findings"
+msgstr ""
+
+#. translators: %s: site name.
+#: includes/Notify/Mailer.php:103
+#, php-format
+msgid "[%s] LW Scan: scheduled scans are failing"
+msgstr ""
+
+#. translators: %s: site name.
+#: includes/Notify/Mailer.php:136
+#, php-format
+msgid "[%s] LW Scan: test e-mail"
+msgstr ""
+
+#: includes/Notify/Mailer.php:140
+msgid "This is a test e-mail from LW Scan. Notification e-mails reach this address."
+msgstr ""
+
+#. translators: %d: number of new findings the e-mail did not list.
+#: includes/Notify/Mailer.php:162
+#, php-format
+msgid "… and %d more — see the Findings tab"
+msgstr ""
+
+#. translators: 1: site name. 2: number of new findings.
+#: includes/Notify/Mailer.php:266
+#, php-format
+msgid "[%1$s] LW Scan: %2$d new finding"
+msgid_plural "[%1$s] LW Scan: %2$d new findings"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: 1: site name. 2: number of new alerts.
+#: includes/Notify/Mailer.php:274
+#, php-format
+msgid "[%1$s] LW Scan: %2$d new alert"
+msgid_plural "[%1$s] LW Scan: %2$d new alerts"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/Rest/Errors.php:41
+msgid "A scan is in progress. Stop it or wait until it finishes, then try again."
+msgstr ""
+
+#: includes/Rest/FindingsController.php:96
+#: includes/SiteManager/AbilityCallbacks.php:116
+msgid "Unknown finding state."
+msgstr ""
+
+#: includes/Rest/HealthController.php:97
+msgid "Unknown bundle operation."
+msgstr ""
+
+#: includes/Rest/HealthController.php:119
+msgid "Unknown index operation."
+msgstr ""
+
+#: includes/Rest/Presenter/FindingPresenter.php:88
+msgid "Remove or restore the file. LW Scan never deletes files itself."
+msgstr ""
+
+#: includes/Rest/Presenter/FindingPresenter.php:90
+msgid "Inspect and clean the row in the database (e.g. via WP-CLI or phpMyAdmin)."
+msgstr ""
+
+#: includes/Rest/Presenter/FindingPresenter.php:131
+msgid "Re-install the affected package from wordpress.org to restore the original file."
+msgstr ""
+
+#. translators: 1: package name, e.g. WordPress or a plugin slug. 2: package version.
+#: includes/Rest/Presenter/FindingPresenter.php:136
+#, php-format
+msgid "Re-install %1$s %2$s from wordpress.org to restore the original file."
+msgstr ""
+
+#: includes/Rest/Presenter/FindingPresenter.php:149
+msgid "No fix is available yet; consider disabling the plugin."
+msgstr ""
+
+#. translators: %s: version the vulnerability is fixed in.
+#: includes/Rest/Presenter/FindingPresenter.php:154
+#, php-format
+msgid "Update to %s."
+msgstr ""
+
+#: includes/Rest/Presenter/FindingPresenter.php:161
+msgid "WordPress"
+msgstr ""
+
+#: includes/Rest/Presenter/FindingPresenter.php:192
+msgid "checksum mismatch"
+msgstr ""
+
+#: includes/Rest/ScanController.php:118
+#: includes/Run/Starter.php:93
+#: includes/SiteManager/AbilityCallbacks.php:64
+msgid "Unknown scan scope."
+msgstr ""
+
+#: includes/Run/RunError.php:57
+msgid "The signature set was updated while this scan was under way, so it was dropped — the next scan starts over against the new signatures."
+msgstr ""
+
+#: includes/Run/RunError.php:64
+msgid "Signatures could not be downloaded — check the Health tab and the backend connection."
+msgstr ""
+
+#. translators: %s: memory_limit the tick was running at, e.g. "256 MB".
+#: includes/Run/RunError.php:85
+#, php-format
+msgid "PHP ran out of memory during the scan (memory_limit %s). Raise memory_limit or run the scan with WP-CLI."
+msgstr ""
+
+#: includes/Run/RunError.php:90
+msgid "PHP ran out of memory during the scan. Raise memory_limit or run the scan with WP-CLI."
+msgstr ""
+
+#: includes/Run/Scheduler.php:83
+msgid "Once Weekly"
+msgstr ""
+
+#: includes/Run/Starter.php:64
+#: includes/Run/Starter.php:153
+#: includes/Run/Starter.php:160
+msgid "A scan is already in progress."
+msgstr ""
+
+#: includes/Run/Starter.php:108
+msgid "The scan path must be a directory inside the WordPress installation."
+msgstr ""
+
+#: includes/Run/Starter.php:156
+msgid "There is no stopped scan to resume."
+msgstr ""
+
+#: includes/Run/Starter.php:195
+msgid "The scan could not be recorded — the plugin tables are missing. Deactivate and reactivate the plugin."
+msgstr ""
+
+#: includes/SiteManager/Abilities.php:65
+msgid "Run malware scans and read their findings."
+msgstr ""
+
+#: includes/SiteManager/Abilities.php:103
+msgid "Start Malware Scan"
+msgstr ""
+
+#: includes/SiteManager/Abilities.php:104
+msgid "Start a malware scan and return its run id. The scan runs in the background; poll lw-scan/status for progress."
+msgstr ""
+
+#: includes/SiteManager/Abilities.php:114
+msgid "What to scan: the whole site, only changed files, the database, or one folder."
+msgstr ""
+
+#: includes/SiteManager/Abilities.php:119
+msgid "Folder to scan, relative to the WordPress root. Used with scope=path."
+msgstr ""
+
+#: includes/SiteManager/Abilities.php:124
+msgid "Continue a stopped scan instead of starting a new one."
+msgstr ""
+
+#: includes/SiteManager/Abilities.php:148
+msgid "Get Scan Status"
+msgstr ""
+
+#: includes/SiteManager/Abilities.php:149
+msgid "Get the progress of the running scan (or the last one), the last run summary and the current finding counts."
+msgstr ""
+
+#: includes/SiteManager/Abilities.php:177
+msgid "List Scan Findings"
+msgstr ""
+
+#: includes/SiteManager/Abilities.php:178
+msgid "List malware-scan findings, filtered by severity, type or state, one page at a time."
+msgstr ""
+
+#: includes/SiteManager/Abilities.php:213
+msgid "Only findings of this severity."
+msgstr ""
+
+#: includes/SiteManager/Abilities.php:218
+msgid "Only findings of this type."
+msgstr ""
+
+#: includes/SiteManager/Abilities.php:223
+msgid "Only findings in this state."
+msgstr ""
+
+#: includes/SiteManager/Abilities.php:228
+msgid "1-based page number."
+msgstr ""
+
+#: includes/SiteManager/Abilities.php:234
+msgid "Findings per page. Defaults to 50, max 200."
+msgstr ""
+
+#: includes/SiteManager/Abilities.php:250
+msgid "Set Finding State"
+msgstr ""
+
+#: includes/SiteManager/Abilities.php:251
+msgid "Mark findings as acknowledged or ignored, or move them back to new. Never changes a file or the database."
+msgstr ""
+
+#: includes/SiteManager/Abilities.php:261
+msgid "Finding ids to update."
+msgstr ""
+
+#: includes/SiteManager/Abilities.php:266
+msgid "The state to set."
+msgstr ""
+
+#. translators: %s: exception class name.
+#: includes/Status/StatusReport.php:145
+#, php-format
+msgid "Check failed (%s)."
+msgstr ""
+
+#: build/index.js:1
+msgid "Settings saved."
+msgstr ""
+
+#: build/index.js:1
+msgid "LW Plugins (opens in a new tab)"
+msgstr ""
+
+#: build/index.js:1
+msgid "LW Scan home"
+msgstr ""
+
+#: build/index.js:1
+msgid "LW Scan sections"
+msgstr ""
+
+#: build/index.js:1
+msgid "Documentation"
+msgstr ""
+
+#: build/index.js:1
+msgid "(opens in a new tab)"
+msgstr ""
+
+#: build/index.js:1
+msgid "Unsaved changes"
+msgstr ""
+
+#: build/index.js:1
+msgid "Discard"
+msgstr ""
+
+#: build/index.js:1
+msgid "Save changes"
+msgstr ""
+
+#: build/index.js:1
+#: build/index.js:20
+msgid "Findings"
+msgstr ""
+
+#: build/index.js:1
+msgid "Notifications"
+msgstr ""
+
+#: build/index.js:1
+msgid "Scan Settings"
+msgstr ""
+
+#: build/index.js:1
+#: build/index.js:23
+msgid "Health"
+msgstr ""
+
+#: build/index.js:1
+#: build/index.js:13
+msgid "Status"
+msgstr ""
+
+#: build/index.js:1
+msgid "Status Endpoint"
+msgstr ""
+
+#: build/index.js:1
+#: build/index.js:20
+msgid "Try again"
+msgstr ""
+
+#: build/index.js:1
+#: build/index.js:9
+msgid "Loading…"
+msgstr ""
+
+#. translators: %d: seconds.
+#: build/index.js:1
+#, js-format
+msgid "%d s"
+msgstr ""
+
+#. translators: 1: minutes, 2: seconds.
+#: build/index.js:2
+#, js-format
+msgid "%1$d m %2$d s"
+msgstr ""
+
+#. translators: 1: hours, 2: minutes.
+#: build/index.js:3
+#, js-format
+msgid "%1$d h %2$d m"
+msgstr ""
+
+#: build/index.js:3
+msgid "changed files + database"
+msgstr ""
+
+#: build/index.js:3
+msgid "full site"
+msgstr ""
+
+#: build/index.js:3
+msgid "database only"
+msgstr ""
+
+#: build/index.js:3
+msgid "one folder"
+msgstr ""
+
+#: build/index.js:3
+msgid "manual"
+msgstr ""
+
+#: build/index.js:3
+msgid "scheduled"
+msgstr ""
+
+#: build/index.js:3
+msgid "catch-up"
+msgstr ""
+
+#: build/index.js:3
+msgid "ability"
+msgstr ""
+
+#: build/index.js:3
+#: build/index.js:23
+msgid "Signatures"
+msgstr ""
+
+#: build/index.js:3
+msgid "Index"
+msgstr ""
+
+#: build/index.js:3
+msgid "Hashes"
+msgstr ""
+
+#: build/index.js:3
+#: build/index.js:17
+msgid "Files"
+msgstr ""
+
+#: build/index.js:3
+#: build/index.js:17
+msgid "Database"
+msgstr ""
+
+#: build/index.js:3
+#: build/index.js:17
+msgid "Vulnerabilities"
+msgstr ""
+
+#: build/index.js:3
+msgid "Finalize"
+msgstr ""
+
+#: build/index.js:3
+msgid "file"
+msgstr ""
+
+#: build/index.js:3
+msgid "integrity"
+msgstr ""
+
+#: build/index.js:3
+msgid "database"
+msgstr ""
+
+#: build/index.js:3
+msgid "vulnerability"
+msgstr ""
+
+#: build/index.js:3
+msgid "Daily"
+msgstr ""
+
+#: build/index.js:3
+msgid "Hourly"
+msgstr ""
+
+#: build/index.js:3
+msgid "Weekly"
+msgstr ""
+
+#: build/index.js:3
+#: build/index.js:21
+#: build/index.js:23
+#: build/index.js:24
+msgid "Off"
+msgstr ""
+
+#. translators: 1: number of alerts, 2: number of items to review.
+#: build/index.js:4
+#, js-format
+msgid "Action needed — %1$d alerts, %2$d to review"
+msgstr ""
+
+#. translators: %d: number of items to review.
+#: build/index.js:5
+#, js-format
+msgid "No alerts — %d item to review"
+msgid_plural "No alerts — %d items to review"
+msgstr[0] ""
+msgstr[1] ""
+
+#: build/index.js:5
+msgid "No findings — last scan clean"
+msgstr ""
+
+#: build/index.js:5
+msgid "Never scanned"
+msgstr ""
+
+#. translators: 1: date, 2: "trigger, scope", 3: duration, 4: signature bundle description.
+#: build/index.js:6
+#, js-format
+msgid "Last scan: %1$s (%2$s) · finished in %3$s · %4$s"
+msgstr ""
+
+#: build/index.js:6
+msgid "Files indexed"
+msgstr ""
+
+#. translators: %s: number of files.
+#: build/index.js:7
+#, js-format
+msgid "%s queued for the next scan"
+msgstr ""
+
+#: build/index.js:7
+msgid "Known-good excluded"
+msgstr ""
+
+#. translators: %s: percentage.
+#: build/index.js:8
+#, js-format
+msgid "%s matched wp.org checksums"
+msgstr ""
+
+#: build/index.js:8
+#: build/index.js:11
+msgid "Deep-scanned"
+msgstr ""
+
+#: build/index.js:9
+msgid "Next scheduled"
+msgstr ""
+
+#: build/index.js:9
+msgid "off"
+msgstr ""
+
+#: build/index.js:9
+msgid "scheduled scans are off"
+msgstr ""
+
+#: build/index.js:9
+msgid "Search"
+msgstr ""
+
+#: build/index.js:9
+msgid "Filter"
+msgstr ""
+
+#: build/index.js:9
+msgid "Clear"
+msgstr ""
+
+#: build/index.js:9
+msgid "Clear all filters"
+msgstr ""
+
+#: build/index.js:9
+#: build/index.js:17
+#: build/index.js:21
+msgid "All"
+msgstr ""
+
+#: build/index.js:9
+msgid "No findings match these filters."
+msgstr ""
+
+#: build/index.js:9
+msgid "No findings. Everything scanned so far looks clean."
+msgstr ""
+
+#: build/index.js:9
+msgid "Previous page"
+msgstr ""
+
+#: build/index.js:9
+msgid "Next page"
+msgstr ""
+
+#: build/index.js:9
+msgid "Rows per page"
+msgstr ""
+
+#: build/index.js:9
+msgid "Select all findings on this page"
+msgstr ""
+
+#: build/index.js:9
+msgid "Clear selection"
+msgstr ""
+
+#: build/index.js:9
+msgid "Bulk actions"
+msgstr ""
+
+#. translators: %d: number of rows.
+#: build/index.js:9
+#, js-format
+msgid "%d entry"
+msgid_plural "%d entries"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %d: number of results.
+#: build/index.js:9
+#, js-format
+msgid "%d result"
+msgid_plural "%d results"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: 1: current page, 2: total pages.
+#: build/index.js:9
+#, js-format
+msgid "Page %1$d of %2$d"
+msgstr ""
+
+#. translators: %s: finding location.
+#: build/index.js:9
+#, js-format
+msgid "Select: %s"
+msgstr ""
+
+#. translators: %d: number of selected findings.
+#: build/index.js:10
+#, js-format
+msgid "%d selected"
+msgid_plural "%d selected"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: 1: selected findings, 2: of those, on this page.
+#: build/index.js:11
+#, js-format
+msgid "%1$d selected, %2$d on this page"
+msgstr ""
+
+#. translators: 1: findings the action applies to, 2: selected findings on this page.
+#: build/index.js:11
+#, js-format
+msgid "applies to %1$d of %2$d"
+msgstr ""
+
+#: build/index.js:11
+msgid "Started"
+msgstr ""
+
+#: build/index.js:11
+msgid "Trigger"
+msgstr ""
+
+#: build/index.js:11
+#: build/index.js:16
+#: build/index.js:23
+msgid "Scope"
+msgstr ""
+
+#: build/index.js:11
+msgid "Duration"
+msgstr ""
+
+#: build/index.js:11
+msgid "Indexed"
+msgstr ""
+
+#: build/index.js:11
+msgid "New findings"
+msgstr ""
+
+#. translators: %d: number of alerts.
+#: build/index.js:12
+#, js-format
+msgid "%d alert"
+msgid_plural "%d alerts"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %d: number of review items.
+#: build/index.js:13
+#, js-format
+msgid "%d review"
+msgid_plural "%d reviews"
+msgstr[0] ""
+msgstr[1] ""
+
+#: build/index.js:13
+#: build/index.js:23
+msgid "none"
+msgstr ""
+
+#: build/index.js:13
+msgid "Recent runs"
+msgstr ""
+
+#. translators: 1: scan scope, 2: start time.
+#: build/index.js:14
+#, js-format
+msgid "Scanning… %1$s · started %2$s"
+msgstr ""
+
+#: build/index.js:14
+msgid "Stopping…"
+msgstr ""
+
+#: build/index.js:14
+msgid "Stop"
+msgstr ""
+
+#: build/index.js:14
+msgid "done"
+msgstr ""
+
+#: build/index.js:14
+msgid "Scan progress"
+msgstr ""
+
+#. translators: 1: items done, 2: items total, 3: current phase name.
+#: build/index.js:15
+#, js-format
+msgid "%1$s / %2$s items in this phase · Now: %3$s"
+msgstr ""
+
+#. translators: %s: duration.
+#: build/index.js:15
+#, js-format
+msgid "~%s remaining"
+msgstr ""
+
+#: build/index.js:15
+msgid "Findings so far"
+msgstr ""
+
+#: build/index.js:15
+msgid "Findings appear as they are found. Notification e-mail goes out only for new alerts when the run finishes."
+msgstr ""
+
+#: build/index.js:15
+msgid "Nothing found yet."
+msgstr ""
+
+#: build/index.js:15
+msgid "Runs in the background; you can leave this page."
+msgstr ""
+
+#. translators: 1: estimated duration, 2: number of changed files.
+#: build/index.js:16
+#, js-format
+msgid "Estimated ~%1$s for %2$s changed files."
+msgstr ""
+
+#: build/index.js:16
+msgid "Start a scan"
+msgstr ""
+
+#: build/index.js:16
+msgid "Scan scope"
+msgstr ""
+
+#: build/index.js:16
+msgid "Folder to scan"
+msgstr ""
+
+#: build/index.js:16
+#: build/index.js:23
+msgid "Heuristic layer"
+msgstr ""
+
+#: build/index.js:16
+msgid "Token-level analysis of unknown PHP files. Adds \"review\" findings only."
+msgstr ""
+
+#: build/index.js:16
+#: build/index.js:23
+#: build/index.js:24
+msgid "Enabled"
+msgstr ""
+
+#: build/index.js:16
+#: build/index.js:23
+msgid "Disabled"
+msgstr ""
+
+#: build/index.js:16
+msgid "Starting…"
+msgstr ""
+
+#: build/index.js:16
+msgid "Start scan"
+msgstr ""
+
+#: build/index.js:16
+msgid "Resume stopped scan"
+msgstr ""
+
+#: build/index.js:16
+msgid "The first scan downloads the signature bundle (about 1 MB)."
+msgstr ""
+
+#: build/index.js:16
+msgid "LW Scan cannot find its database tables. Deactivate and re-activate the plugin to create them."
+msgstr ""
+
+#: build/index.js:16
+msgid "Copy"
+msgstr ""
+
+#: build/index.js:16
+msgid "Copied"
+msgstr ""
+
+#. translators: %d: line number.
+#: build/index.js:17
+#, js-format
+msgid "Match · line %d"
+msgstr ""
+
+#: build/index.js:17
+msgid "Why it is an alert"
+msgstr ""
+
+#: build/index.js:17
+msgid "Why it is flagged"
+msgstr ""
+
+#: build/index.js:17
+msgid "What to do"
+msgstr ""
+
+#: build/index.js:17
+msgid "Copy path"
+msgstr ""
+
+#: build/index.js:17
+msgid "Record and license"
+msgstr ""
+
+#: build/index.js:17
+msgid "Alerts"
+msgstr ""
+
+#: build/index.js:17
+msgid "Review"
+msgstr ""
+
+#: build/index.js:17
+msgid "Acknowledged"
+msgstr ""
+
+#: build/index.js:17
+msgid "Ignored"
+msgstr ""
+
+#: build/index.js:17
+msgid "Integrity"
+msgstr ""
+
+#: build/index.js:17
+msgid "Check for updates"
+msgstr ""
+
+#: build/index.js:17
+msgid "Re-download full bundle"
+msgstr ""
+
+#: build/index.js:17
+msgid "Rebuild file index"
+msgstr ""
+
+#: build/index.js:17
+msgid "Run checks again"
+msgstr ""
+
+#: build/index.js:17
+msgid "Checks updated."
+msgstr ""
+
+#: build/index.js:17
+msgid "File index cleared. The next scan rebuilds it and re-checks every file."
+msgstr ""
+
+#: build/index.js:17
+msgid "Rebuild the file index? This clears the index and the file and integrity findings; the next scan re-checks every file, so it takes about as long as the first one."
+msgstr ""
+
+#: build/index.js:17
+msgid "Critical"
+msgstr ""
+
+#: build/index.js:17
+msgid "Warning"
+msgstr ""
+
+#: build/index.js:17
+msgid "Info"
+msgstr ""
+
+#: build/index.js:17
+msgid "OK"
+msgstr ""
+
+#: build/index.js:17
+msgid "Scanning is blocked"
+msgstr ""
+
+#. translators: %d: number of warnings.
+#: build/index.js:18
+#, js-format
+msgid "Ready, with %d warning"
+msgid_plural "Ready, with %d warnings"
+msgstr[0] ""
+msgstr[1] ""
+
+#: build/index.js:18
+msgid "Ready"
+msgstr ""
+
+#: build/index.js:18
+msgid "Running environment checks…"
+msgstr ""
+
+#: build/index.js:18
+msgid "Test e-mail sent. If it does not arrive, the site cannot deliver mail — check the server or an SMTP plugin."
+msgstr ""
+
+#: build/index.js:18
+msgid "WordPress could not send the test e-mail. The site has no working mail transport."
+msgstr ""
+
+#: build/index.js:18
+msgid "There is nobody to send to: the recipients field is empty and this site has no admin e-mail address."
+msgstr ""
+
+#: build/index.js:18
+#: build/index.js:21
+msgid "Recipients"
+msgstr ""
+
+#. translators: %d: number of findings updated.
+#: build/index.js:19
+#, js-format
+msgid "%d finding updated."
+msgid_plural "%d findings updated."
+msgstr[0] ""
+msgstr[1] ""
+
+#: build/index.js:19
+msgid "Severity"
+msgstr ""
+
+#: build/index.js:19
+#: build/index.js:20
+msgid "Type"
+msgstr ""
+
+#: build/index.js:19
+msgid "Where"
+msgstr ""
+
+#: build/index.js:19
+msgid "Detected by"
+msgstr ""
+
+#: build/index.js:19
+msgid "Last seen"
+msgstr ""
+
+#. translators: %s: date first seen.
+#: build/index.js:20
+#, js-format
+msgid "first %s"
+msgstr ""
+
+#: build/index.js:20
+msgid "Actions"
+msgstr ""
+
+#: build/index.js:20
+msgid "Update plugin"
+msgstr ""
+
+#: build/index.js:20
+msgid "Acknowledge"
+msgstr ""
+
+#: build/index.js:20
+msgid "Ignore"
+msgstr ""
+
+#: build/index.js:20
+msgid "Reopen"
+msgstr ""
+
+#: build/index.js:20
+msgid "Details"
+msgstr ""
+
+#: build/index.js:20
+msgid "Show"
+msgstr ""
+
+#: build/index.js:20
+msgid "Clear all findings"
+msgstr ""
+
+#: build/index.js:20
+msgid "Search path, signature, plugin…"
+msgstr ""
+
+#: build/index.js:20
+msgid "Ignored findings stay hidden until a new signature matches the same file. Clearing empties this list; the next scan re-checks every file and reports again whatever is still there. Nothing here modifies site files or content."
+msgstr ""
+
+#: build/index.js:20
+msgid "All findings cleared."
+msgstr ""
+
+#: build/index.js:20
+msgid "Delete every finding from this list? The next scan re-checks every file, so it takes about as long as the first one, and reports again anything that is still on the site."
+msgstr ""
+
+#: build/index.js:20
+msgid "Comma-separated."
+msgstr ""
+
+#. translators: %s: the site's admin e-mail address.
+#: build/index.js:21
+#, js-format
+msgid "Comma-separated. Empty, as now, means the site's admin e-mail address: %s"
+msgstr ""
+
+#: build/index.js:21
+msgid "Comma-separated. Empty means the site's admin e-mail address, which this site has not set."
+msgstr ""
+
+#: build/index.js:21
+msgid "First scan: a baseline."
+msgstr ""
+
+#: build/index.js:21
+msgid "The first scan reports everything already on the site, so no e-mail was sent for it. Go through those findings on the Findings tab; from the next scan on, only what is new is mailed."
+msgstr ""
+
+#: build/index.js:21
+msgid "E-mail"
+msgstr ""
+
+#: build/index.js:21
+msgid "Send e-mail"
+msgstr ""
+
+#: build/index.js:21
+msgid "Off sends no scan e-mail at all — the warning about repeatedly failing scheduled scans included. There are no \"all clear\" e-mails either way."
+msgstr ""
+
+#: build/index.js:21
+msgid "New alerts only"
+msgstr ""
+
+#: build/index.js:21
+msgid "New alerts + review items"
+msgstr ""
+
+#: build/index.js:21
+msgid "Maximum items per e-mail"
+msgstr ""
+
+#: build/index.js:21
+msgid "A scan that finds more than this lists the first few and links to the Findings tab for the rest. The subject line always carries the true total."
+msgstr ""
+
+#: build/index.js:21
+msgid "Test"
+msgstr ""
+
+#: build/index.js:21
+msgid "Sends a short message to the saved recipients and reports whether WordPress accepted it."
+msgstr ""
+
+#: build/index.js:21
+msgid "Send a test e-mail"
+msgstr ""
+
+#: build/index.js:21
+msgid "You have unsaved changes: the test uses the saved recipients. Save first if you just edited the list."
+msgstr ""
+
+#: build/index.js:21
+msgid "In the admin"
+msgstr ""
+
+#: build/index.js:21
+msgid "Admin notice"
+msgstr ""
+
+#: build/index.js:21
+msgid "Shown to administrators on every admin screen until the findings are acknowledged or ignored. Independent of the e-mail switch above."
+msgstr ""
+
+#: build/index.js:21
+msgid "Show a persistent notice while new alerts exist"
+msgstr ""
+
+#: build/index.js:21
+msgid "Scheduled scan"
+msgstr ""
+
+#: build/index.js:21
+#: build/index.js:22
+msgid "Frequency"
+msgstr ""
+
+#: build/index.js:21
+msgid "Scheduled scans are off. Start one from the Scan tab whenever you need it."
+msgstr ""
+
+#. translators: %s: date and time of the next scheduled scan.
+#: build/index.js:22
+#, js-format
+msgid "Next run: %s. If WP-Cron misses it, the next page load catches up in the background."
+msgstr ""
+
+#: build/index.js:22
+msgid "Time of day"
+msgstr ""
+
+#. translators: %s: site timezone, e.g. Europe/Budapest.
+#: build/index.js:23
+#, js-format
+msgid "site time (%s)"
+msgstr ""
+
+#: build/index.js:23
+msgid "Changed-files mode re-scans only files whose size or modification time changed, plus every non-known-good file when new signatures arrive."
+msgstr ""
+
+#: build/index.js:23
+msgid "Signature updates"
+msgstr ""
+
+#: build/index.js:23
+msgid "Automatically before each scheduled scan"
+msgstr ""
+
+#: build/index.js:23
+msgid "Manually (Health tab)"
+msgstr ""
+
+#: build/index.js:23
+msgid "Scan depth"
+msgstr ""
+
+#: build/index.js:23
+msgid "Token-level analysis of unknown PHP files: input to dangerous call pairs, identifier entropy, static decoding, disguise headers. Adds \"review\" findings only, never \"alert\" on its own."
+msgstr ""
+
+#: build/index.js:23
+msgid "Per-file size limit"
+msgstr ""
+
+#: build/index.js:23
+msgid "Larger files get type detection and hash matching only. A large PHP file skipped this way is listed as \"review\"."
+msgstr ""
+
+#: build/index.js:23
+msgid "Excluded paths"
+msgstr ""
+
+#: build/index.js:23
+msgid "One pattern per line, relative to the WordPress root. * matches any characters. wp-content/lw-scan is always excluded."
+msgstr ""
+
+#: build/index.js:23
+msgid "Follow symlinks"
+msgstr ""
+
+#: build/index.js:23
+msgid "Off is safer: symlinked directories outside the site are not scanned."
+msgstr ""
+
+#: build/index.js:23
+msgid "Follow symlinked directories"
+msgstr ""
+
+#: build/index.js:23
+msgid "Settings affect scanning and notifications only. Nothing here modifies files or database rows."
+msgstr ""
+
+#: build/index.js:23
+msgid "Scanning is enabled. Nothing needs your attention here."
+msgstr ""
+
+#. translators: 1: number of rules, 2: when the bundle was checked.
+#: build/index.js:24
+#, js-format
+msgid "%1$s rules · checked %2$s"
+msgstr ""
+
+#: build/index.js:24
+msgid "Checksums cached"
+msgstr ""
+
+#: build/index.js:24
+msgid "wordpress.org package checksums"
+msgstr ""
+
+#: build/index.js:24
+msgid "Vulnerability data"
+msgstr ""
+
+#: build/index.js:24
+msgid "lookups cached · 24 h"
+msgstr ""
+
+#: build/index.js:24
+msgid "Checks"
+msgstr ""
+
+#: build/index.js:24
+msgid "Run scans from a system cron"
+msgstr ""
+
+#: build/index.js:24
+msgid "Recommended fix for the warning"
+msgstr ""
+
+#: build/index.js:24
+msgid "Run the scan from a system cron so it does not depend on site traffic. Paste one of these into the server's crontab:"
+msgstr ""
+
+#: build/index.js:24
+msgid "Status endpoint"
+msgstr ""
+
+#: build/index.js:24
+msgid "A read-only report on this site's malware-scan status for an external monitoring service. It only reads; it changes nothing. Enabled by default."
+msgstr ""
+
+#: build/index.js:24
+msgid "Endpoint"
+msgstr ""
+
+#: build/index.js:24
+msgid "Access"
+msgstr ""
+
+#: build/index.js:24
+msgid "Give this address to your monitoring service."
+msgstr ""
+
+#: build/index.js:24
+msgid "Status URL"
+msgstr ""
+
+#: build/index.js:24
+msgid "The key inside it is the only protection — anyone who knows the address can read the report."
+msgstr ""
+
+#: build/index.js:24
+msgid "The endpoint is switched off: this address answers \"not found\" until you switch it on and save."
+msgstr ""
+
+#. translators: %s: date and time the URL was created.
+#: build/index.js:25
+#, js-format
+msgid "Created: %s"
+msgstr ""
+
+#: build/index.js:25
+#: build/index.js:26
+msgid "Generate new URL"
+msgstr ""
+
+#: build/index.js:25
+msgid "Reuse the result for"
+msgstr ""
+
+#: build/index.js:25
+msgid "A stored result answers requests for this long; after that the next request runs the check again."
+msgstr ""
+
+#. translators: %d: number of minutes.
+#: build/index.js:26
+#, js-format
+msgid "%d minute"
+msgid_plural "%d minutes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: build/index.js:26
+msgid "New URL generated. The previous URL no longer works."
+msgstr ""
+
+#: build/index.js:26
+msgid "The current URL stops working immediately. Continue?"
+msgstr ""

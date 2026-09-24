@@ -84,7 +84,7 @@ final class SettingsPage {
 		$asset = self::asset();
 
 		wp_enqueue_script( self::HANDLE, LW_SCAN_URL . 'build/index.js', $asset['dependencies'], $asset['version'], true );
-		wp_set_script_translations( self::HANDLE, 'lw-scan' );
+		wp_set_script_translations( self::HANDLE, 'lw-scan', LW_SCAN_PATH . 'languages' );
 		wp_add_inline_script( self::HANDLE, 'window.lwScan = ' . wp_json_encode( self::script_data() ) . ';', 'before' );
 
 		if ( is_readable( LW_SCAN_PATH . 'build/index.css' ) ) {

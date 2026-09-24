@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.4.2] - 2026-09-24
+
+### Added
+- Hungarian (hu_HU) translation, and a fresh `lw-scan.pot` template covering the React admin.
+
+### Fixed
+- The React admin now loads its translations from the plugin's own `languages/` folder, so it is no longer left in English.
+- The Health tab's checks list and the Scan tab's live feed show label, detail and status in aligned columns instead of running together.
+- The status badges in the checks list are translatable (OK, Warning, Critical, Info) instead of the raw status code.
+
 ## [1.4.1] - 2026-09-24
 
 ### Fixed
