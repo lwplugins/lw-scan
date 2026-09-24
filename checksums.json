@@ -1,5 +1,5 @@
 {
-    "version": "1.4.0",
+    "version": "1.4.1",
     "files": {
         "build/index-rtl.css": "55707d70af591f4673488fcee64e7911",
         "build/index.asset.php": "dbf809d82a75c7330bb0cd5d95c41afc",
@@ -11,7 +11,7 @@
         "includes/Admin/Settings/Format.php": "6aeedb5d92202bbe42f8e3c9e0582769",
         "includes/Admin/Settings/RunStatsView.php": "d9b955fafcc0ccd977c2eae3a972176a",
         "includes/Admin/Settings/VulnRecord.php": "ff62c948118058d387fcf0917d5b19cc",
-        "includes/Admin/SettingsPage.php": "77c87e94dc107956a6b9ec51fa1920ca",
+        "includes/Admin/SettingsPage.php": "0951eb357633d1adb03ed87fb19eb91b",
         "includes/Admin/SettingsSanitizer.php": "7e00488d3a163fb77f0c8cc336bdba1a",
         "includes/Autoloader.php": "421eaeebfe744a16369fe44fa3fe6f0e",
         "includes/Bundle/NewSignatures.php": "4c97bda4af2d411844e183f39e00626c",
@@ -172,7 +172,7 @@
         "includes/Vuln/Matcher.php": "52416eff4e86205c216f8f78237010d1",
         "includes/Vuln/VersionRange.php": "f94cc5debc0b6c862c4865b8cec6a537",
         "includes/functions.php": "137fc6cf37d788d22f100c6f2743c977",
-        "lw-scan.php": "695b344a8f68137902aa2a0285bd34da",
+        "lw-scan.php": "4996fbcdc2f09f81b75a4f41f985d976",
         "uninstall.php": "feb3613e6a957b8b376195b888f5bddd"
     }
 }

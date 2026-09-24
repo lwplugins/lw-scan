@@ -110,16 +110,17 @@ final class SettingsPage {
 			return;
 		}
 
-		echo '<div class="wrap">';
-
+		// No core .wrap around the mount point: its margins (10px 20px 0 2px)
+		// would keep the full-bleed app shell off the screen edges.
 		if ( ! is_readable( LW_SCAN_PATH . 'build/index.js' ) ) {
 			printf(
-				'<div class="notice notice-error"><p>%s</p></div>',
+				'<div class="wrap"><div class="notice notice-error"><p>%s</p></div></div>',
 				esc_html__( 'The LW Scan admin interface is missing (build/index.js). Reinstall the plugin from a release package, or run "npm run build" in a development checkout.', 'lw-scan' )
 			);
+			return;
 		}
 
-		echo '<div id="lw-scan-root" class="lw-scan-root"></div></div>';
+		echo '<div id="lw-scan-root" class="lw-scan-root"></div>';
 	}
 
 	/**

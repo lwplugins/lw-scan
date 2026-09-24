@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.4.1] - 2026-09-24
+
+### Fixed
+- The admin screen fills the whole content area again: it no longer sits inside the core `.wrap` box, whose margins kept it off the screen edges.
+
 ## [1.4.0] - 2026-09-24
 
 ### Added
