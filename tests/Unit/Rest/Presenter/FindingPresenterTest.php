@@ -160,9 +160,11 @@ final class FindingPresenterTest extends MonkeyTestCase {
 		$this->assertFalse( $item['can_copy_path'] );
 		$this->assertSame(
 			[
-				'title'     => 'Unauthenticated Stored XSS',
-				'reference' => 'https://example.org/cve-1',
-				'notice'    => '',
+				'title'       => 'Unauthenticated Stored XSS',
+				'reference'   => 'https://example.org/cve-1',
+				'notice'      => '',
+				'license'     => '',
+				'license_url' => '',
 			],
 			$item['vuln']
 		);

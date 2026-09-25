@@ -263,6 +263,53 @@ final class RunnerTest extends MonkeyTestCase {
 		$this->assertSame( 'changed', $cursor->scope() );
 	}
 
+	public function test_a_manual_start_drops_the_cached_vulnerability_feed(): void {
+		$cache = $this->seed_cache_files();
+
+		$this->runs->shouldReceive( 'create' )->once()->andReturn( 7 );
+
+		$this->assertSame( 7, $this->runner()->start( 'manual', 'db' ) );
+
+		$this->assertFileDoesNotExist( $cache . '/vuln-plugin-elementor.json' );
+		$this->assertFileExists( $cache . '/checksum-core-6.8.json' );
+	}
+
+	public function test_a_scheduled_start_keeps_the_cached_vulnerability_feed(): void {
+		$cache = $this->seed_cache_files();
+
+		$this->runs->shouldReceive( 'create' )->once()->andReturn( 7 );
+
+		$this->assertSame( 7, $this->runner()->start( 'cron', 'changed' ) );
+
+		$this->assertFileExists( $cache . '/vuln-plugin-elementor.json' );
+	}
+
+	public function test_a_path_scan_keeps_the_cached_vulnerability_feed(): void {
+		// scope=path has no vuln phase, so there is nothing to refresh for.
+		$cache = $this->seed_cache_files();
+
+		$this->runs->shouldReceive( 'create' )->once()->andReturn( 7 );
+
+		$this->assertSame( 7, $this->runner()->start( 'manual', 'path', 'Fixtures/corpus' ) );
+
+		$this->assertFileExists( $cache . '/vuln-plugin-elementor.json' );
+	}
+
+	/**
+	 * One cached vulnerability response and one checksum list in the test
+	 * storage dir's cache.
+	 *
+	 * @return string The cache directory.
+	 */
+	private function seed_cache_files(): string {
+		$cache = ( new Store( $this->health_dir ) )->cache_dir();
+
+		file_put_contents( $cache . '/vuln-plugin-elementor.json', '{"vulnerabilities":[]}' );
+		file_put_contents( $cache . '/checksum-core-6.8.json', '{}' );
+
+		return $cache;
+	}
+
 	public function test_start_opens_the_first_run_on_an_install_with_no_bundle_yet(): void {
 		// A fresh install: nothing downloaded, nothing compiled, state at 0.
 		// The `bundle` phase of this very run is what fetches the signatures,

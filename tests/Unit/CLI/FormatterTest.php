@@ -133,6 +133,23 @@ final class FormatterTest extends MonkeyTestCase {
 		$this->assertSame( 'LW0001, LW0002', $rows[0]['detected_by'] );
 		$this->assertSame( '2023-11-14 22:13:20', $rows[0]['last_seen'] );
 		$this->assertSame( 'new', $rows[0]['state'] );
+		$this->assertSame( '', $rows[0]['reference'] );
+	}
+
+	public function test_findings_rows_link_a_vulnerability_to_its_record(): void {
+		$rows = Formatter::findings_rows(
+			[
+				$this->finding(
+					[
+						'type'    => 'vulnerability',
+						'locator' => 'plugin:elementor',
+						'meta'    => '{"records":[{"id":"cve-1","references":["https://example.test/v/1"]}]}',
+					]
+				),
+			]
+		);
+
+		$this->assertSame( 'https://example.test/v/1', $rows[0]['reference'] );
 	}
 
 	public function test_findings_rows_decode_a_raw_signature_ids_column(): void {

@@ -15,7 +15,12 @@ defined( 'ABSPATH' ) || exit;
  * A `vulnerability` finding carries the feed's raw records in
  * `meta.records` (spec §8.3). These are third-party data, so everything
  * here is defensive: unknown shapes yield empty strings, and `reference()`
- * only ever hands back an `https://` URL (spec §13).
+ * and `license_url()` only ever hand back an `https://` URL (spec §13).
+ *
+ * The Wordfence Intelligence licence asks every copy to link to the record,
+ * reproduce Defiant's copyright designation and reproduce the licence
+ * itself: `reference()`, `copyright()` and `license()` supply those three,
+ * verbatim from the record, since the wording may change upstream.
  */
 final class VulnRecord {
 
@@ -99,26 +104,35 @@ final class VulnRecord {
 	public static function reference( array $finding ): string {
 		$record     = self::record( $finding );
 		$references = is_array( $record['references'] ?? null ) ? $record['references'] : [];
-		$url        = [] === $references ? '' : (string) reset( $references );
 
-		return 0 === stripos( $url, 'https://' ) ? $url : '';
+		return self::https_only( [] === $references ? '' : (string) reset( $references ) );
 	}
 
 	/**
-	 * The feed's required attribution line, if the record carries one.
+	 * The feed's required copyright designation, if the record carries one.
 	 *
 	 * @param array<string, mixed> $finding Findings-table row.
 	 */
 	public static function copyright( array $finding ): string {
-		$record = self::record( $finding );
+		return (string) ( self::defiant( $finding )['notice'] ?? '' );
+	}
 
-		if ( null === $record || ! is_array( $record['copyrights'] ?? null ) ) {
-			return '';
-		}
+	/**
+	 * The licence text the record is distributed under, if it carries one.
+	 *
+	 * @param array<string, mixed> $finding Findings-table row.
+	 */
+	public static function license( array $finding ): string {
+		return (string) ( self::defiant( $finding )['license'] ?? '' );
+	}
 
-		$defiant = $record['copyrights']['defiant'] ?? null;
-
-		return is_array( $defiant ) ? (string) ( $defiant['notice'] ?? '' ) : '';
+	/**
+	 * The licence terms page, but only when it is an `https://` link.
+	 *
+	 * @param array<string, mixed> $finding Findings-table row.
+	 */
+	public static function license_url( array $finding ): string {
+		return self::https_only( (string) ( self::defiant( $finding )['license_url'] ?? '' ) );
 	}
 
 	/**
@@ -166,6 +180,28 @@ final class VulnRecord {
 		$first   = [] === $records ? null : reset( $records );
 
 		return is_array( $first ) ? $first : null;
+	}
+
+	/**
+	 * The record's `copyrights.defiant` block, or an empty array.
+	 *
+	 * @param array<string, mixed> $finding Findings-table row.
+	 * @return array<string, mixed>
+	 */
+	private static function defiant( array $finding ): array {
+		$record     = self::record( $finding );
+		$copyrights = is_array( $record['copyrights'] ?? null ) ? $record['copyrights'] : [];
+
+		return is_array( $copyrights['defiant'] ?? null ) ? $copyrights['defiant'] : [];
+	}
+
+	/**
+	 * `$url` when it is an `https://` link, otherwise an empty string.
+	 *
+	 * @param string $url Candidate URL from the record.
+	 */
+	private static function https_only( string $url ): string {
+		return 0 === stripos( $url, 'https://' ) ? $url : '';
 	}
 
 	/**

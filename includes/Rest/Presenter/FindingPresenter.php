@@ -203,17 +203,20 @@ final class FindingPresenter {
 	}
 
 	/**
-	 * The feed's own line: the record title, its https reference and the
-	 * attribution its licence requires; null when the record has none.
+	 * The feed's own lines: the record title, its https reference, and the
+	 * copyright notice, licence text and licence link its licence requires
+	 * a copy to carry; null when the record has none of them.
 	 *
 	 * @param array<string, mixed> $finding Findings-table row.
-	 * @return array{title: string, reference: string, notice: string}|null
+	 * @return array{title: string, reference: string, notice: string, license: string, license_url: string}|null
 	 */
 	private static function vuln( array $finding ): ?array {
 		$vuln = [
-			'title'     => VulnRecord::title( $finding ),
-			'reference' => VulnRecord::reference( $finding ),
-			'notice'    => VulnRecord::copyright( $finding ),
+			'title'       => VulnRecord::title( $finding ),
+			'reference'   => VulnRecord::reference( $finding ),
+			'notice'      => VulnRecord::copyright( $finding ),
+			'license'     => VulnRecord::license( $finding ),
+			'license_url' => VulnRecord::license_url( $finding ),
 		];
 
 		return '' === implode( '', $vuln ) ? null : $vuln;

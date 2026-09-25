@@ -77,6 +77,42 @@ final class VulnRecordTest extends MonkeyTestCase {
 		$this->assertSame( '', VulnRecord::copyright( self::finding( [ 'copyrights' => [] ] ) ) );
 	}
 
+	public function test_license_reads_the_defiant_license_verbatim(): void {
+		$this->assertSame(
+			'Defiant hereby grants you a perpetual copyright license.',
+			VulnRecord::license( self::finding() )
+		);
+	}
+
+	public function test_license_and_its_url_are_empty_when_the_record_has_none(): void {
+		$finding = self::finding( [ 'copyrights' => [ 'defiant' => [ 'notice' => 'Copyright Defiant Inc.' ] ] ] );
+
+		$this->assertSame( '', VulnRecord::license( $finding ) );
+		$this->assertSame( '', VulnRecord::license_url( $finding ) );
+		$this->assertSame( 'Copyright Defiant Inc.', VulnRecord::copyright( $finding ) );
+	}
+
+	public function test_license_url_keeps_an_https_link(): void {
+		$this->assertSame( 'https://example.test/terms/', VulnRecord::license_url( self::finding() ) );
+	}
+
+	/**
+	 * @dataProvider provide_rejected_references
+	 */
+	public function test_license_url_rejects_anything_but_https( string $url ): void {
+		$finding = self::finding( [ 'copyrights' => [ 'defiant' => [ 'license_url' => $url ] ] ] );
+
+		$this->assertSame( '', VulnRecord::license_url( $finding ) );
+	}
+
+	public function test_copyright_accessors_tolerate_a_malformed_block(): void {
+		$finding = self::finding( [ 'copyrights' => [ 'defiant' => 'not an array' ] ] );
+
+		$this->assertSame( '', VulnRecord::copyright( $finding ) );
+		$this->assertSame( '', VulnRecord::license( $finding ) );
+		$this->assertSame( '', VulnRecord::license_url( $finding ) );
+	}
+
 	public function test_patched_version_reads_the_matching_software_entry(): void {
 		$this->assertSame( '5.9.4', VulnRecord::patched_version( self::finding() ) );
 	}
@@ -99,7 +135,11 @@ final class VulnRecordTest extends MonkeyTestCase {
 				'title'      => 'Unauthenticated Stored XSS',
 				'references' => [ 'https://example.test/v/1' ],
 				'copyrights' => [
-					'defiant' => [ 'notice' => 'Disclosure provided under license by Defiant Inc.' ],
+					'defiant' => [
+						'notice'      => 'Disclosure provided under license by Defiant Inc.',
+						'license'     => 'Defiant hereby grants you a perpetual copyright license.',
+						'license_url' => 'https://example.test/terms/',
+					],
 				],
 				'software'   => [
 					[

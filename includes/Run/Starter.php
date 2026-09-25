@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace LightweightPlugins\Scan\Run;
 
 use LightweightPlugins\Scan\Db\RunsRepositoryInterface;
+use LightweightPlugins\Scan\Remote\VulnerabilityProvider;
 use LightweightPlugins\Scan\State;
 use WP_Error;
 
@@ -36,8 +37,15 @@ defined( 'ABSPATH' ) || exit;
  * The whole check-then-write is bracketed by the run lock so two requests
  * can't both find no live run and both create one. No scan work happens
  * inside the lock.
+ *
+ * A new run a person asked for (not a scheduled one) that includes the
+ * `vuln` phase first drops the cached vulnerability feed: a manual re-check
+ * must see what the backend knows now, not what it knew an hour ago.
  */
 final class Starter {
+
+	/** Triggers that mean a person started the run, not the scheduler. */
+	private const USER_TRIGGERS = [ 'manual', 'cli', 'ability' ];
 
 	/** Health probe, built in a later task; consulted only when present. */
 	private const ENVIRONMENT = 'LightweightPlugins\\Scan\\Health\\Environment';
@@ -107,6 +115,10 @@ final class Starter {
 			if ( null === $relative ) {
 				return new WP_Error( 'lw_scan_bad_path', __( 'The scan path must be a directory inside the WordPress installation.', 'lw-scan' ) );
 			}
+		}
+
+		if ( in_array( $trigger, self::USER_TRIGGERS, true ) && in_array( 'vuln', Phases::for_scope( $scope ), true ) ) {
+			VulnerabilityProvider::purge_cache();
 		}
 
 		return $this->create( $trigger, $scope, $relative );

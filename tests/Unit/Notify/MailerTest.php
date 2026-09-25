@@ -70,22 +70,90 @@ final class MailerTest extends MonkeyTestCase {
 		$this->assertStringNotContainsString( 'ct:9999', $line );
 	}
 
-	public function test_format_finding_line_uses_reason_for_vulnerability_findings(): void {
+	/**
+	 * A vulnerability finding as `Vuln\Matcher` stores it: the feed's record
+	 * titles in `reason`, the raw records (with their WFI copyright block)
+	 * in `meta`.
+	 *
+	 * @param array<string, mixed> $software Overrides for the record's software entry.
+	 * @return array<string, mixed>
+	 */
+	private static function vuln_finding( array $software = [] ): array {
+		return self::finding(
+			[
+				'type'          => 'vulnerability',
+				'category'      => 'vulnerability',
+				'tier'          => 'infected',
+				'locator'       => 'plugin:elementor',
+				'signature_ids' => [ '7bea239c' ],
+				'reason'        => 'Elementor 4.3.0 - 4.3.1 - Cross-Site Request Forgery — installed 4.3.0, patched in 4.3.2',
+				'excerpt'       => '',
+				'meta'          => (string) json_encode(
+					[
+						'installed_version' => '4.3.0',
+						'records'           => [
+							[
+								'id'         => '7bea239c',
+								'title'      => 'Elementor 4.3.0 - 4.3.1 - Cross-Site Request Forgery',
+								'references' => [ 'https://www.wordfence.com/threat-intel/vulnerabilities/id/7bea239c' ],
+								'copyrights' => [
+									'defiant' => [
+										'notice'  => 'Copyright 2012-2026 Defiant Inc.',
+										'license' => 'Defiant hereby grants you a license.',
+									],
+								],
+								'software'   => [
+									array_merge(
+										[
+											'type'             => 'plugin',
+											'slug'             => 'elementor',
+											'name'             => 'Elementor Website Builder',
+											'patched'          => true,
+											'patched_versions' => [ '4.3.2' ],
+										],
+										$software
+									),
+								],
+							],
+						],
+					]
+				),
+			]
+		);
+	}
+
+	public function test_a_vulnerability_line_names_the_package_and_the_fixed_version(): void {
+		$this->assertSame(
+			'[ALERT] vulnerability · plugin:elementor · infected/vulnerability · Elementor Website Builder 4.3.0: known vulnerability, update to 4.3.2 · ',
+			Mailer::format_finding_line( self::vuln_finding() )
+		);
+	}
+
+	public function test_a_vulnerability_line_without_a_fix_says_so(): void {
 		$line = Mailer::format_finding_line(
-			self::finding(
+			self::vuln_finding(
 				[
-					'type'          => 'vulnerability',
-					'category'      => 'vulnerability',
-					'locator'       => 'plugin:some-plugin',
-					'signature_ids' => [ 'CVE-2024-1234' ],
-					'reason'        => 'Some Plugin XSS — installed 1.0, patched in 1.1',
-					'excerpt'       => '',
+					'patched'          => false,
+					'patched_versions' => [],
 				]
 			)
 		);
 
-		$this->assertStringContainsString( 'Some Plugin XSS — installed 1.0, patched in 1.1', $line );
-		$this->assertStringNotContainsString( 'CVE-2024-1234', $line );
+		$this->assertStringContainsString( ' · Elementor Website Builder 4.3.0: known vulnerability, no fixed version yet · ', $line );
+	}
+
+	public function test_a_vulnerability_line_falls_back_to_the_slug_without_a_name(): void {
+		$line = Mailer::format_finding_line( self::vuln_finding( [ 'name' => '' ] ) );
+
+		$this->assertStringContainsString( ' · elementor 4.3.0: known vulnerability, update to 4.3.2 · ', $line );
+	}
+
+	public function test_a_vulnerability_line_carries_no_feed_text(): void {
+		$line = Mailer::format_finding_line( self::vuln_finding() );
+
+		foreach ( [ 'Cross-Site', '7bea239c', 'wordfence.com', 'Defiant' ] as $feed_text ) {
+			$this->assertStringNotContainsString( $feed_text, $line );
+		}
 	}
 
 	public function test_format_finding_line_caps_excerpt_and_collapses_newlines(): void {
@@ -189,6 +257,40 @@ final class MailerTest extends MonkeyTestCase {
 		];
 
 		Mailer::send_new_findings( [], $findings, $options );
+	}
+
+	/**
+	 * @dataProvider provide_bodies_with_and_without_a_vulnerability
+	 */
+	public function test_the_findings_tab_sentence_appears_only_with_a_vulnerability_line( string $type, bool $expected ): void {
+		$body = '';
+		Functions\when( 'wp_mail' )->alias(
+			function ( $to, $subject, $sent ) use ( &$body ) {
+				$body = $sent;
+
+				return true;
+			}
+		);
+
+		$finding = 'vulnerability' === $type ? self::vuln_finding() : self::finding();
+		$options = [
+			'notify_level'  => 'alert',
+			'notify_emails' => [ 'a@example.test' ],
+		];
+
+		Mailer::send_new_findings( [], [ $finding ], $options );
+
+		$this->assertSame( $expected, str_contains( $body, "Details and sources are on the Findings tab:\nhttps://example.test/wp-admin/admin.php?page=lw-scan&tab=findings" ) );
+	}
+
+	/**
+	 * @return array<string, array{0: string, 1: bool}>
+	 */
+	public static function provide_bodies_with_and_without_a_vulnerability(): array {
+		return [
+			'vulnerability' => [ 'vulnerability', true ],
+			'file'          => [ 'file', false ],
+		];
 	}
 
 	public function test_send_new_findings_body_ends_with_findings_link(): void {

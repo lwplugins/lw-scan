@@ -30,7 +30,7 @@ defined( 'ABSPATH' ) || exit;
 final class Formatter {
 
 	/** Columns of the findings table (`findings_rows()`). */
-	public const FINDINGS_COLUMNS = [ 'id', 'severity', 'type', 'where', 'detected_by', 'last_seen', 'state' ];
+	public const FINDINGS_COLUMNS = [ 'id', 'severity', 'type', 'where', 'detected_by', 'last_seen', 'state', 'reference' ];
 
 	/** Columns of every metric/value table (`run_summary()`, `status()`). */
 	public const SUMMARY_COLUMNS = [ 'metric', 'value' ];
@@ -60,6 +60,7 @@ final class Formatter {
 				'detected_by' => self::detected_by( $finding ),
 				'last_seen'   => self::timestamp( (int) ( $finding['last_seen'] ?? 0 ) ),
 				'state'       => (string) ( $finding['state'] ?? '' ),
+				'reference'   => Attribution::fields( $finding )['reference'],
 			];
 		}
 

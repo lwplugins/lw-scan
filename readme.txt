@@ -4,7 +4,7 @@ Tags: security, malware, scanner, antivirus, vulnerability
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 1.4.3
+Stable tag: 1.4.4
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -98,6 +98,13 @@ The plugin activates and scans files on multisite, but the database scan covers 
 Everything goes: the settings, the run state, the three scan tables and the `wp-content/lw-scan` directory with the signature bundle and its caches. The cleanup covers the site it runs on, so a network install may leave per-site options behind. A re-install starts from a clean scan.
 
 == Changelog ==
+
+= 1.4.4 =
+* Fix: newly published vulnerabilities could take up to a day to show up: each plugin's, theme's and core's vulnerability list was cached for 24 hours. The cache now lasts one hour, matching the backend's hourly sync.
+* Fix: starting a scan by hand (Scan tab, WP-CLI or the Site Manager ability) now drops the cached vulnerability lists first, so a manual scan always checks against the latest data. Scheduled scans keep using the hourly cache.
+* Fix: a vulnerability finding's details showed the Wordfence Intelligence copyright notice but not the license text the record is shared under, which the license requires every copy to include. The details now show the notice and the license verbatim from the record, with a link to the license terms. The record link is now labelled "Vulnerability record".
+* Fix: wp lw-scan findings and wp lw-scan run now carry the Wordfence Intelligence attribution for vulnerability findings: JSON rows get reference, copyright, license and license_url fields; table and CSV rows get a reference column, and the copyright notice and license text are printed once after the output (after a table on STDOUT, after CSV on STDERR so the CSV still parses).
+* Fix: the notification e-mail's line for a vulnerability no longer quotes the vulnerability record's title. It now names the package, the installed version and the version to update to ("Elementor Website Builder 4.3.0: known vulnerability, update to 4.3.2", or "no fixed version yet"), and points to the Findings tab for details and sources. The e-mail carries no third-party record or license text.
 
 = 1.4.3 =
 * Fix: notices from themes and other plugins (for example a theme's purchase-code or recommended-plugins notice) showed above the LW Scan screen when no other LW plugin was active. They are now kept off every LW Plugins screen, whatever their markup.

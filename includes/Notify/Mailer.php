@@ -21,10 +21,10 @@ defined( 'ABSPATH' ) || exit;
  * piece that turns one finding row into a plain-text body line.
  *
  * The body line's fields are separated by `·`, as spec §10.8 writes them.
- * An em dash would read better were it not already inside the fields: a
- * vulnerability finding's reason is "Some Plugin XSS — installed 1.0,
- * patched in 1.1", so a line separated the same way cannot be split back
- * into its parts by eye or by anything else.
+ * A vulnerability finding's line carries `VulnLine`'s own wording instead
+ * of the finding's reason, which quotes the vulnerability feed: the mail
+ * carries no third-party record text, and points to the Findings tab for
+ * the record and its sources.
  *
  * Both triggers answer to the Notifications tab's switch (`Preferences`):
  * off means no scan e-mail at all, the failure-streak warning included.
@@ -164,7 +164,13 @@ final class Mailer {
 			);
 		}
 
-		return implode( "\n", $lines ) . "\n\n" . self::findings_link();
+		$link = self::findings_link();
+
+		if ( in_array( 'vulnerability', array_column( $shown, 'type' ), true ) ) {
+			$link = __( 'Details and sources are on the Findings tab:', 'lw-scan' ) . "\n" . $link;
+		}
+
+		return implode( "\n", $lines ) . "\n\n" . $link;
 	}
 
 	/**
@@ -184,7 +190,7 @@ final class Mailer {
 		$classification = '' === $category ? $tier : $tier . '/' . $category;
 
 		$middle = 'vulnerability' === $type
-			? (string) ( $f['reason'] ?? '' )
+			? VulnLine::describe( $f )
 			: self::first_signature( $f );
 
 		$excerpt = self::clean_excerpt( (string) ( $f['excerpt'] ?? '' ) );

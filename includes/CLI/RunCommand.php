@@ -288,6 +288,7 @@ final class RunCommand {
 		}
 
 		Utils\format_items( 'table', Formatter::findings_rows( $findings ), Formatter::FINDINGS_COLUMNS );
+		Attribution::print_footer( $findings, false );
 	}
 
 	/**
@@ -304,11 +305,12 @@ final class RunCommand {
 	private static function document( string $format, array $findings ): void {
 		if ( 'json' !== $format ) {
 			Utils\format_items( $format, Formatter::findings_rows( $findings ), Formatter::FINDINGS_COLUMNS );
+			Attribution::print_footer( $findings, true );
 
 			return;
 		}
 
-		$rows = array_map( [ self::class, 'decode_row' ], $findings );
+		$rows = Attribution::with_fields( array_map( [ self::class, 'decode_row' ], $findings ) );
 
 		Utils\format_items( 'json', $rows, [] === $rows ? Formatter::FINDINGS_COLUMNS : array_keys( (array) reset( $rows ) ) );
 	}

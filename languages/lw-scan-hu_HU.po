@@ -1024,8 +1024,12 @@ msgid "Copy path"
 msgstr "Elérési út másolása"
 
 #: build/index.js:17
-msgid "Record and license"
-msgstr "Rekord és licenc"
+msgid "Vulnerability record"
+msgstr "Sebezhetőségi rekord"
+
+#: build/index.js:17
+msgid "License terms"
+msgstr "Licencfeltételek"
 
 #: build/index.js:17
 msgid "Alerts"
@@ -1473,3 +1477,19 @@ msgstr "Új URL generálva. Az előző URL már nem működik."
 #: build/index.js:26
 msgid "The current URL stops working immediately. Continue?"
 msgstr "A jelenlegi URL azonnal megszűnik működni. Folytatod?"
+
+#. translators: %s: plugin, theme or WordPress name and installed version.
+#: includes/Notify/VulnLine.php:44
+#, php-format
+msgid "%s: known vulnerability, no fixed version yet"
+msgstr "%s: ismert sebezhetőség, javított verzió még nincs"
+
+#. translators: 1: plugin, theme or WordPress name and installed version. 2: version that fixes it.
+#: includes/Notify/VulnLine.php:51
+#, php-format
+msgid "%1$s: known vulnerability, update to %2$s"
+msgstr "%1$s: ismert sebezhetőség, frissíts erre: %2$s"
+
+#: includes/Notify/Mailer.php:170
+msgid "Details and sources are on the Findings tab:"
+msgstr "A részletek és a források a Találatok fülön:"

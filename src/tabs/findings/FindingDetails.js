@@ -66,20 +66,58 @@ export default function FindingDetails( { finding, onClose } ) {
 					) }
 				</div>
 			</div>
-			{ finding.vuln && (
-				<p className="lw-admin-hint lw-admin-detail__vuln">
-					{ finding.vuln.title }
-					{ finding.vuln.reference && (
-						<>
-							{ ' · ' }
-							<ExternalLink href={ finding.vuln.reference }>
-								{ __( 'Record and license', 'lw-scan' ) }
-							</ExternalLink>
-						</>
-					) }
-					{ finding.vuln.notice && <> · { finding.vuln.notice }</> }
-				</p>
-			) }
+			{ finding.vuln && <VulnFooter vuln={ finding.vuln } /> }
 		</Modal>
+	);
+}
+
+/**
+ * The record's title and link, then the copyright notice and licence text
+ * the Wordfence Intelligence licence requires every copy to reproduce,
+ * verbatim from the record. A record without licence text keeps the old
+ * single line.
+ *
+ * @param {Object} props
+ * @param {Object} props.vuln Vulnerability view: title, reference, notice, license, license_url.
+ */
+function VulnFooter( { vuln } ) {
+	const record = (
+		<>
+			{ vuln.title }
+			{ vuln.reference && (
+				<>
+					{ ' · ' }
+					<ExternalLink href={ vuln.reference }>
+						{ __( 'Vulnerability record', 'lw-scan' ) }
+					</ExternalLink>
+				</>
+			) }
+		</>
+	);
+
+	if ( ! vuln.license ) {
+		return (
+			<p className="lw-admin-hint lw-admin-detail__vuln">
+				{ record }
+				{ vuln.notice && <> · { vuln.notice }</> }
+			</p>
+		);
+	}
+
+	return (
+		<div className="lw-admin-detail__vuln">
+			<p className="lw-admin-hint">{ record }</p>
+			<p className="lw-admin-hint lw-admin-detail__license">
+				{ [ vuln.notice, vuln.license ].filter( Boolean ).join( ' ' ) }
+				{ vuln.license_url && (
+					<>
+						{ ' ' }
+						<ExternalLink href={ vuln.license_url }>
+							{ __( 'License terms', 'lw-scan' ) }
+						</ExternalLink>
+					</>
+				) }
+			</p>
+		</div>
 	);
 }

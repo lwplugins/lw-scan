@@ -21,6 +21,8 @@ defined( 'ABSPATH' ) || exit;
  * `Formatter::findings_rows()`. `--format=json` prints the full rows the
  * repository returns (JSON columns already decoded) instead of the seven
  * summary columns, so scripts get the whole finding model (spec §11.2).
+ * Vulnerability rows carry the Wordfence Intelligence attribution its
+ * licence requires (see `Attribution`).
  */
 final class FindingsCommand {
 
@@ -119,6 +121,7 @@ final class FindingsCommand {
 		Utils\format_items( 'table', Formatter::findings_rows( $items ), Formatter::FINDINGS_COLUMNS );
 
 		WP_CLI::log( sprintf( 'Page %d of %d (%d findings).', $page, (int) ceil( $result['total'] / $per ), $result['total'] ) );
+		Attribution::print_footer( $items, false );
 	}
 
 	/**
@@ -129,11 +132,14 @@ final class FindingsCommand {
 	private static function document( string $format, array $items ): void {
 		if ( 'json' !== $format ) {
 			Utils\format_items( $format, Formatter::findings_rows( $items ), Formatter::FINDINGS_COLUMNS );
+			Attribution::print_footer( $items, true );
 
 			return;
 		}
 
-		Utils\format_items( 'json', $items, [] === $items ? Formatter::FINDINGS_COLUMNS : array_keys( (array) reset( $items ) ) );
+		$rows = Attribution::with_fields( $items );
+
+		Utils\format_items( 'json', $rows, [] === $rows ? Formatter::FINDINGS_COLUMNS : array_keys( (array) reset( $rows ) ) );
 	}
 
 	/**
