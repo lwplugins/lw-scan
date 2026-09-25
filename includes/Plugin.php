@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\Scan;
 
+use LightweightPlugins\Scan\Admin\NoticeManager;
 use LightweightPlugins\Scan\Admin\SettingsPage;
 use LightweightPlugins\Scan\CLI\Commands;
 use LightweightPlugins\Scan\Db\Schema;
@@ -47,6 +48,8 @@ final class Plugin {
 	 * - Run\CatchUp                  the missed-schedule recovery, on `init`
 	 * - Admin\SettingsPage, AdminNotice  is_admin() only: the menu entry,
 	 *                                the React mount point and its assets
+	 * - Admin\NoticeManager          is_admin() only: keeps other plugins'
+	 *                                notices off the LW Plugins screens
 	 * - Rest\Routes                  the React admin's `lw-scan/v1`
 	 *                                routes, on `rest_api_init` — every
 	 *                                request type, since REST requests are
@@ -76,6 +79,7 @@ final class Plugin {
 
 		if ( is_admin() ) {
 			AdminNotice::register();
+			NoticeManager::register();
 			SettingsPage::register();
 		}
 
