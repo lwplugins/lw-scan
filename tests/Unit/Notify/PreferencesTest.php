@@ -26,10 +26,10 @@ final class PreferencesTest extends MonkeyTestCase {
 		Functions\when( 'get_option' )->justReturn( 'admin@example.test' );
 	}
 
-	public function test_an_options_array_without_the_new_keys_behaves_as_before(): void {
+	public function test_an_options_array_without_the_notify_keys_reads_the_defaults(): void {
 		$prefs = new Preferences( [ 'notify_level' => 'review' ] );
 
-		$this->assertTrue( $prefs->enabled(), 'An install saved before 1.3.0 has no notify_enabled key and must keep mailing.' );
+		$this->assertFalse( $prefs->enabled(), 'A missing notify_enabled reads as the default, which is off.' );
 		$this->assertSame( 'review', $prefs->level() );
 		$this->assertSame( 20, $prefs->limit() );
 	}

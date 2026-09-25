@@ -51,7 +51,7 @@ final class Options {
 				'wp-content/updraft',
 			],
 			'follow_symlinks'    => false,
-			'notify_enabled'     => true,
+			'notify_enabled'     => false,
 			'notify_emails'      => [],
 			'notify_level'       => 'alert',
 			'notify_limit'       => 20,

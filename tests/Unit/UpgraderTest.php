@@ -351,6 +351,33 @@ final class UpgraderTest extends MonkeyTestCase {
 		$this->assertSame( LW_SCAN_VERSION, $this->stored_version() );
 	}
 
+	public function test_maybe_upgrade_keeps_mail_on_for_an_existing_install_that_never_stored_the_switch(): void {
+		$this->seed_version( '1.2.0' );
+
+		Upgrader::maybe_upgrade();
+
+		$this->assertTrue( $this->option_store[ Options::OPTION_NAME ]['notify_enabled'] );
+	}
+
+	public function test_maybe_upgrade_keeps_a_stored_mail_switch_as_it_is(): void {
+		$this->option_store[ Options::OPTION_NAME ] = [
+			Upgrader::VERSION_KEY => '1.4.4',
+			'notify_enabled'      => false,
+		];
+
+		Upgrader::maybe_upgrade();
+
+		$this->assertFalse( $this->option_store[ Options::OPTION_NAME ]['notify_enabled'] );
+	}
+
+	public function test_maybe_upgrade_leaves_mail_off_on_a_fresh_install(): void {
+		$this->option_store[ Options::OPTION_NAME ] = [ Upgrader::VERSION_KEY => '' ];
+
+		Upgrader::maybe_upgrade();
+
+		$this->assertFalse( $this->option_store[ Options::OPTION_NAME ]['notify_enabled'] );
+	}
+
 	public function test_maybe_upgrade_fires_the_upgraded_action_with_both_versions(): void {
 		$this->seed_version( '0.9.0' );
 

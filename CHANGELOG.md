@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.4.5] - 2026-09-25
+
+### Changed
+- E-mail notifications are off by default on a new install; switch them on from the Notifications tab or with `wp lw-scan notify enable`. A site that was already mailing keeps doing so, including an older install that never saved the setting.
+
 ## [1.4.4] - 2026-09-25
 
 ### Fixed

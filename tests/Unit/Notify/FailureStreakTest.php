@@ -84,7 +84,10 @@ final class FailureStreakTest extends MonkeyTestCase {
 	public function test_record_failure_notifies_on_the_third_consecutive_failure(): void {
 		Functions\expect( 'wp_mail' )->once()->andReturn( true );
 
-		$this->option_store['lw_scan_options'] = [ 'notify_emails' => [ 'a@example.test' ] ];
+		$this->option_store['lw_scan_options'] = [
+			'notify_enabled' => true,
+			'notify_emails'  => [ 'a@example.test' ],
+		];
 
 		FailureStreak::record_failure( 'e1' );
 		FailureStreak::record_failure( 'e2' );
@@ -97,7 +100,10 @@ final class FailureStreakTest extends MonkeyTestCase {
 	public function test_record_failure_does_not_notify_again_after_the_flag_is_set(): void {
 		Functions\expect( 'wp_mail' )->once()->andReturn( true );
 
-		$this->option_store['lw_scan_options'] = [ 'notify_emails' => [ 'a@example.test' ] ];
+		$this->option_store['lw_scan_options'] = [
+			'notify_enabled' => true,
+			'notify_emails'  => [ 'a@example.test' ],
+		];
 
 		FailureStreak::record_failure( 'e1' );
 		FailureStreak::record_failure( 'e2' );
@@ -110,7 +116,10 @@ final class FailureStreakTest extends MonkeyTestCase {
 	public function test_record_success_resets_streak_and_notified_flag(): void {
 		Functions\when( 'wp_mail' )->justReturn( true );
 
-		$this->option_store['lw_scan_options'] = [ 'notify_emails' => [ 'a@example.test' ] ];
+		$this->option_store['lw_scan_options'] = [
+			'notify_enabled' => true,
+			'notify_emails'  => [ 'a@example.test' ],
+		];
 
 		FailureStreak::record_failure( 'e1' );
 		FailureStreak::record_failure( 'e2' );

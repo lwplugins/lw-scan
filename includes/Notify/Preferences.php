@@ -19,9 +19,11 @@ defined( 'ABSPATH' ) || exit;
  * same way — what the switch says, which severities go out, how many lines
  * the body may carry, and who receives it.
  *
- * Every getter tolerates an options array saved before 1.3.0: a missing
- * `notify_enabled` reads as on, and a missing `notify_limit` as the default
- * cap, so an upgrade changes nothing about who gets mail.
+ * Every getter tolerates a partial options array: a missing
+ * `notify_enabled` reads as off (the default since 1.4.5; `Upgrader` pins
+ * older installs that never stored the key to on, so an upgrade changes
+ * nothing about who gets mail), and a missing `notify_limit` as the
+ * default cap.
  *
  * `recipients()` is the one method that reaches outside the array: an empty
  * recipient list means "the site's admin address", which is what made a
@@ -61,7 +63,7 @@ final class Preferences {
 	 * failure-streak warning alike.
 	 */
 	public function enabled(): bool {
-		return ! empty( $this->options['notify_enabled'] ?? true );
+		return ! empty( $this->options['notify_enabled'] ?? false );
 	}
 
 	/**

@@ -60,7 +60,7 @@ final class OptionsTest extends MonkeyTestCase {
 			$defaults['excluded_paths']
 		);
 		$this->assertFalse( $defaults['follow_symlinks'] );
-		$this->assertTrue( $defaults['notify_enabled'] );
+		$this->assertFalse( $defaults['notify_enabled'] );
 		$this->assertSame( [], $defaults['notify_emails'] );
 		$this->assertSame( 'alert', $defaults['notify_level'] );
 		$this->assertSame( 20, $defaults['notify_limit'] );

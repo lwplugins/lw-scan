@@ -186,6 +186,7 @@ final class MailerTest extends MonkeyTestCase {
 
 		$options = [
 			'notify_level'  => 'alert',
+			'notify_enabled' => true,
 			'notify_emails' => [ 'a@example.test', 'b@example.test' ],
 		];
 
@@ -211,6 +212,7 @@ final class MailerTest extends MonkeyTestCase {
 
 		$options = [
 			'notify_level'  => 'review',
+			'notify_enabled' => true,
 			'notify_emails' => [ 'a@example.test' ],
 		];
 
@@ -223,6 +225,7 @@ final class MailerTest extends MonkeyTestCase {
 		$findings = [ self::finding( [ 'severity' => 'review' ] ) ];
 		$options  = [
 			'notify_level'  => 'alert',
+			'notify_enabled' => true,
 			'notify_emails' => [ 'a@example.test' ],
 		];
 
@@ -236,6 +239,7 @@ final class MailerTest extends MonkeyTestCase {
 		$findings = [ self::finding( [ 'severity' => 'alert' ] ) ];
 		$options  = [
 			'notify_level'  => 'alert',
+			'notify_enabled' => true,
 			'notify_emails' => [ 'not-an-email' ],
 		];
 
@@ -253,6 +257,7 @@ final class MailerTest extends MonkeyTestCase {
 		$findings = [ self::finding( [ 'severity' => 'alert' ] ) ];
 		$options  = [
 			'notify_level'  => 'alert',
+			'notify_enabled' => true,
 			'notify_emails' => [],
 		];
 
@@ -275,6 +280,7 @@ final class MailerTest extends MonkeyTestCase {
 		$finding = 'vulnerability' === $type ? self::vuln_finding() : self::finding();
 		$options = [
 			'notify_level'  => 'alert',
+			'notify_enabled' => true,
 			'notify_emails' => [ 'a@example.test' ],
 		];
 
@@ -305,6 +311,7 @@ final class MailerTest extends MonkeyTestCase {
 		$findings = [ self::finding( [ 'severity' => 'alert' ] ) ];
 		$options  = [
 			'notify_level'  => 'alert',
+			'notify_enabled' => true,
 			'notify_emails' => [ 'a@example.test' ],
 		];
 
@@ -326,7 +333,7 @@ final class MailerTest extends MonkeyTestCase {
 			'error' => 'disk full',
 			'id'    => 7,
 		];
-		$options = [ 'notify_emails' => [ 'a@example.test' ] ];
+		$options = [ 'notify_enabled' => true, 'notify_emails' => [ 'a@example.test' ] ];
 
 		$this->assertTrue( Mailer::send_failure_streak( $run, $options ) );
 	}
@@ -351,14 +358,14 @@ final class MailerTest extends MonkeyTestCase {
 			'id'    => 9,
 		];
 
-		$this->assertTrue( Mailer::send_failure_streak( $run, [ 'notify_emails' => [ 'a@example.test' ] ] ) );
+		$this->assertTrue( Mailer::send_failure_streak( $run, [ 'notify_enabled' => true, 'notify_emails' => [ 'a@example.test' ] ] ) );
 	}
 
 	public function test_send_failure_streak_returns_false_when_no_valid_recipients(): void {
 		Functions\expect( 'wp_mail' )->never();
 		Functions\when( 'get_option' )->justReturn( false );
 
-		$this->assertFalse( Mailer::send_failure_streak( [ 'error' => 'x' ], [ 'notify_emails' => [] ] ) );
+		$this->assertFalse( Mailer::send_failure_streak( [ 'error' => 'x' ], [ 'notify_enabled' => true, 'notify_emails' => [] ] ) );
 	}
 
 	public function test_the_off_switch_sends_no_finding_mail_at_all(): void {
@@ -416,6 +423,7 @@ final class MailerTest extends MonkeyTestCase {
 			[
 				'notify_level'  => 'alert',
 				'notify_limit'  => 10,
+				'notify_enabled' => true,
 				'notify_emails' => [ 'a@example.test' ],
 			]
 		);
@@ -446,6 +454,7 @@ final class MailerTest extends MonkeyTestCase {
 			self::alerts( 25 ),
 			[
 				'notify_level'  => 'alert',
+				'notify_enabled' => true,
 				'notify_emails' => [ 'a@example.test' ],
 			]
 		);
@@ -473,6 +482,7 @@ final class MailerTest extends MonkeyTestCase {
 			[
 				'notify_level'  => 'alert',
 				'notify_limit'  => 0,
+				'notify_enabled' => true,
 				'notify_emails' => [ 'a@example.test' ],
 			]
 		);
@@ -499,6 +509,7 @@ final class MailerTest extends MonkeyTestCase {
 			[
 				'notify_level'  => 'alert',
 				'notify_limit'  => 10,
+				'notify_enabled' => true,
 				'notify_emails' => [ 'a@example.test' ],
 			]
 		);

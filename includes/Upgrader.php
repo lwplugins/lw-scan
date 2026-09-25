@@ -104,7 +104,7 @@ final class Upgrader {
 			( new FilesRepository() )->reset_hashes();
 			Environment::invalidate();
 
-			Options::update( [ self::VERSION_KEY => $to ] );
+			Options::update( [ self::VERSION_KEY => $to ] + self::keep_mail_on( $from ) );
 
 			/**
 			 * Fires once after the plugin has finished its post-upgrade cleanup.
@@ -116,6 +116,25 @@ final class Upgrader {
 		} finally {
 			self::release( $claimed_at );
 		}
+	}
+
+	/**
+	 * E-mail is off by default since 1.4.5, but an install that already
+	 * existed and never stored `notify_enabled` was mailing under the old
+	 * default. Pin that choice so the new default does not silence it.
+	 * A fresh install (`$from` is '') gets the new default.
+	 *
+	 * @param string $from Version the site was on, '' on a fresh install.
+	 * @return array<string, bool> The pin to store, empty when none is needed.
+	 */
+	private static function keep_mail_on( string $from ): array {
+		$raw = get_option( Options::OPTION_NAME, [] );
+
+		if ( '' === $from || ! is_array( $raw ) || array_key_exists( 'notify_enabled', $raw ) ) {
+			return [];
+		}
+
+		return [ 'notify_enabled' => true ];
 	}
 
 	/**

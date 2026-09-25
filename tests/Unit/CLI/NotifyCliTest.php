@@ -69,7 +69,7 @@ final class NotifyCliTest extends MonkeyTestCase {
 	public function test_status_on_a_fresh_site(): void {
 		$status = self::cli( false )->status();
 
-		$this->assertTrue( $status['enabled'] );
+		$this->assertFalse( $status['enabled'], 'E-mail is off until the site switches it on.' );
 		$this->assertSame( 'alerts', $status['level'] );
 		$this->assertSame( [ 'admin@example.test' ], $status['recipients'] );
 		$this->assertTrue( $status['uses_admin_email'] );
@@ -96,6 +96,8 @@ final class NotifyCliTest extends MonkeyTestCase {
 	}
 
 	public function test_disable_switches_e_mail_off(): void {
+		$this->options[ Options::OPTION_NAME ] = [ 'notify_enabled' => true ];
+
 		$result = self::cli()->disable();
 
 		$this->assertTrue( $result['changed'] );
@@ -127,6 +129,8 @@ final class NotifyCliTest extends MonkeyTestCase {
 	}
 
 	public function test_enable_is_idempotent(): void {
+		self::cli()->enable();
+
 		$result = self::cli()->enable();
 
 		$this->assertFalse( $result['changed'] );

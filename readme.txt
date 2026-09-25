@@ -4,7 +4,7 @@ Tags: security, malware, scanner, antivirus, vulnerability
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 1.4.4
+Stable tag: 1.4.5
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -28,7 +28,7 @@ LW Scan is a lightweight malware scanner for WordPress. It scans your files, you
 * Scopes: changed files only (the default), a full scan, the database alone, or a single directory
 * Resumable and time-budget-aware — a scan advances in ticks that respect the request's time budget, can be stopped from the admin or the terminal, and picks up where it left off; if PHP runs out of memory mid-tick, the run is reported as a failed scan naming the memory_limit it hit
 * Findings workflow: acknowledge, ignore or reopen findings; only new ones are reported again
-* Email notifications and an admin notice for new alerts, plus a warning when scheduled scans keep failing — all on a Notifications tab where e-mail can be switched off, capped at 10, 20 or 50 items per message, and sent to a list of addresses you choose
+* Email notifications and an admin notice for new alerts, plus a warning when scheduled scans keep failing — all on a Notifications tab where e-mail (off by default on a new install) can be switched on or off, capped at 10, 20 or 50 items per message, and sent to a list of addresses you choose
 * A Health tab that checks the things a scanner depends on: storage, signature bundle, backend, PCRE limits, memory, tokenizer, WP-Cron and the plugin's own tables
 * A read-only status endpoint for external monitoring, on by default: a secret URL that answers with the scan status as JSON (see the FAQ)
 
@@ -65,7 +65,7 @@ A site that was already scanning before this behaviour existed is not affected: 
 
 = The scan e-mails are too long, or I do not want them at all =
 
-**LW Plugins → Scan → Notifications.** "Send e-mail" has three settings — Off, new alerts only, or new alerts plus review items — and Off means no scan e-mail at all, the warning about repeatedly failing scheduled scans included. "Maximum items per e-mail" caps the body at 10, 20 or 50 items; the rest is one line linking to the Findings tab, and the subject still carries the true total. Leave Recipients empty and mail goes to the site's admin address — the tab names it, so it is never a surprise.
+**LW Plugins → Scan → Notifications.** "Send e-mail" has three settings — Off, new alerts only, or new alerts plus review items — and Off means no scan e-mail at all, the warning about repeatedly failing scheduled scans included. A new install starts at Off; a site that was already mailing keeps doing so. "Maximum items per e-mail" caps the body at 10, 20 or 50 items; the rest is one line linking to the Findings tab, and the subject still carries the true total. Leave Recipients empty and mail goes to the site's admin address — the tab names it, so it is never a surprise.
 
 = Does it remove or repair what it finds? =
 
@@ -98,6 +98,9 @@ The plugin activates and scans files on multisite, but the database scan covers 
 Everything goes: the settings, the run state, the three scan tables and the `wp-content/lw-scan` directory with the signature bundle and its caches. The cleanup covers the site it runs on, so a network install may leave per-site options behind. A re-install starts from a clean scan.
 
 == Changelog ==
+
+= 1.4.5 =
+* Change: E-mail notifications are off by default on a new install; switch them on from the Notifications tab or with `wp lw-scan notify enable`. A site that was already mailing keeps doing so, including an older install that never saved the setting.
 
 = 1.4.4 =
 * Fix: newly published vulnerabilities could take up to a day to show up: each plugin's, theme's and core's vulnerability list was cached for 24 hours. The cache now lasts one hour, matching the backend's hourly sync.

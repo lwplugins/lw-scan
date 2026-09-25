@@ -247,7 +247,10 @@ final class FinalizePhaseTest extends MonkeyTestCase {
 			],
 		];
 
-		$this->option_store[ Options::OPTION_NAME ] = [ 'notify_emails' => [ 'ops@example.test' ] ];
+		$this->option_store[ Options::OPTION_NAME ] = [
+			'notify_enabled' => true,
+			'notify_emails'  => [ 'ops@example.test' ],
+		];
 
 		$this->allow_run_close();
 		$this->runs->shouldReceive( 'get' )->andReturn( [] );
