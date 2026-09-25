@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.4.3] - 2026-09-25
+
+### Fixed
+- Notices from themes and other plugins (for example a theme's purchase-code or recommended-plugins notice) showed above the LW Scan screen when no other LW plugin was active. They are now kept off every LW Plugins screen, whatever their markup.
+
 ## [1.4.2] - 2026-09-24
 
 ### Added
