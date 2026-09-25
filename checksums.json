@@ -1,5 +1,5 @@
 {
-    "version": "1.4.4",
+    "version": "1.4.5",
     "files": {
         "build/index-rtl.css": "f1fc43c5a283cd03bd826122637ec904",
         "build/index.asset.php": "c6e966d515b738c7ae1815a4f078eaea",
@@ -81,9 +81,9 @@
         "includes/Notify/Baseline.php": "b5ecb043926da4edcc03fd77c413f619",
         "includes/Notify/FailureStreak.php": "3277a6e297c5ba14c40abfa272fba971",
         "includes/Notify/Mailer.php": "21f244757ac8649d0a1ee837a22c5b5c",
-        "includes/Notify/Preferences.php": "2109169934704ec5c6b528b22991a1cd",
+        "includes/Notify/Preferences.php": "417349c941e67289e9eed27bdd995b69",
         "includes/Notify/VulnLine.php": "eaeb51cbb19275b2dd99ec15b1d847fc",
-        "includes/Options.php": "0270d18c4d7dfae76f1c13b3b24c0d1e",
+        "includes/Options.php": "2b9d0cae4fa7e2f86be1168d3f8f992d",
         "includes/Plugin.php": "f0bcae2c93a97dec61e8aed0e616dd7f",
         "includes/Remote/ChecksumProvider.php": "1bfd182f4e26b9eaf72da881028a2e8b",
         "includes/Remote/Client.php": "e61e14ee2bfdedc662a87786e37a6b8d",
@@ -170,12 +170,12 @@
         "includes/Status/StatusReport.php": "a24560a4062b27b1753ce2fcfbbad4a8",
         "includes/Status/StatusRoute.php": "b11b3e46abdda36f4ab6ab76f32b64d8",
         "includes/Uninstall/Uninstaller.php": "663aaa33bb4e8e4ef31e4bd139260964",
-        "includes/Upgrader.php": "1ab9ae296071cab19d7802cb92b1f61c",
+        "includes/Upgrader.php": "8dc5cc7ba46de6154d516451b9b59391",
         "includes/Vuln/InstalledSoftware.php": "7799d79dc06c0434daa280565a0e873f",
         "includes/Vuln/Matcher.php": "52416eff4e86205c216f8f78237010d1",
         "includes/Vuln/VersionRange.php": "f94cc5debc0b6c862c4865b8cec6a537",
         "includes/functions.php": "137fc6cf37d788d22f100c6f2743c977",
-        "lw-scan.php": "31f9374ba0bb888a8ec9815b99cb0669",
+        "lw-scan.php": "9ac8bf1e24e958deb07aed8e6a0143c7",
         "uninstall.php": "feb3613e6a957b8b376195b888f5bddd"
     }
 }
