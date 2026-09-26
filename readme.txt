@@ -4,7 +4,7 @@ Tags: security, malware, scanner, antivirus, vulnerability
 Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 1.4.5
+Stable tag: 1.4.6
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -98,6 +98,11 @@ The plugin activates and scans files on multisite, but the database scan covers 
 Everything goes: the settings, the run state, the three scan tables and the `wp-content/lw-scan` directory with the signature bundle and its caches. The cleanup covers the site it runs on, so a network install may leave per-site options behind. A re-install starts from a clean scan.
 
 == Changelog ==
+
+= 1.4.6 =
+* Change: Requires WordPress 6.6: the React settings screen needs the react-jsx-runtime script that WordPress registers from 6.6.
+* Change: The LW Plugins overview page is now a searchable table showing each LW plugin's status and version, with one-click activation for installed plugins; it always uses the newest version shipped by any active LW plugin.
+* Fix: LW Site Manager's MCP server now lists this plugin's abilities (they were only reachable through REST).
 
 = 1.4.5 =
 * Change: E-mail notifications are off by default on a new install; switch them on from the Notifications tab or with `wp lw-scan notify enable`. A site that was already mailing keeps doing so, including an older install that never saved the setting.

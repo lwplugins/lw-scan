@@ -1,5 +1,5 @@
 {
-    "version": "1.4.5",
+    "version": "1.4.6",
     "files": {
         "assets/hub/index-rtl.css": "dfa2bcb5e11d2d54e66548ea64182942",
         "assets/hub/index.css": "707f64d2361230883b4506aacc736f54",
@@ -188,7 +188,7 @@
         "includes/Vuln/Matcher.php": "52416eff4e86205c216f8f78237010d1",
         "includes/Vuln/VersionRange.php": "f94cc5debc0b6c862c4865b8cec6a537",
         "includes/functions.php": "137fc6cf37d788d22f100c6f2743c977",
-        "lw-scan.php": "621a2fd908f43de570e72ce6d5168b07",
+        "lw-scan.php": "ce4a4f941d2b08d15fd8e7400dbfb9fa",
         "uninstall.php": "feb3613e6a957b8b376195b888f5bddd"
     }
 }
