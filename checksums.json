@@ -176,7 +176,7 @@
         "includes/Scanner/RegexLayer.php": "010a7e89993a80d337581f7ef3bed70c",
         "includes/Scanner/RegexWalks.php": "b31afdd7bb0b4618bd217516ea142778",
         "includes/Scanner/ScanOutcome.php": "9803294366eeccffa9f77d1026c35c77",
-        "includes/SiteManager/Abilities.php": "22d1663d7e2ba5202470968d8b669adb",
+        "includes/SiteManager/Abilities.php": "7fb80f35f898c097b0b8babf787bf87b",
         "includes/SiteManager/AbilityCallbacks.php": "be8def4d5ba7e7e0c11cbf77d08c2528",
         "includes/State.php": "1d4ee3a92d8d36ee117513f774283a88",
         "includes/Status/EndpointSettings.php": "e98d6ffd4b0da7ffb52fb90c2b314c85",

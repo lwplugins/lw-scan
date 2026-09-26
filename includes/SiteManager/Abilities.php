@@ -33,6 +33,17 @@ final class Abilities {
 	/** Ability category slug; also the ability-name prefix. */
 	private const CATEGORY = 'lw-scan';
 
+	/**
+	 * Opt-in for LW Site Manager's MCP server: Site Manager only exposes its
+	 * own site-manager/* abilities automatically, so companion abilities must
+	 * flag themselves as public MCP tools. Authorization is unchanged — every
+	 * call still goes through the ability's permission_callback.
+	 */
+	private const MCP_META = [
+		'public' => true,
+		'type'   => 'tool',
+	];
+
 	/** @var bool Whether the category has been registered this request. */
 	private static bool $category_registered = false;
 
@@ -314,6 +325,7 @@ final class Abilities {
 	private static function meta( bool $readonly, bool $destructive, bool $idempotent ): array {
 		return [
 			'show_in_rest' => true,
+			'mcp'          => self::MCP_META,
 			'annotations'  => [
 				'readonly'    => $readonly,
 				'destructive' => $destructive,
