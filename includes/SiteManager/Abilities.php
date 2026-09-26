@@ -17,7 +17,7 @@ defined( 'ABSPATH' ) || exit;
  * agent (LW Site Manager's MCP server, `@wordpress/abilities`, the
  * `wp-abilities/v1` REST namespace) can drive the scanner.
  *
- * The Abilities API landed in WordPress 6.9 and the plugin supports 6.0, so
+ * The Abilities API landed in WordPress 6.9 and the plugin supports 6.6, so
  * every registration is guarded twice: by the API's own init hooks, which
  * only fire where the API exists, and by a `function_exists()` check for
  * the site that has the hooks but not the functions. Categories must be

@@ -24,7 +24,7 @@ composer require lwplugins/lw-scan
 
 Or download the release ZIP from the [Releases page](https://github.com/lwplugins/lw-scan/releases) and install it through **Plugins → Add New → Upload Plugin**. The ZIP ships with its autoloader; a clone of this repository needs `composer install` before it will run.
 
-Requirements: WordPress 6.0+, PHP 8.0+.
+Requirements: WordPress 6.6+, PHP 8.0+.
 
 ## Scheduling
 

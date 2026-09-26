@@ -4,7 +4,7 @@
  * Plugin URI:        https://github.com/lwplugins/lw-scan
  * Description:       Lightweight malware scanner for WordPress — files, database and vulnerable software. Reports only, never modifies your site.
  * Version:           1.4.5
- * Requires at least: 6.0
+ * Requires at least: 6.6
  * Requires PHP:      8.0
  * Author:            LW Plugins
  * Author URI:        https://lwplugins.com

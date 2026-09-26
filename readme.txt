@@ -1,7 +1,7 @@
 === LW Scan ===
 Contributors: lwplugins
 Tags: security, malware, scanner, antivirus, vulnerability
-Requires at least: 6.0
+Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 8.0
 Stable tag: 1.4.5

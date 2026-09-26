@@ -163,7 +163,7 @@
         "includes/Scanner/RegexLayer.php": "010a7e89993a80d337581f7ef3bed70c",
         "includes/Scanner/RegexWalks.php": "b31afdd7bb0b4618bd217516ea142778",
         "includes/Scanner/ScanOutcome.php": "9803294366eeccffa9f77d1026c35c77",
-        "includes/SiteManager/Abilities.php": "f0b7e3e508d402f1cbfec04473284139",
+        "includes/SiteManager/Abilities.php": "22d1663d7e2ba5202470968d8b669adb",
         "includes/SiteManager/AbilityCallbacks.php": "be8def4d5ba7e7e0c11cbf77d08c2528",
         "includes/State.php": "1d4ee3a92d8d36ee117513f774283a88",
         "includes/Status/EndpointSettings.php": "e98d6ffd4b0da7ffb52fb90c2b314c85",
@@ -175,7 +175,7 @@
         "includes/Vuln/Matcher.php": "52416eff4e86205c216f8f78237010d1",
         "includes/Vuln/VersionRange.php": "f94cc5debc0b6c862c4865b8cec6a537",
         "includes/functions.php": "137fc6cf37d788d22f100c6f2743c977",
-        "lw-scan.php": "9ac8bf1e24e958deb07aed8e6a0143c7",
+        "lw-scan.php": "621a2fd908f43de570e72ce6d5168b07",
         "uninstall.php": "feb3613e6a957b8b376195b888f5bddd"
     }
 }
