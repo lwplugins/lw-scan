@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LW Scan 1.4.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/lw-scan\n"
-"POT-Creation-Date: 2026-09-24T18:03:30+00:00\n"
+"POT-Creation-Date: 2026-09-26T20:59:04+00:00\n"
 "PO-Revision-Date: 2026-09-24 19:57+0200\n"
 "Last-Translator: LW Plugins\n"
 "Language-Team: Hungarian\n"
@@ -28,11 +28,16 @@ msgstr "https://github.com/lwplugins/lw-scan"
 
 #. Description of the plugin
 #: lw-scan.php
-msgid "Lightweight malware scanner for WordPress — files, database and vulnerable software. Reports only, never modifies your site."
-msgstr "Könnyűsúlyú kártevő-kereső WordPresshez — fájlok, adatbázis és sérülékeny szoftverek. Csak jelent, soha nem módosítja az oldaladat."
+msgid ""
+"Lightweight malware scanner for WordPress — files, database and vulnerable "
+"software. Reports only, never modifies your site."
+msgstr ""
+"Könnyűsúlyú kártevő-kereső WordPresshez — fájlok, adatbázis és sérülékeny "
+"szoftverek. Csak jelent, soha nem módosítja az oldaladat."
 
 #. Author of the plugin
-#: lw-scan.php includes/Admin/ParentPage.php:78 includes/Admin/ParentPage.php:79 includes/Admin/ParentPage.php:94
+#: lw-scan.php includes/Admin/Hub/Page.php:59 includes/Admin/Hub/Page.php:60
+#: includes/Admin/Hub/Page.php:134 assets/hub/index.js:5
 msgid "LW Plugins"
 msgstr "LW Plugins"
 
@@ -41,21 +46,85 @@ msgstr "LW Plugins"
 msgid "https://lwplugins.com"
 msgstr "https://lwplugins.com"
 
-#: includes/Admin/ParentPage.php:95
-msgid "Lightweight plugins for WordPress - minimal footprint, maximum impact."
-msgstr "Könnyűsúlyú bővítmények WordPresshez – minimális terhelés, maximális hatás."
+#: includes/Admin/Hub/Activator.php:48
+msgid "This is not an LW plugin."
+msgstr "Ez nem LW bővítmény."
 
-#: includes/Admin/ParentPage.php:144
-msgid "Active"
-msgstr "Aktív"
+#: includes/Admin/Hub/Activator.php:54
+msgid "This plugin is not installed."
+msgstr "Ez a bővítmény nincs telepítve."
 
-#: includes/Admin/ParentPage.php:151 build/index.js:1
-msgid "Settings"
-msgstr "Beállítások"
+#: includes/Admin/Hub/Activator.php:62
+msgid "You are not allowed to activate this plugin."
+msgstr "Nincs jogod bekapcsolni ezt a bővítményt."
 
-#: includes/Admin/ParentPage.php:155
-msgid "Get Plugin"
-msgstr "Bővítmény beszerzése"
+#: includes/Admin/Hub/Page.php:135
+msgid ""
+"The LW Plugins page files are missing. Re-install the plugin from a release "
+"ZIP."
+msgstr ""
+"Hiányoznak az LW Plugins oldal fájljai. Telepítsd újra a bővítményt egy "
+"kiadási ZIP-ből."
+
+#: includes/Admin/Hub/RegistryFallback.php:32
+msgid "GDPR-compliant cookie consent banner."
+msgstr "GDPR-kompatibilis sütihozzájárulási sáv."
+
+#: includes/Admin/Hub/RegistryFallback.php:41
+msgid "Disable WordPress features like comments."
+msgstr "WordPress-funkciók kikapcsolása, például a hozzászólásoké."
+
+#: includes/Admin/Hub/RegistryFallback.php:50
+msgid "Enable WordPress features: SVG uploads and more."
+msgstr "WordPress-funkciók bekapcsolása: SVG-feltöltés és egyebek."
+
+#: includes/Admin/Hub/RegistryFallback.php:59
+msgid "Rate limiting, bot blocking, IP bans and security headers."
+msgstr "Kéréskorlátozás, botszűrés, IP-tiltás és biztonsági fejlécek."
+
+#: includes/Admin/Hub/RegistryFallback.php:68
+msgid ""
+"Lightweight image optimization — auto-convert uploads to WebP via HelloImg."
+msgstr ""
+"Könnyű képoptimalizálás: a feltöltések automatikus WebP-konverziója a "
+"HelloImg-gel."
+
+#: includes/Admin/Hub/RegistryFallback.php:77
+msgid ""
+"Headless LMS backend: courses, lessons, access, progress and quizzes over a "
+"REST API."
+msgstr ""
+"Headless LMS-háttér: kurzusok, leckék, hozzáférés, haladás és kvízek REST "
+"API-n."
+
+#: includes/Admin/Hub/RegistryFallback.php:86
+msgid ""
+"Tracking pixels: Meta, GA4, Ads, GTM, TikTok, Pinterest, Bing, Reddit, "
+"Snapchat, X."
+msgstr ""
+"Követőpixelek: Meta, GA4, Ads, GTM, TikTok, Pinterest, Bing, Reddit, "
+"Snapchat, X."
+
+#: includes/Admin/Hub/RegistryFallback.php:95
+msgid "Malware scanner for files, the database and vulnerable software."
+msgstr ""
+"Kártevőkereső a fájlokhoz, az adatbázishoz és a sérülékeny szoftverekhez."
+
+#: includes/Admin/Hub/RegistryFallback.php:104
+msgid "Essential SEO features without the bloat."
+msgstr "A lényeges SEO-funkciók, felesleg nélkül."
+
+#: includes/Admin/Hub/RegistryFallback.php:113
+msgid "Site maintenance via AI/REST using Abilities API."
+msgstr "Oldalkarbantartás AI-on és REST-en át, az Abilities API-val."
+
+#: includes/Admin/Hub/RegistryFallback.php:122
+msgid "Manage WordPress translations from community repositories."
+msgstr "WordPress-fordítások kezelése közösségi tárolókból."
+
+#: includes/Admin/Hub/RegistryFallback.php:131
+msgid "Clean up your admin — notices sidebar & widget manager."
+msgstr "Rendezett admin: értesítési oldalsáv és widgetkezelő."
 
 #: includes/Admin/Settings/BundleInfo.php:55
 msgid "no signature bundle installed yet"
@@ -81,23 +150,30 @@ msgstr "ma %s"
 msgid "%1$s files · %2$s DB rows · %3$s packages"
 msgstr "%1$s fájl · %2$s DB sor · %3$s csomag"
 
-#: includes/Admin/Settings/VulnRecord.php:88
+#: includes/Admin/Settings/VulnRecord.php:93
 msgid "no fix available"
 msgstr "nincs elérhető javítás"
 
 #. translators: %s: version the vulnerability is fixed in.
-#: includes/Admin/Settings/VulnRecord.php:90
+#: includes/Admin/Settings/VulnRecord.php:95
 #, php-format
 msgid "patched in %s"
 msgstr "javítva ekkor: %s"
 
-#: includes/Admin/SettingsPage.php:66 includes/Admin/SettingsPage.php:67 build/index.js:1
+#: includes/Admin/SettingsPage.php:66 includes/Admin/SettingsPage.php:67
+#: build/index.js:1
 msgid "Scan"
 msgstr "Vizsgálat"
 
 #: includes/Admin/SettingsPage.php:118
-msgid "The LW Scan admin interface is missing (build/index.js). Reinstall the plugin from a release package, or run \"npm run build\" in a development checkout."
-msgstr "Hiányzik az LW Scan admin felülete (build/index.js). Telepítsd újra a bővítményt egy release csomagból, vagy futtasd az „npm run build” parancsot egy fejlesztői checkoutban."
+msgid ""
+"The LW Scan admin interface is missing (build/index.js). Reinstall the "
+"plugin from a release package, or run \"npm run build\" in a development "
+"checkout."
+msgstr ""
+"Hiányzik az LW Scan admin felülete (build/index.js). Telepítsd újra a "
+"bővítményt egy release csomagból, vagy futtasd az „npm run build” parancsot "
+"egy fejlesztői checkoutban."
 
 #: includes/Health/Checks/BackendCheck.php:29
 msgid "Signature backend"
@@ -124,8 +200,12 @@ msgstr "Még nincs szignatúracsomag — az első vizsgálat letölti."
 #. translators: %d: signature pack version.
 #: includes/Health/Checks/BundleCheck.php:63
 #, php-format
-msgid "The files of signature pack v%d are missing — the next scan downloads them again."
-msgstr "Hiányoznak a v%d szignatúracsomag fájljai — a következő vizsgálat újra letölti őket."
+msgid ""
+"The files of signature pack v%d are missing — the next scan downloads them "
+"again."
+msgstr ""
+"Hiányoznak a v%d szignatúracsomag fájljai — a következő vizsgálat újra "
+"letölti őket."
 
 #. translators: 1: signature pack version. 2: number of signatures.
 #: includes/Health/Checks/BundleCheck.php:69
@@ -140,8 +220,12 @@ msgid "WP-Cron"
 msgstr "WP-Cron"
 
 #: includes/Health/Checks/CronCheck.php:49
-msgid "DISABLE_WP_CRON is set — a system cron runner is expected to trigger scheduled scans."
-msgstr "A DISABLE_WP_CRON be van állítva — az ütemezett vizsgálatokat egy rendszer cronnak kell indítania."
+msgid ""
+"DISABLE_WP_CRON is set — a system cron runner is expected to trigger "
+"scheduled scans."
+msgstr ""
+"A DISABLE_WP_CRON be van állítva — az ütemezett vizsgálatokat egy rendszer "
+"cronnak kell indítania."
 
 #: includes/Health/Checks/CronCheck.php:50
 msgid "Built-in WP-Cron (triggered by site visits)."
@@ -152,8 +236,12 @@ msgid "The server can reach its own site for WP-Cron."
 msgstr "A szerver eléri a saját oldalát a WP-Cronhoz."
 
 #: includes/Health/Checks/CronCheck.php:69
-msgid "The server cannot reach its own site — scheduled scans only progress via site traffic, WP-CLI, or a system cron runner."
-msgstr "A szerver nem éri el a saját oldalát — az ütemezett vizsgálatok csak látogatói forgalom, WP-CLI vagy rendszer cron révén haladnak."
+msgid ""
+"The server cannot reach its own site — scheduled scans only progress via "
+"site traffic, WP-CLI, or a system cron runner."
+msgstr ""
+"A szerver nem éri el a saját oldalát — az ütemezett vizsgálatok csak "
+"látogatói forgalom, WP-CLI vagy rendszer cron révén haladnak."
 
 #: includes/Health/Checks/MemoryCheck.php:68
 msgid "Memory & time budget"
@@ -174,26 +262,41 @@ msgstr "a memory_limit %s — a vizsgálatokhoz legalább 128 MB kell."
 #. translators: 1: memory in use. 2: memory_limit. 3: memory left for a tick.
 #: includes/Health/Checks/MemoryCheck.php:118
 #, php-format
-msgid "WordPress and your plugins already use %1$s of the %2$s memory_limit, leaving %3$s; a scan tick needs about 20 MB. Raise memory_limit or run scans with WP-CLI."
-msgstr "A WordPress és a bővítményeid már %1$s memóriát használnak a %2$s memory_limitből, így %3$s marad; egy vizsgálati lépéshez kb. 20 MB kell. Emeld a memory_limitet, vagy futtasd a vizsgálatot WP-CLI-vel."
+msgid ""
+"WordPress and your plugins already use %1$s of the %2$s memory_limit, "
+"leaving %3$s; a scan tick needs about 20 MB. Raise memory_limit or run scans "
+"with WP-CLI."
+msgstr ""
+"A WordPress és a bővítményeid már %1$s memóriát használnak a %2$s "
+"memory_limitből, így %3$s marad; egy vizsgálati lépéshez kb. 20 MB kell. "
+"Emeld a memory_limitet, vagy futtasd a vizsgálatot WP-CLI-vel."
 
 #. translators: 1: memory_limit. 2: memory free after WordPress loads. 3: per-tick time budget in seconds.
 #: includes/Health/Checks/MemoryCheck.php:130
 #, php-format
-msgid "memory_limit %1$s, %2$s free after WordPress loads; per-tick time budget %3$ss."
-msgstr "memory_limit %1$s, a WordPress betöltése után %2$s szabad; lépésenkénti időkeret: %3$ss."
+msgid ""
+"memory_limit %1$s, %2$s free after WordPress loads; per-tick time budget "
+"%3$ss."
+msgstr ""
+"memory_limit %1$s, a WordPress betöltése után %2$s szabad; lépésenkénti "
+"időkeret: %3$ss."
 
 #: includes/Health/Checks/PcreCheck.php:44
 msgid "PCRE engine"
 msgstr "PCRE motor"
 
 #: includes/Health/Checks/PcreCheck.php:54
-msgid "The host does not allow raising pcre.backtrack_limit/pcre.recursion_limit — very large files may silently fail to match."
-msgstr "A tárhely nem engedi a pcre.backtrack_limit/pcre.recursion_limit emelését — a nagyon nagy fájloknál a találat csendben elmaradhat."
+msgid ""
+"The host does not allow raising pcre.backtrack_limit/pcre.recursion_limit — "
+"very large files may silently fail to match."
+msgstr ""
+"A tárhely nem engedi a pcre.backtrack_limit/pcre.recursion_limit emelését — "
+"a nagyon nagy fájloknál a találat csendben elmaradhat."
 
 #: includes/Health/Checks/PcreCheck.php:62
 msgid "PCRE JIT is disabled — regex matching will be slower on large sites."
-msgstr "A PCRE JIT ki van kapcsolva — a regex-illesztés nagy oldalakon lassabb lesz."
+msgstr ""
+"A PCRE JIT ki van kapcsolva — a regex-illesztés nagy oldalakon lassabb lesz."
 
 #: includes/Health/Checks/PcreCheck.php:69
 msgid "PCRE limits tuned and JIT enabled."
@@ -206,8 +309,11 @@ msgstr "Tárolási könyvtár"
 #. translators: %s: absolute storage directory path.
 #: includes/Health/Checks/StorageCheck.php:50
 #, php-format
-msgid "%s is not writable — the signature bundle cannot be stored and scans cannot start."
-msgstr "%s nem írható — a szignatúracsomag nem tárolható, és vizsgálat nem indulhat."
+msgid ""
+"%s is not writable — the signature bundle cannot be stored and scans cannot "
+"start."
+msgstr ""
+"%s nem írható — a szignatúracsomag nem tárolható, és vizsgálat nem indulhat."
 
 #. translators: 1: absolute storage directory path. 2: human-readable size, e.g. "4 MB".
 #: includes/Health/Checks/StorageCheck.php:58
@@ -222,8 +328,12 @@ msgstr "Adatbázistáblák"
 #. translators: %s: comma-separated list of missing table names.
 #: includes/Health/Checks/TablesCheck.php:48
 #, php-format
-msgid "The plugin's database tables are missing (%s) — deactivate and reactivate the plugin."
-msgstr "Hiányoznak a bővítmény adatbázistáblái (%s) — kapcsold ki, majd kapcsold be újra a bővítményt."
+msgid ""
+"The plugin's database tables are missing (%s) — deactivate and reactivate "
+"the plugin."
+msgstr ""
+"Hiányoznak a bővítmény adatbázistáblái (%s) — kapcsold ki, majd kapcsold be "
+"újra a bővítményt."
 
 #. translators: 1: table name. 2: row count.
 #: includes/Health/Checks/TablesCheck.php:81
@@ -246,8 +356,11 @@ msgid "Tokenizer extension"
 msgstr "Tokenizer bővítmény (PHP)"
 
 #: includes/Health/Checks/TokenizerCheck.php:34
-msgid "The tokenizer extension is not available — the heuristic layer is disabled."
-msgstr "A tokenizer PHP-bővítmény nem érhető el — a heurisztikus réteg ki van kapcsolva."
+msgid ""
+"The tokenizer extension is not available — the heuristic layer is disabled."
+msgstr ""
+"A tokenizer PHP-bővítmény nem érhető el — a heurisztikus réteg ki van "
+"kapcsolva."
 
 #: includes/Health/Checks/TokenizerCheck.php:41
 msgid "Tokenizer extension available."
@@ -259,7 +372,9 @@ msgstr "Kártevő-vizsgálat"
 
 #: includes/HelloPack/StatusCheck.php:103
 msgid "New alerts from the last scan, and whether scans still run on schedule."
-msgstr "Új riasztások az utolsó vizsgálatból, és hogy a vizsgálatok továbbra is ütemezetten futnak-e."
+msgstr ""
+"Új riasztások az utolsó vizsgálatból, és hogy a vizsgálatok továbbra is "
+"ütemezetten futnak-e."
 
 #: includes/HelloPack/StatusCheck.php:178 build/index.js:6 build/index.js:13
 msgid "No scan has run yet."
@@ -300,8 +415,13 @@ msgstr[0] "%d új riasztást talált az LW Scan."
 msgstr[1] "%d új riasztást talált az LW Scan."
 
 #: includes/Notify/AdminNotice.php:58
-msgid "This was the first scan, so these are a baseline of what is already on the site — no e-mail was sent. Later scans report only what is new."
-msgstr "Ez volt az első vizsgálat, ezért ezek az oldalon már meglévő állapot kiindulópontját adják — e-mail nem ment ki. A későbbi vizsgálatok csak az újdonságokat jelentik."
+msgid ""
+"This was the first scan, so these are a baseline of what is already on the "
+"site — no e-mail was sent. Later scans report only what is new."
+msgstr ""
+"Ez volt az első vizsgálat, ezért ezek az oldalon már meglévő állapot "
+"kiindulópontját adják — e-mail nem ment ki. A későbbi vizsgálatok csak az "
+"újdonságokat jelentik."
 
 #: includes/Notify/AdminNotice.php:65
 msgid "Review findings"
@@ -320,8 +440,11 @@ msgid "[%s] LW Scan: test e-mail"
 msgstr "[%s] LW Scan: teszt e-mail"
 
 #: includes/Notify/Mailer.php:140
-msgid "This is a test e-mail from LW Scan. Notification e-mails reach this address."
-msgstr "Ez egy teszt e-mail az LW Scantől. Az értesítő e-mailek erre a címre érkeznek."
+msgid ""
+"This is a test e-mail from LW Scan. Notification e-mails reach this address."
+msgstr ""
+"Ez egy teszt e-mail az LW Scantől. Az értesítő e-mailek erre a címre "
+"érkeznek."
 
 #. translators: %d: number of new findings the e-mail did not list.
 #: includes/Notify/Mailer.php:162
@@ -329,8 +452,12 @@ msgstr "Ez egy teszt e-mail az LW Scantől. Az értesítő e-mailek erre a címr
 msgid "… and %d more — see the Findings tab"
 msgstr "… és még %d — lásd a Találatok fület"
 
+#: includes/Notify/Mailer.php:170
+msgid "Details and sources are on the Findings tab:"
+msgstr "A részletek és a források a Találatok fülön:"
+
 #. translators: 1: site name. 2: number of new findings.
-#: includes/Notify/Mailer.php:266
+#: includes/Notify/Mailer.php:272
 #, php-format
 msgid "[%1$s] LW Scan: %2$d new finding"
 msgid_plural "[%1$s] LW Scan: %2$d new findings"
@@ -338,18 +465,34 @@ msgstr[0] "[%1$s] LW Scan: %2$d új találat"
 msgstr[1] "[%1$s] LW Scan: %2$d új találat"
 
 #. translators: 1: site name. 2: number of new alerts.
-#: includes/Notify/Mailer.php:274
+#: includes/Notify/Mailer.php:280
 #, php-format
 msgid "[%1$s] LW Scan: %2$d new alert"
 msgid_plural "[%1$s] LW Scan: %2$d new alerts"
 msgstr[0] "[%1$s] LW Scan: %2$d új riasztás"
 msgstr[1] "[%1$s] LW Scan: %2$d új riasztás"
 
-#: includes/Rest/Errors.php:41
-msgid "A scan is in progress. Stop it or wait until it finishes, then try again."
-msgstr "Egy vizsgálat folyamatban van. Állítsd le, vagy várd meg, amíg befejeződik, majd próbáld újra."
+#. translators: %s: plugin, theme or WordPress name and installed version.
+#: includes/Notify/VulnLine.php:44
+#, php-format
+msgid "%s: known vulnerability, no fixed version yet"
+msgstr "%s: ismert sebezhetőség, javított verzió még nincs"
 
-#: includes/Rest/FindingsController.php:96 includes/SiteManager/AbilityCallbacks.php:116
+#. translators: 1: plugin, theme or WordPress name and installed version. 2: version that fixes it.
+#: includes/Notify/VulnLine.php:51
+#, php-format
+msgid "%1$s: known vulnerability, update to %2$s"
+msgstr "%1$s: ismert sebezhetőség, frissíts erre: %2$s"
+
+#: includes/Rest/Errors.php:41
+msgid ""
+"A scan is in progress. Stop it or wait until it finishes, then try again."
+msgstr ""
+"Egy vizsgálat folyamatban van. Állítsd le, vagy várd meg, amíg befejeződik, "
+"majd próbáld újra."
+
+#: includes/Rest/FindingsController.php:96
+#: includes/SiteManager/AbilityCallbacks.php:116
 msgid "Unknown finding state."
 msgstr "Ismeretlen találatállapot."
 
@@ -363,21 +506,32 @@ msgstr "Ismeretlen indexművelet."
 
 #: includes/Rest/Presenter/FindingPresenter.php:88
 msgid "Remove or restore the file. LW Scan never deletes files itself."
-msgstr "Távolítsd el vagy állítsd vissza a fájlt. Az LW Scan soha nem töröl fájlt magától."
+msgstr ""
+"Távolítsd el vagy állítsd vissza a fájlt. Az LW Scan soha nem töröl fájlt "
+"magától."
 
 #: includes/Rest/Presenter/FindingPresenter.php:90
-msgid "Inspect and clean the row in the database (e.g. via WP-CLI or phpMyAdmin)."
-msgstr "Vizsgáld meg és tisztítsd meg az adatbázisban lévő sort (pl. WP-CLI-vel vagy phpMyAdminnal)."
+msgid ""
+"Inspect and clean the row in the database (e.g. via WP-CLI or phpMyAdmin)."
+msgstr ""
+"Vizsgáld meg és tisztítsd meg az adatbázisban lévő sort (pl. WP-CLI-vel vagy "
+"phpMyAdminnal)."
 
 #: includes/Rest/Presenter/FindingPresenter.php:131
-msgid "Re-install the affected package from wordpress.org to restore the original file."
-msgstr "Telepítsd újra az érintett csomagot a wordpress.org-ról az eredeti fájl visszaállításához."
+msgid ""
+"Re-install the affected package from wordpress.org to restore the original "
+"file."
+msgstr ""
+"Telepítsd újra az érintett csomagot a wordpress.org-ról az eredeti fájl "
+"visszaállításához."
 
 #. translators: 1: package name, e.g. WordPress or a plugin slug. 2: package version.
 #: includes/Rest/Presenter/FindingPresenter.php:136
 #, php-format
 msgid "Re-install %1$s %2$s from wordpress.org to restore the original file."
-msgstr "Telepítsd újra a(z) %1$s %2$s csomagot a wordpress.org-ról az eredeti fájl visszaállításához."
+msgstr ""
+"Telepítsd újra a(z) %1$s %2$s csomagot a wordpress.org-ról az eredeti fájl "
+"visszaállításához."
 
 #: includes/Rest/Presenter/FindingPresenter.php:149
 msgid "No fix is available yet; consider disabling the plugin."
@@ -397,47 +551,71 @@ msgstr "WordPress"
 msgid "checksum mismatch"
 msgstr "ellenőrzőösszeg-eltérés"
 
-#: includes/Rest/ScanController.php:118 includes/Run/Starter.php:93 includes/SiteManager/AbilityCallbacks.php:64
+#: includes/Rest/ScanController.php:118 includes/Run/Starter.php:101
+#: includes/SiteManager/AbilityCallbacks.php:64
 msgid "Unknown scan scope."
 msgstr "Ismeretlen vizsgálati hatókör."
 
 #: includes/Run/RunError.php:57
-msgid "The signature set was updated while this scan was under way, so it was dropped — the next scan starts over against the new signatures."
-msgstr "A szignatúrakészlet a vizsgálat közben frissült, ezért a vizsgálat megszakadt — a következő vizsgálat elölről indul az új szignatúrákkal."
+msgid ""
+"The signature set was updated while this scan was under way, so it was "
+"dropped — the next scan starts over against the new signatures."
+msgstr ""
+"A szignatúrakészlet a vizsgálat közben frissült, ezért a vizsgálat "
+"megszakadt — a következő vizsgálat elölről indul az új szignatúrákkal."
 
 #: includes/Run/RunError.php:64
-msgid "Signatures could not be downloaded — check the Health tab and the backend connection."
-msgstr "A szignatúrák nem tölthetők le — nézd meg az Állapotfelmérés fület és a backend-kapcsolatot."
+msgid ""
+"Signatures could not be downloaded — check the Health tab and the backend "
+"connection."
+msgstr ""
+"A szignatúrák nem tölthetők le — nézd meg az Állapotfelmérés fület és a "
+"backend-kapcsolatot."
 
 #. translators: %s: memory_limit the tick was running at, e.g. "256 MB".
 #: includes/Run/RunError.php:85
 #, php-format
-msgid "PHP ran out of memory during the scan (memory_limit %s). Raise memory_limit or run the scan with WP-CLI."
-msgstr "A PHP memóriája elfogyott a vizsgálat közben (memory_limit %s). Emeld a memory_limit értékét, vagy futtasd a vizsgálatot WP-CLI-vel."
+msgid ""
+"PHP ran out of memory during the scan (memory_limit %s). Raise memory_limit "
+"or run the scan with WP-CLI."
+msgstr ""
+"A PHP memóriája elfogyott a vizsgálat közben (memory_limit %s). Emeld a "
+"memory_limit értékét, vagy futtasd a vizsgálatot WP-CLI-vel."
 
 #: includes/Run/RunError.php:90
-msgid "PHP ran out of memory during the scan. Raise memory_limit or run the scan with WP-CLI."
-msgstr "A PHP memóriája elfogyott a vizsgálat közben. Emeld a memory_limit értékét, vagy futtasd a vizsgálatot WP-CLI-vel."
+msgid ""
+"PHP ran out of memory during the scan. Raise memory_limit or run the scan "
+"with WP-CLI."
+msgstr ""
+"A PHP memóriája elfogyott a vizsgálat közben. Emeld a memory_limit értékét, "
+"vagy futtasd a vizsgálatot WP-CLI-vel."
 
 #: includes/Run/Scheduler.php:83
 msgid "Once Weekly"
 msgstr "Hetente egyszer"
 
-#: includes/Run/Starter.php:64 includes/Run/Starter.php:153 includes/Run/Starter.php:160
+#: includes/Run/Starter.php:72 includes/Run/Starter.php:165
+#: includes/Run/Starter.php:172
 msgid "A scan is already in progress."
 msgstr "Már fut egy vizsgálat."
 
-#: includes/Run/Starter.php:108
+#: includes/Run/Starter.php:116
 msgid "The scan path must be a directory inside the WordPress installation."
-msgstr "A vizsgálati útvonalnak a WordPress telepítésen belüli könyvtárnak kell lennie."
+msgstr ""
+"A vizsgálati útvonalnak a WordPress telepítésen belüli könyvtárnak kell "
+"lennie."
 
-#: includes/Run/Starter.php:156
+#: includes/Run/Starter.php:168
 msgid "There is no stopped scan to resume."
 msgstr "Nincs folytatható, leállított vizsgálat."
 
-#: includes/Run/Starter.php:195
-msgid "The scan could not be recorded — the plugin tables are missing. Deactivate and reactivate the plugin."
-msgstr "A vizsgálat nem rögzíthető — hiányoznak a bővítmény táblái. Kapcsold ki, majd újra be a bővítményt."
+#: includes/Run/Starter.php:207
+msgid ""
+"The scan could not be recorded — the plugin tables are missing. Deactivate "
+"and reactivate the plugin."
+msgstr ""
+"A vizsgálat nem rögzíthető — hiányoznak a bővítmény táblái. Kapcsold ki, "
+"majd újra be a bővítményt."
 
 #: includes/SiteManager/Abilities.php:65
 msgid "Run malware scans and read their findings."
@@ -448,16 +626,26 @@ msgid "Start Malware Scan"
 msgstr "Kártevő-vizsgálat indítása"
 
 #: includes/SiteManager/Abilities.php:104
-msgid "Start a malware scan and return its run id. The scan runs in the background; poll lw-scan/status for progress."
-msgstr "Kártevő-vizsgálatot indít, és visszaadja a futás azonosítóját. A vizsgálat a háttérben fut; a haladás a lw-scan/status segítségével kérdezhető le."
+msgid ""
+"Start a malware scan and return its run id. The scan runs in the background; "
+"poll lw-scan/status for progress."
+msgstr ""
+"Kártevő-vizsgálatot indít, és visszaadja a futás azonosítóját. A vizsgálat a "
+"háttérben fut; a haladás a lw-scan/status segítségével kérdezhető le."
 
 #: includes/SiteManager/Abilities.php:114
-msgid "What to scan: the whole site, only changed files, the database, or one folder."
-msgstr "Mit vizsgáljon: a teljes oldalt, csak a módosított fájlokat, az adatbázist vagy egy mappát."
+msgid ""
+"What to scan: the whole site, only changed files, the database, or one "
+"folder."
+msgstr ""
+"Mit vizsgáljon: a teljes oldalt, csak a módosított fájlokat, az adatbázist "
+"vagy egy mappát."
 
 #: includes/SiteManager/Abilities.php:119
 msgid "Folder to scan, relative to the WordPress root. Used with scope=path."
-msgstr "A vizsgálandó mappa a WordPress gyökeréhez képest. A scope=path értékkel használatos."
+msgstr ""
+"A vizsgálandó mappa a WordPress gyökeréhez képest. A scope=path értékkel "
+"használatos."
 
 #: includes/SiteManager/Abilities.php:124
 msgid "Continue a stopped scan instead of starting a new one."
@@ -468,16 +656,24 @@ msgid "Get Scan Status"
 msgstr "Vizsgálat állapotának lekérése"
 
 #: includes/SiteManager/Abilities.php:149
-msgid "Get the progress of the running scan (or the last one), the last run summary and the current finding counts."
-msgstr "A futó (vagy az utolsó) vizsgálat előrehaladásának, az utolsó futás összegzésének és az aktuális találatszámoknak a lekérése."
+msgid ""
+"Get the progress of the running scan (or the last one), the last run summary "
+"and the current finding counts."
+msgstr ""
+"A futó (vagy az utolsó) vizsgálat előrehaladásának, az utolsó futás "
+"összegzésének és az aktuális találatszámoknak a lekérése."
 
 #: includes/SiteManager/Abilities.php:177
 msgid "List Scan Findings"
 msgstr "Vizsgálati találatok listázása"
 
 #: includes/SiteManager/Abilities.php:178
-msgid "List malware-scan findings, filtered by severity, type or state, one page at a time."
-msgstr "Kártevő-vizsgálati találatok listázása súlyosság, típus vagy állapot szerint szűrve, oldalanként."
+msgid ""
+"List malware-scan findings, filtered by severity, type or state, one page at "
+"a time."
+msgstr ""
+"Kártevő-vizsgálati találatok listázása súlyosság, típus vagy állapot szerint "
+"szűrve, oldalanként."
 
 #: includes/SiteManager/Abilities.php:213
 msgid "Only findings of this severity."
@@ -504,8 +700,12 @@ msgid "Set Finding State"
 msgstr "Találat állapotának beállítása"
 
 #: includes/SiteManager/Abilities.php:251
-msgid "Mark findings as acknowledged or ignored, or move them back to new. Never changes a file or the database."
-msgstr "Találatok megjelölése nyugtázottként vagy mellőzöttként, illetve visszaállításuk újra. Soha nem módosít fájlt vagy adatbázist."
+msgid ""
+"Mark findings as acknowledged or ignored, or move them back to new. Never "
+"changes a file or the database."
+msgstr ""
+"Találatok megjelölése nyugtázottként vagy mellőzöttként, illetve "
+"visszaállításuk újra. Soha nem módosít fájlt vagy adatbázist."
 
 #: includes/SiteManager/Abilities.php:261
 msgid "Finding ids to update."
@@ -521,13 +721,159 @@ msgstr "A beállítandó állapot."
 msgid "Check failed (%s)."
 msgstr "Ellenőrzés sikertelen (%s)."
 
+#: assets/hub/index.js:1
+msgid "All LW plugins on GitHub"
+msgstr "Az összes LW bővítmény a GitHubon"
+
+#: assets/hub/index.js:1 build/index.js:1
+msgid "(opens in a new tab)"
+msgstr "(új lapon nyílik meg)"
+
+#: assets/hub/index.js:1 build/index.js:1
+msgid "LW Plugins (opens in a new tab)"
+msgstr "LW Plugins (új lapon nyílik meg)"
+
+#: assets/hub/index.js:1 build/index.js:1 build/index.js:20
+msgid "Try again"
+msgstr "Próbáld újra"
+
+#. translators: %s: plugin name.
+#: assets/hub/index.js:2
+msgid "%s settings"
+msgstr "%s beállításai"
+
+#: assets/hub/index.js:2 build/index.js:1
+msgid "Settings"
+msgstr "Beállítások"
+
+#. translators: %s: plugin name.
+#: assets/hub/index.js:3
+msgid "Activate %s"
+msgstr "%s bekapcsolása"
+
+#: assets/hub/index.js:3
+msgid "Activating…"
+msgstr "Bekapcsolás…"
+
+#: assets/hub/index.js:3
+msgid "Activate"
+msgstr "Bekapcsolás"
+
+#: assets/hub/index.js:3
+msgid "GitHub"
+msgstr "GitHub"
+
+#. translators: %s: plugin name.
+#: assets/hub/index.js:4
+msgid "%s on GitHub (opens in a new tab)"
+msgstr "%s a GitHubon (új lapon nyílik meg)"
+
+#: assets/hub/index.js:4 build/index.js:9 build/index.js:17 build/index.js:21
+msgid "All"
+msgstr "Összes"
+
+#: assets/hub/index.js:4
+msgid "Active"
+msgstr "Aktív"
+
+#: assets/hub/index.js:4
+msgid "Inactive"
+msgstr "Kikapcsolva"
+
+#: assets/hub/index.js:4
+msgid "Not installed"
+msgstr "Nincs telepítve"
+
+#: assets/hub/index.js:4
+msgid "Plugin"
+msgstr "Bővítmény"
+
+#: assets/hub/index.js:4 build/index.js:1 build/index.js:13
+msgid "Status"
+msgstr "Állapot"
+
+#: assets/hub/index.js:4
+msgid "Version"
+msgstr "Verzió"
+
+#: assets/hub/index.js:4
+msgid "Action"
+msgstr "Művelet"
+
+#: assets/hub/index.js:4
+msgid "Beta"
+msgstr "Béta"
+
+#: assets/hub/index.js:4
+msgid "No version"
+msgstr "Nincs verzió"
+
+#. translators: %s: search text.
+#: assets/hub/index.js:5
+msgid "No plugins match “%s”."
+msgstr "Nincs találat erre: „%s”."
+
+#: assets/hub/index.js:5
+msgid "No plugins in this group."
+msgstr "Ebben a csoportban nincs bővítmény."
+
+#: assets/hub/index.js:5
+msgid "Show all plugins"
+msgstr "Az összes bővítmény mutatása"
+
+#: assets/hub/index.js:5 build/index.js:1 build/index.js:9
+msgid "Loading…"
+msgstr "Betöltés…"
+
+#: assets/hub/index.js:5
+msgid "Search plugins"
+msgstr "Keresés a bővítmények között"
+
+#: assets/hub/index.js:5
+msgid "Filter by status"
+msgstr "Szűrés állapot szerint"
+
+#: assets/hub/index.js:5
+msgid "active"
+msgid_plural "active"
+msgstr[0] "aktív"
+msgstr[1] "aktív"
+
+#: assets/hub/index.js:5
+msgid "inactive"
+msgid_plural "inactive"
+msgstr[0] "kikapcsolva"
+msgstr[1] "kikapcsolva"
+
+#: assets/hub/index.js:5
+msgid "not installed"
+msgid_plural "not installed"
+msgstr[0] "nincs telepítve"
+msgstr[1] "nincs telepítve"
+
+#. translators: %d: number of LW plugins listed.
+#: assets/hub/index.js:6
+msgid "%d LW plugin listed."
+msgid_plural "%d LW plugins listed."
+msgstr[0] "%d LW bővítmény látható."
+msgstr[1] "%d LW bővítmény látható."
+
+#: assets/hub/index.js:6
+msgid "That did not work. Please reload the page and try again."
+msgstr "Ez nem sikerült. Töltsd újra az oldalt, és próbáld újra."
+
+#. translators: %s: plugin name.
+#: assets/hub/index.js:7
+msgid "%s is active."
+msgstr "%s bekapcsolva."
+
+#: assets/hub/index.js:7
+msgid "Reload page"
+msgstr "Oldal újratöltése"
+
 #: build/index.js:1
 msgid "Settings saved."
 msgstr "Beállítások mentve."
-
-#: build/index.js:1
-msgid "LW Plugins (opens in a new tab)"
-msgstr "LW Plugins (új lapon nyílik meg)"
 
 #: build/index.js:1
 msgid "LW Scan home"
@@ -540,10 +886,6 @@ msgstr "LW Scan részei"
 #: build/index.js:1
 msgid "Documentation"
 msgstr "Dokumentáció"
-
-#: build/index.js:1
-msgid "(opens in a new tab)"
-msgstr "(új lapon nyílik meg)"
 
 #: build/index.js:1
 msgid "Unsaved changes"
@@ -573,21 +915,9 @@ msgstr "Vizsgálat beállításai"
 msgid "Health"
 msgstr "Állapotfelmérés"
 
-#: build/index.js:1 build/index.js:13
-msgid "Status"
-msgstr "Állapot"
-
 #: build/index.js:1
 msgid "Status Endpoint"
 msgstr "Status endpoint"
-
-#: build/index.js:1 build/index.js:20
-msgid "Try again"
-msgstr "Próbáld újra"
-
-#: build/index.js:1 build/index.js:9
-msgid "Loading…"
-msgstr "Betöltés…"
 
 #. translators: %d: seconds.
 #: build/index.js:1
@@ -771,10 +1101,6 @@ msgstr "Törlés"
 msgid "Clear all filters"
 msgstr "Minden szűrő törlése"
 
-#: build/index.js:9 build/index.js:17 build/index.js:21
-msgid "All"
-msgstr "Összes"
-
 #: build/index.js:9
 msgid "No findings match these filters."
 msgstr "Nincs olyan találat, ami megfelel ezeknek a szűrőknek."
@@ -930,8 +1256,12 @@ msgid "Findings so far"
 msgstr "Eddigi találatok"
 
 #: build/index.js:15
-msgid "Findings appear as they are found. Notification e-mail goes out only for new alerts when the run finishes."
-msgstr "A találatok a felfedezésükkel párhuzamosan jelennek meg. Értesítő e-mail csak az új riasztásokról megy ki, amikor a futás befejeződik."
+msgid ""
+"Findings appear as they are found. Notification e-mail goes out only for new "
+"alerts when the run finishes."
+msgstr ""
+"A találatok a felfedezésükkel párhuzamosan jelennek meg. Értesítő e-mail "
+"csak az új riasztásokról megy ki, amikor a futás befejeződik."
 
 #: build/index.js:15
 msgid "Nothing found yet."
@@ -963,8 +1293,10 @@ msgid "Heuristic layer"
 msgstr "Heurisztikus réteg"
 
 #: build/index.js:16
-msgid "Token-level analysis of unknown PHP files. Adds \"review\" findings only."
-msgstr "Ismeretlen PHP-fájlok token-szintű elemzése. Csak „átnézendő” találatokat ad."
+msgid ""
+"Token-level analysis of unknown PHP files. Adds \"review\" findings only."
+msgstr ""
+"Ismeretlen PHP-fájlok token-szintű elemzése. Csak „átnézendő” találatokat ad."
 
 #: build/index.js:16 build/index.js:23 build/index.js:24
 msgid "Enabled"
@@ -991,8 +1323,12 @@ msgid "The first scan downloads the signature bundle (about 1 MB)."
 msgstr "Az első vizsgálat letölti a szignatúracsomagot (kb. 1 MB)."
 
 #: build/index.js:16
-msgid "LW Scan cannot find its database tables. Deactivate and re-activate the plugin to create them."
-msgstr "Az LW Scan nem találja az adatbázistábláit. Kapcsold ki, majd újra be a bővítményt, hogy létrehozza őket."
+msgid ""
+"LW Scan cannot find its database tables. Deactivate and re-activate the "
+"plugin to create them."
+msgstr ""
+"Az LW Scan nem találja az adatbázistábláit. Kapcsold ki, majd újra be a "
+"bővítményt, hogy létrehozza őket."
 
 #: build/index.js:16
 msgid "Copy"
@@ -1073,11 +1409,19 @@ msgstr "Az ellenőrzések frissítve."
 
 #: build/index.js:17
 msgid "File index cleared. The next scan rebuilds it and re-checks every file."
-msgstr "A fájlindex törölve. A következő vizsgálat újraépíti és minden fájlt újraellenőriz."
+msgstr ""
+"A fájlindex törölve. A következő vizsgálat újraépíti és minden fájlt "
+"újraellenőriz."
 
 #: build/index.js:17
-msgid "Rebuild the file index? This clears the index and the file and integrity findings; the next scan re-checks every file, so it takes about as long as the first one."
-msgstr "Újraépíted a fájlindexet? Ez törli az indexet, valamint a fájl- és integritási találatokat; a következő vizsgálat minden fájlt újraellenőriz, ezért nagyjából annyi ideig tart, mint az első."
+msgid ""
+"Rebuild the file index? This clears the index and the file and integrity "
+"findings; the next scan re-checks every file, so it takes about as long as "
+"the first one."
+msgstr ""
+"Újraépíted a fájlindexet? Ez törli az indexet, valamint a fájl- és "
+"integritási találatokat; a következő vizsgálat minden fájlt újraellenőriz, "
+"ezért nagyjából annyi ideig tart, mint az első."
 
 #: build/index.js:17
 msgid "Critical"
@@ -1115,16 +1459,28 @@ msgid "Running environment checks…"
 msgstr "Környezet ellenőrzése…"
 
 #: build/index.js:18
-msgid "Test e-mail sent. If it does not arrive, the site cannot deliver mail — check the server or an SMTP plugin."
-msgstr "Teszt e-mail elküldve. Ha nem érkezik meg, az oldal nem tud levelet kézbesíteni — nézd meg a szervert vagy egy SMTP bővítményt."
+msgid ""
+"Test e-mail sent. If it does not arrive, the site cannot deliver mail — "
+"check the server or an SMTP plugin."
+msgstr ""
+"Teszt e-mail elküldve. Ha nem érkezik meg, az oldal nem tud levelet "
+"kézbesíteni — nézd meg a szervert vagy egy SMTP bővítményt."
 
 #: build/index.js:18
-msgid "WordPress could not send the test e-mail. The site has no working mail transport."
-msgstr "A WordPress nem tudta elküldeni a teszt e-mailt. Az oldalon nincs működő levélküldés."
+msgid ""
+"WordPress could not send the test e-mail. The site has no working mail "
+"transport."
+msgstr ""
+"A WordPress nem tudta elküldeni a teszt e-mailt. Az oldalon nincs működő "
+"levélküldés."
 
 #: build/index.js:18
-msgid "There is nobody to send to: the recipients field is empty and this site has no admin e-mail address."
-msgstr "Nincs kinek küldeni: a címzettek mező üres, és az oldalnak nincs admin e-mail címe."
+msgid ""
+"There is nobody to send to: the recipients field is empty and this site has "
+"no admin e-mail address."
+msgstr ""
+"Nincs kinek küldeni: a címzettek mező üres, és az oldalnak nincs admin e-"
+"mail címe."
 
 #: build/index.js:18 build/index.js:21
 msgid "Recipients"
@@ -1199,16 +1555,29 @@ msgid "Search path, signature, plugin…"
 msgstr "Keresés útvonalra, szignatúrára, bővítményre…"
 
 #: build/index.js:20
-msgid "Ignored findings stay hidden until a new signature matches the same file. Clearing empties this list; the next scan re-checks every file and reports again whatever is still there. Nothing here modifies site files or content."
-msgstr "A mellőzött találatok rejtve maradnak, amíg egy új szignatúra nem illeszkedik ugyanarra a fájlra. A törlés kiüríti a listát; a következő vizsgálat minden fájlt újra ellenőriz, és újra jelenti, ami még ott van. Semmi nem módosítja az oldal fájljait vagy tartalmát."
+msgid ""
+"Ignored findings stay hidden until a new signature matches the same file. "
+"Clearing empties this list; the next scan re-checks every file and reports "
+"again whatever is still there. Nothing here modifies site files or content."
+msgstr ""
+"A mellőzött találatok rejtve maradnak, amíg egy új szignatúra nem "
+"illeszkedik ugyanarra a fájlra. A törlés kiüríti a listát; a következő "
+"vizsgálat minden fájlt újra ellenőriz, és újra jelenti, ami még ott van. "
+"Semmi nem módosítja az oldal fájljait vagy tartalmát."
 
 #: build/index.js:20
 msgid "All findings cleared."
 msgstr "Minden találat törölve."
 
 #: build/index.js:20
-msgid "Delete every finding from this list? The next scan re-checks every file, so it takes about as long as the first one, and reports again anything that is still on the site."
-msgstr "Törlöd a listából az összes találatot? A következő vizsgálat minden fájlt újra ellenőriz, így nagyjából annyi ideig tart, mint az első, és újra jelent mindent, ami még az oldalon van."
+msgid ""
+"Delete every finding from this list? The next scan re-checks every file, so "
+"it takes about as long as the first one, and reports again anything that is "
+"still on the site."
+msgstr ""
+"Törlöd a listából az összes találatot? A következő vizsgálat minden fájlt "
+"újra ellenőriz, így nagyjából annyi ideig tart, mint az első, és újra jelent "
+"mindent, ami még az oldalon van."
 
 #: build/index.js:20
 msgid "Comma-separated."
@@ -1216,20 +1585,32 @@ msgstr "Vesszővel elválasztva."
 
 #. translators: %s: the site's admin e-mail address.
 #: build/index.js:21
-msgid "Comma-separated. Empty, as now, means the site's admin e-mail address: %s"
-msgstr "Vesszővel elválasztva. Üresen (mint most) az oldal admin e-mail címe: %s"
+msgid ""
+"Comma-separated. Empty, as now, means the site's admin e-mail address: %s"
+msgstr ""
+"Vesszővel elválasztva. Üresen (mint most) az oldal admin e-mail címe: %s"
 
 #: build/index.js:21
-msgid "Comma-separated. Empty means the site's admin e-mail address, which this site has not set."
-msgstr "Vesszővel elválasztva. Üresen az oldal admin e-mail címe lenne, de ez nincs beállítva."
+msgid ""
+"Comma-separated. Empty means the site's admin e-mail address, which this "
+"site has not set."
+msgstr ""
+"Vesszővel elválasztva. Üresen az oldal admin e-mail címe lenne, de ez nincs "
+"beállítva."
 
 #: build/index.js:21
 msgid "First scan: a baseline."
 msgstr "Első vizsgálat: kiindulópont."
 
 #: build/index.js:21
-msgid "The first scan reports everything already on the site, so no e-mail was sent for it. Go through those findings on the Findings tab; from the next scan on, only what is new is mailed."
-msgstr "Az első vizsgálat mindent jelent, ami már az oldalon van, ezért erről nem ment e-mail. Nézd át ezeket a Találatok fülön; a következő vizsgálattól csak az újdonságokról megy e-mail."
+msgid ""
+"The first scan reports everything already on the site, so no e-mail was sent "
+"for it. Go through those findings on the Findings tab; from the next scan "
+"on, only what is new is mailed."
+msgstr ""
+"Az első vizsgálat mindent jelent, ami már az oldalon van, ezért erről nem "
+"ment e-mail. Nézd át ezeket a Találatok fülön; a következő vizsgálattól csak "
+"az újdonságokról megy e-mail."
 
 #: build/index.js:21
 msgid "E-mail"
@@ -1240,8 +1621,13 @@ msgid "Send e-mail"
 msgstr "E-mail küldése"
 
 #: build/index.js:21
-msgid "Off sends no scan e-mail at all — the warning about repeatedly failing scheduled scans included. There are no \"all clear\" e-mails either way."
-msgstr "Kikapcsolva semmilyen vizsgálati e-mail nem megy ki — az ismétlődően sikertelen ütemezett vizsgálatokról szóló figyelmeztetés sem. „Minden rendben” e-mail egyik esetben sincs."
+msgid ""
+"Off sends no scan e-mail at all — the warning about repeatedly failing "
+"scheduled scans included. There are no \"all clear\" e-mails either way."
+msgstr ""
+"Kikapcsolva semmilyen vizsgálati e-mail nem megy ki — az ismétlődően "
+"sikertelen ütemezett vizsgálatokról szóló figyelmeztetés sem. „Minden "
+"rendben” e-mail egyik esetben sincs."
 
 #: build/index.js:21
 msgid "New alerts only"
@@ -1256,24 +1642,37 @@ msgid "Maximum items per e-mail"
 msgstr "Maximális elemek száma e-mailenként"
 
 #: build/index.js:21
-msgid "A scan that finds more than this lists the first few and links to the Findings tab for the rest. The subject line always carries the true total."
-msgstr "Ha egy vizsgálat ennél többet talál, az első néhányat sorolja fel, a többihez a Találatok fülre linkel. A tárgysor mindig a valós összeszámot tartalmazza."
+msgid ""
+"A scan that finds more than this lists the first few and links to the "
+"Findings tab for the rest. The subject line always carries the true total."
+msgstr ""
+"Ha egy vizsgálat ennél többet talál, az első néhányat sorolja fel, a "
+"többihez a Találatok fülre linkel. A tárgysor mindig a valós összeszámot "
+"tartalmazza."
 
 #: build/index.js:21
 msgid "Test"
 msgstr "Teszt"
 
 #: build/index.js:21
-msgid "Sends a short message to the saved recipients and reports whether WordPress accepted it."
-msgstr "Egy rövid üzenetet küld a mentett címzetteknek, és jelzi, hogy a WordPress elfogadta-e."
+msgid ""
+"Sends a short message to the saved recipients and reports whether WordPress "
+"accepted it."
+msgstr ""
+"Egy rövid üzenetet küld a mentett címzetteknek, és jelzi, hogy a WordPress "
+"elfogadta-e."
 
 #: build/index.js:21
 msgid "Send a test e-mail"
 msgstr "Teszt e-mail küldése"
 
 #: build/index.js:21
-msgid "You have unsaved changes: the test uses the saved recipients. Save first if you just edited the list."
-msgstr "Nem mentett módosításaid vannak: a teszt a mentett címzetteket használja. Ments előbb, ha most szerkesztetted a listát."
+msgid ""
+"You have unsaved changes: the test uses the saved recipients. Save first if "
+"you just edited the list."
+msgstr ""
+"Nem mentett módosításaid vannak: a teszt a mentett címzetteket használja. "
+"Ments előbb, ha most szerkesztetted a listát."
 
 #: build/index.js:21
 msgid "In the admin"
@@ -1284,8 +1683,13 @@ msgid "Admin notice"
 msgstr "Admin értesítés"
 
 #: build/index.js:21
-msgid "Shown to administrators on every admin screen until the findings are acknowledged or ignored. Independent of the e-mail switch above."
-msgstr "Az összes admin képernyőn megjelenik az adminisztrátoroknak, amíg a találatok nincsenek nyugtázva vagy mellőzve. Független a fenti e-mail kapcsolótól."
+msgid ""
+"Shown to administrators on every admin screen until the findings are "
+"acknowledged or ignored. Independent of the e-mail switch above."
+msgstr ""
+"Az összes admin képernyőn megjelenik az adminisztrátoroknak, amíg a "
+"találatok nincsenek nyugtázva vagy mellőzve. Független a fenti e-mail "
+"kapcsolótól."
 
 #: build/index.js:21
 msgid "Show a persistent notice while new alerts exist"
@@ -1300,13 +1704,20 @@ msgid "Frequency"
 msgstr "Gyakoriság"
 
 #: build/index.js:21
-msgid "Scheduled scans are off. Start one from the Scan tab whenever you need it."
-msgstr "Az ütemezett vizsgálatok ki vannak kapcsolva. Indíts egyet a Vizsgálat fülről, amikor kell."
+msgid ""
+"Scheduled scans are off. Start one from the Scan tab whenever you need it."
+msgstr ""
+"Az ütemezett vizsgálatok ki vannak kapcsolva. Indíts egyet a Vizsgálat "
+"fülről, amikor kell."
 
 #. translators: %s: date and time of the next scheduled scan.
 #: build/index.js:22
-msgid "Next run: %s. If WP-Cron misses it, the next page load catches up in the background."
-msgstr "Következő futás: %s. Ha a WP-Cron kihagyja, a következő oldalbetöltés a háttérben bepótolja."
+msgid ""
+"Next run: %s. If WP-Cron misses it, the next page load catches up in the "
+"background."
+msgstr ""
+"Következő futás: %s. Ha a WP-Cron kihagyja, a következő oldalbetöltés a "
+"háttérben bepótolja."
 
 #: build/index.js:22
 msgid "Time of day"
@@ -1318,8 +1729,13 @@ msgid "site time (%s)"
 msgstr "oldal ideje (%s)"
 
 #: build/index.js:23
-msgid "Changed-files mode re-scans only files whose size or modification time changed, plus every non-known-good file when new signatures arrive."
-msgstr "A módosított fájlok mód csak azokat a fájlokat vizsgálja újra, amelyek mérete vagy módosítási ideje változott, valamint minden nem ismert jó fájlt, amikor új szignatúrák érkeznek."
+msgid ""
+"Changed-files mode re-scans only files whose size or modification time "
+"changed, plus every non-known-good file when new signatures arrive."
+msgstr ""
+"A módosított fájlok mód csak azokat a fájlokat vizsgálja újra, amelyek "
+"mérete vagy módosítási ideje változott, valamint minden nem ismert jó fájlt, "
+"amikor új szignatúrák érkeznek."
 
 #: build/index.js:23
 msgid "Signature updates"
@@ -1338,24 +1754,38 @@ msgid "Scan depth"
 msgstr "Vizsgálat mélysége"
 
 #: build/index.js:23
-msgid "Token-level analysis of unknown PHP files: input to dangerous call pairs, identifier entropy, static decoding, disguise headers. Adds \"review\" findings only, never \"alert\" on its own."
-msgstr "Ismeretlen PHP-fájlok token-szintű elemzése: bemenet veszélyes hívásokba, azonosítók entrópiája, statikus dekódolás, álcázó fejlécek. Csak „átnézendő” találatot ad, önmagában soha nem „riasztás”-t."
+msgid ""
+"Token-level analysis of unknown PHP files: input to dangerous call pairs, "
+"identifier entropy, static decoding, disguise headers. Adds \"review\" "
+"findings only, never \"alert\" on its own."
+msgstr ""
+"Ismeretlen PHP-fájlok token-szintű elemzése: bemenet veszélyes hívásokba, "
+"azonosítók entrópiája, statikus dekódolás, álcázó fejlécek. Csak „átnézendő” "
+"találatot ad, önmagában soha nem „riasztás”-t."
 
 #: build/index.js:23
 msgid "Per-file size limit"
 msgstr "Fájlonkénti méretkorlát"
 
 #: build/index.js:23
-msgid "Larger files get type detection and hash matching only. A large PHP file skipped this way is listed as \"review\"."
-msgstr "A nagyobb fájloknál csak típusfelismerés és hash-egyezés történik. Az így kihagyott nagy PHP-fájl „átnézendő” találatként jelenik meg."
+msgid ""
+"Larger files get type detection and hash matching only. A large PHP file "
+"skipped this way is listed as \"review\"."
+msgstr ""
+"A nagyobb fájloknál csak típusfelismerés és hash-egyezés történik. Az így "
+"kihagyott nagy PHP-fájl „átnézendő” találatként jelenik meg."
 
 #: build/index.js:23
 msgid "Excluded paths"
 msgstr "Kizárt útvonalak"
 
 #: build/index.js:23
-msgid "One pattern per line, relative to the WordPress root. * matches any characters. wp-content/lw-scan is always excluded."
-msgstr "Soronként egy minta, a WordPress gyökeréhez képest. A * bármilyen karakterre illeszkedik. A wp-content/lw-scan mindig ki van zárva."
+msgid ""
+"One pattern per line, relative to the WordPress root. * matches any "
+"characters. wp-content/lw-scan is always excluded."
+msgstr ""
+"Soronként egy minta, a WordPress gyökeréhez képest. A * bármilyen karakterre "
+"illeszkedik. A wp-content/lw-scan mindig ki van zárva."
 
 #: build/index.js:23
 msgid "Follow symlinks"
@@ -1363,15 +1793,21 @@ msgstr "Symlinkek követése"
 
 #: build/index.js:23
 msgid "Off is safer: symlinked directories outside the site are not scanned."
-msgstr "Kikapcsolva biztonságosabb: az oldalon kívülre mutató symlinkelt könyvtárakat nem vizsgálja."
+msgstr ""
+"Kikapcsolva biztonságosabb: az oldalon kívülre mutató symlinkelt "
+"könyvtárakat nem vizsgálja."
 
 #: build/index.js:23
 msgid "Follow symlinked directories"
 msgstr "Symlinkelt könyvtárak követése"
 
 #: build/index.js:23
-msgid "Settings affect scanning and notifications only. Nothing here modifies files or database rows."
-msgstr "A beállítások csak a vizsgálatot és az értesítéseket érintik. Semmi nem módosít fájlt vagy adatbázissort."
+msgid ""
+"Settings affect scanning and notifications only. Nothing here modifies files "
+"or database rows."
+msgstr ""
+"A beállítások csak a vizsgálatot és az értesítéseket érintik. Semmi nem "
+"módosít fájlt vagy adatbázissort."
 
 #: build/index.js:23
 msgid "Scanning is enabled. Nothing needs your attention here."
@@ -1411,16 +1847,25 @@ msgid "Recommended fix for the warning"
 msgstr "Ajánlott javítás a figyelmeztetéshez"
 
 #: build/index.js:24
-msgid "Run the scan from a system cron so it does not depend on site traffic. Paste one of these into the server's crontab:"
-msgstr "Futtasd a vizsgálatot rendszer cronból, hogy ne függjön az oldal forgalmától. Másold be az egyiket a szerver crontabjába:"
+msgid ""
+"Run the scan from a system cron so it does not depend on site traffic. Paste "
+"one of these into the server's crontab:"
+msgstr ""
+"Futtasd a vizsgálatot rendszer cronból, hogy ne függjön az oldal "
+"forgalmától. Másold be az egyiket a szerver crontabjába:"
 
 #: build/index.js:24
 msgid "Status endpoint"
 msgstr "Status endpoint"
 
 #: build/index.js:24
-msgid "A read-only report on this site's malware-scan status for an external monitoring service. It only reads; it changes nothing. Enabled by default."
-msgstr "Csak olvasható jelentés az oldal kártevő-vizsgálati állapotáról egy külső monitorozó szolgáltatásnak. Csak olvas, semmit nem módosít. Alapból engedélyezve."
+msgid ""
+"A read-only report on this site's malware-scan status for an external "
+"monitoring service. It only reads; it changes nothing. Enabled by default."
+msgstr ""
+"Csak olvasható jelentés az oldal kártevő-vizsgálati állapotáról egy külső "
+"monitorozó szolgáltatásnak. Csak olvas, semmit nem módosít. Alapból "
+"engedélyezve."
 
 #: build/index.js:24
 msgid "Endpoint"
@@ -1439,12 +1884,20 @@ msgid "Status URL"
 msgstr "Status URL"
 
 #: build/index.js:24
-msgid "The key inside it is the only protection — anyone who knows the address can read the report."
-msgstr "A benne lévő kulcs az egyetlen védelem — bárki, aki ismeri a címet, elolvashatja a jelentést."
+msgid ""
+"The key inside it is the only protection — anyone who knows the address can "
+"read the report."
+msgstr ""
+"A benne lévő kulcs az egyetlen védelem — bárki, aki ismeri a címet, "
+"elolvashatja a jelentést."
 
 #: build/index.js:24
-msgid "The endpoint is switched off: this address answers \"not found\" until you switch it on and save."
-msgstr "Az endpoint ki van kapcsolva: ez a cím „not found” választ ad, amíg be nem kapcsolod és el nem mented."
+msgid ""
+"The endpoint is switched off: this address answers \"not found\" until you "
+"switch it on and save."
+msgstr ""
+"Az endpoint ki van kapcsolva: ez a cím „not found” választ ad, amíg be nem "
+"kapcsolod és el nem mented."
 
 #. translators: %s: date and time the URL was created.
 #: build/index.js:25
@@ -1460,8 +1913,12 @@ msgid "Reuse the result for"
 msgstr "Eredmény újrahasználása ennyi ideig"
 
 #: build/index.js:25
-msgid "A stored result answers requests for this long; after that the next request runs the check again."
-msgstr "A tárolt eredmény ennyi ideig szolgálja ki a kéréseket; utána a következő kérés újrafuttatja az ellenőrzést."
+msgid ""
+"A stored result answers requests for this long; after that the next request "
+"runs the check again."
+msgstr ""
+"A tárolt eredmény ennyi ideig szolgálja ki a kéréseket; utána a következő "
+"kérés újrafuttatja az ellenőrzést."
 
 #. translators: %d: number of minutes.
 #: build/index.js:26
@@ -1477,19 +1934,3 @@ msgstr "Új URL generálva. Az előző URL már nem működik."
 #: build/index.js:26
 msgid "The current URL stops working immediately. Continue?"
 msgstr "A jelenlegi URL azonnal megszűnik működni. Folytatod?"
-
-#. translators: %s: plugin, theme or WordPress name and installed version.
-#: includes/Notify/VulnLine.php:44
-#, php-format
-msgid "%s: known vulnerability, no fixed version yet"
-msgstr "%s: ismert sebezhetőség, javított verzió még nincs"
-
-#. translators: 1: plugin, theme or WordPress name and installed version. 2: version that fixes it.
-#: includes/Notify/VulnLine.php:51
-#, php-format
-msgid "%1$s: known vulnerability, update to %2$s"
-msgstr "%1$s: ismert sebezhetőség, frissíts erre: %2$s"
-
-#: includes/Notify/Mailer.php:170
-msgid "Details and sources are on the Findings tab:"
-msgstr "A részletek és a források a Találatok fülön:"

@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace LightweightPlugins\Scan;
 
+use LightweightPlugins\Scan\Admin\Hub\Hub;
 use LightweightPlugins\Scan\Admin\NoticeManager;
 use LightweightPlugins\Scan\Admin\SettingsPage;
 use LightweightPlugins\Scan\CLI\Commands;
@@ -46,6 +47,10 @@ final class Plugin {
 	 * - Run\Scheduler                the two WP-Cron hooks and the
 	 *                                settings-save reschedule
 	 * - Run\CatchUp                  the missed-schedule recovery, on `init`
+	 * - Admin\Hub\Hub::init()        every request: offers this plugin's
+	 *                                copy of the shared LW Plugins hub;
+	 *                                the newest copy adds the page and
+	 *                                its `lw-plugins/v1` REST routes
 	 * - Admin\SettingsPage, AdminNotice  is_admin() only: the menu entry,
 	 *                                the React mount point and its assets
 	 * - Admin\NoticeManager          is_admin() only: keeps other plugins'
@@ -76,6 +81,8 @@ final class Plugin {
 
 		Scheduler::register();
 		CatchUp::register();
+
+		Hub::init( LW_SCAN_FILE );
 
 		if ( is_admin() ) {
 			AdminNotice::register();
