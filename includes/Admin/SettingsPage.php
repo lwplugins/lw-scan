@@ -177,7 +177,7 @@ final class SettingsPage {
 			'tab'           => self::one_of( 'tab', self::TABS, 'scan' ),
 			'findings'      => self::findings_filters(),
 			'updateCoreUrl' => admin_url( 'update-core.php' ),
-			'docsUrl'       => 'https://lwplugins.com/docs/lw-scan/',
+			'docsUrl'       => self::docs_url(),
 		];
 	}
 
@@ -213,5 +213,17 @@ final class SettingsPage {
 		$value = isset( $_GET[ $key ] ) ? sanitize_key( wp_unslash( $_GET[ $key ] ) ) : '';
 
 		return in_array( $value, $allowed, true ) ? $value : $fallback;
+	}
+
+	/**
+	 * Documentation URL: the plugin's page on docs.lwplugins.com, in Hungarian
+	 * for Hungarian admin users and in English otherwise.
+	 *
+	 * @return string
+	 */
+	public static function docs_url(): string {
+		$lang = str_starts_with( get_user_locale(), 'hu' ) ? 'hu' : 'en';
+
+		return 'https://docs.lwplugins.com/' . $lang . '/plugins/lw-scan';
 	}
 }

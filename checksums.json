@@ -1,13 +1,13 @@
 {
-    "version": "1.4.6",
+    "version": "1.4.7",
     "files": {
         "assets/hub/index-rtl.css": "dfa2bcb5e11d2d54e66548ea64182942",
         "assets/hub/index.css": "707f64d2361230883b4506aacc736f54",
         "assets/hub/index.js": "82fdf4de28b79cd099f5e1e82657bc10",
         "build/index-rtl.css": "f1fc43c5a283cd03bd826122637ec904",
-        "build/index.asset.php": "c6e966d515b738c7ae1815a4f078eaea",
+        "build/index.asset.php": "bae38545b2b2768164e68a07bc9dab9b",
         "build/index.css": "7a17ed9078d0605c12792330be0676f3",
-        "build/index.js": "068b03424ab6b6a4c5b040bf5f2f1b04",
+        "build/index.js": "5c88784cf4f4c3f6282855cc912ea415",
         "includes/Activator.php": "478238ed9a7d0c2b89eb5e5876e1a833",
         "includes/Admin/Hub/Activator.php": "adfb3d8b79d62b39e104e749608ae92b",
         "includes/Admin/Hub/Assets.php": "f87fbc07ee2bea7a82528c599a816c37",
@@ -25,7 +25,7 @@
         "includes/Admin/Settings/Format.php": "6aeedb5d92202bbe42f8e3c9e0582769",
         "includes/Admin/Settings/RunStatsView.php": "d9b955fafcc0ccd977c2eae3a972176a",
         "includes/Admin/Settings/VulnRecord.php": "e62361ae73b13b4f838ca0d7155eb804",
-        "includes/Admin/SettingsPage.php": "8c45bed54c8062fe476a732079295c38",
+        "includes/Admin/SettingsPage.php": "2f2f4f2b2710142d996439facb9d62d9",
         "includes/Admin/SettingsSanitizer.php": "7e00488d3a163fb77f0c8cc336bdba1a",
         "includes/Autoloader.php": "421eaeebfe744a16369fe44fa3fe6f0e",
         "includes/Bundle/NewSignatures.php": "4c97bda4af2d411844e183f39e00626c",
@@ -188,7 +188,7 @@
         "includes/Vuln/Matcher.php": "52416eff4e86205c216f8f78237010d1",
         "includes/Vuln/VersionRange.php": "f94cc5debc0b6c862c4865b8cec6a537",
         "includes/functions.php": "137fc6cf37d788d22f100c6f2743c977",
-        "lw-scan.php": "ce4a4f941d2b08d15fd8e7400dbfb9fa",
+        "lw-scan.php": "08ed4180162604227b5e3cee32196686",
         "uninstall.php": "feb3613e6a957b8b376195b888f5bddd"
     }
 }
