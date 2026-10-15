@@ -2,6 +2,8 @@
 
 Lightweight malware scanner for WordPress — files, database and vulnerable software. Reports only, never modifies your site.
 
+![LW Scan admin: Scan](.github/screenshot.png)
+
 ## What it scans
 
 - **Files** — every file under the WordPress root is matched against the signature pack: a hash layer for known-bad files, a literal layer and a regex layer. The content type comes from the file itself, not from its extension, so a shell named `logo.png` is still scanned as PHP.
