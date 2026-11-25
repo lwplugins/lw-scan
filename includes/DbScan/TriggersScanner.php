@@ -60,7 +60,7 @@ final class TriggersScanner {
 			];
 		}
 
-		$rows  = is_array( $rows ) ? $rows : [];
+		$rows  = (array) $rows; // get_results() can still return null on a driver error.
 		$rules = $this->signatures->pack()->db_rules( 'db_trigger' );
 
 		$findings = 0;

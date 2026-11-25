@@ -64,7 +64,7 @@
         "includes/DbScan/OptionsScanner.php": "0d6f2a63e2cb046352826b1ff3066a6f",
         "includes/DbScan/PostsScanner.php": "ae3482e8827343d7679d9f234afd95f0",
         "includes/DbScan/RowMatcher.php": "074c260aa59e322c83cf2fc76093e531",
-        "includes/DbScan/TriggersScanner.php": "6a871f361580ad8d3c1a6b89be329261",
+        "includes/DbScan/TriggersScanner.php": "f3e5db6293abbddeda1c93559e90c0c3",
         "includes/DbScan/UsersScanner.php": "283c441825208690cc5576b81e5b0edb",
         "includes/Findings/Finding.php": "b3758eed3300e7bfac57d0d37eced4c0",
         "includes/Findings/Fingerprint.php": "90439f8a601ab00e953e2a8f0c24fcc3",
